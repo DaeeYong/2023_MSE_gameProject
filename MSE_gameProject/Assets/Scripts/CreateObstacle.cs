@@ -33,6 +33,7 @@ public class CreateObstacle : MonoBehaviour
                 cursorObj.transform.position = cursorPosition;
                 preCell = hit.transform.gameObject;
                 Debug.Log(hit.collider.gameObject.transform.parent.name + ": " + hit.collider.gameObject.name);
+                Debug.Log(hit.collider.gameObject.transform.parent.position);
             }
 
             if (Input.GetMouseButtonDown(0) && hit.transform != null)
