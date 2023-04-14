@@ -12,17 +12,6 @@ public class TileManager : MonoBehaviour
     //Save if the tile space is occupied or not
     public bool isOccupied = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnMouseEnter() {
         gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;

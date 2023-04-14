@@ -358,9 +358,11 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/BoardManager.cs"
 "Assets/Scripts/CreateObstacle.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/InputManager.cs"
 "Assets/Scripts/PlayerManager.cs"
 "Assets/Scripts/TileManager.cs"
+"Assets/Scripts/TimerManager.cs"
 -langversion:9.0
 
 /deterministic
