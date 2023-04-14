@@ -1,5 +1,6 @@
 bool isValidObstacle(vector<pair<int,int>> obstacleCoord, vector<pair<int,int>> playerCoord) {
     
+    //For player1
     _initialize();
 
     pair<int, int> obstacle_F;
@@ -10,8 +11,8 @@ bool isValidObstacle(vector<pair<int,int>> obstacleCoord, vector<pair<int,int>> 
 
     visited[obstacle_F.X][obstacle_F.Y] = BLOCKED;
     visited[obstacle_S.X][obstacle_S.Y] = BLOCKED;
-
-    //For player1
+    
+    
     bool flag1 = false;
     queue<pair<int, int>> Q1;
     Q1.push({ player1.X, player1.Y });
@@ -37,6 +38,17 @@ bool isValidObstacle(vector<pair<int,int>> obstacleCoord, vector<pair<int,int>> 
     }
 
     //For player2
+    _initialize();
+
+    pair<int, int> obstacle_F;
+    pair<int, int> obstacle_S;
+    
+    pair<int, int> player1 = playerCoord[0];
+    pair<int, int> player2 = playerCoord[1];
+
+    visited[obstacle_F.X][obstacle_F.Y] = BLOCKED;
+    visited[obstacle_S.X][obstacle_S.Y] = BLOCKED;
+    
     bool flag2 = false;
     queue<pair<int, int>> Q2;
     Q2.push({ player1.X, player1.Y });
