@@ -26,9 +26,9 @@ public class InputManager : MonoBehaviour
             {
                 Vector3 pos = tileMouseOver.transform.position;
                 Debug.Log(pos);
-                player = FindObjectOfType<PlayerManager>();
-                Vector3 destination = new Vector3(pos.x, player.transform.position.y, pos.z);
-                player.transform.position = destination;
+                //player = FindObjectOfType<PlayerManager>();
+                //Vector3 destination = new Vector3(pos.x, player.transform.position.y, pos.z);
+                //player.transform.position = destination;
                 
             }
         }
