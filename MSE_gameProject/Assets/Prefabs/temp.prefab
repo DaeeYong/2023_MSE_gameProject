@@ -61,15 +61,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4321784482605771050, guid: 32180ee5528bb914e961598ca9502ba3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4321784482605771050, guid: 32180ee5528bb914e961598ca9502ba3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4321784482605771050, guid: 32180ee5528bb914e961598ca9502ba3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4321784482605771050, guid: 32180ee5528bb914e961598ca9502ba3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
