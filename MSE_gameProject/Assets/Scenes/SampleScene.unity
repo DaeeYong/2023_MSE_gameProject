@@ -215,6 +215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 6106539687483949060, guid: 064a5fd3501c07b4cbe4f4d4aaef8723, type: 3}
+  obstacleMaterial:
+  - {fileID: 2100000, guid: f2c194fac370b994a98489173553838e, type: 2}
+  - {fileID: 2100000, guid: dfe1793983911e6409c17acdb833092f, type: 2}
   layerMask:
     serializedVersion: 2
     m_Bits: 64

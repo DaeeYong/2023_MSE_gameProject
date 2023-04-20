@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 7424908276909227279, guid: 32180ee5528bb914e961598ca9502ba3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ea754b31ed3ccc48aa0a239a442df54, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32180ee5528bb914e961598ca9502ba3, type: 3}
 --- !u!4 &8017772291361078704 stripped
