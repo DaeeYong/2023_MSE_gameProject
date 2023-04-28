@@ -7,23 +7,27 @@ public class TimerManager : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     private float leftTime = 30;
+    public bool inTurn;
+
+    private void Start() {
+        inTurn = true;
+    }
 
     private void FixedUpdate() {
-        
-        leftTime -= 1 * Time.deltaTime;
-        timerText.text = ("Turn Time : " + (int)leftTime).ToString();
-
-        if(leftTime <= 0)
+        if(inTurn)
         {
-            notifyZeroTime();
-            leftTime = 30;
+            leftTime -= 1 * Time.deltaTime;
+            timerText.text = ("Turn Time : " + (int)leftTime).ToString();
+
+            if(leftTime <= 0)
+            {
+                leftTime = 30;
+            }
         }
     }
 
-    private void notifyZeroTime()
+    public void makeZerotime()
     {
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
-        gameManager.GetComponent<GameManager>().TurnChage();
-
+        leftTime = 0;
     }
 }

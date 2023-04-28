@@ -30,7 +30,6 @@ public class BoardManager : MonoBehaviour
             for(int x = 0; x < width; x++)
             {
                 gameBoard[x, y] = Instantiate(tilePrefab, new Vector3(x * spaceSize, 0, -y * spaceSize), Quaternion.identity);
-                //gameBoard[x, y] = Instantiate(tilePrefab, new Vector3((x) * spaceSize, 0, (-y) * spaceSize), Quaternion.identity);
                 gameBoard[x, y].GetComponent<TileManager>().SetPosition(x, y);
                 gameBoard[x, y].transform.parent = transform;
                 gameBoard[x, y].gameObject.name = "Space (X: " + x.ToString() + " , Y:" + y.ToString() + ")";
