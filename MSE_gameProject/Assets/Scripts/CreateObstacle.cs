@@ -50,7 +50,6 @@ public class CreateObstacle : MonoBehaviour
             { 
                 cursorObj.transform.position = cursorPosition;
                 preCell = hit.transform.gameObject;
-                printLog(hit.transform);
             }
 
             if (!CheckValid(hit.transform))
@@ -71,12 +70,12 @@ public class CreateObstacle : MonoBehaviour
                 switch (obstacleState)
                 {
                     case ObstacleState.HORIZONTAL:
-                        mapdata[(int)hit.transform.position.x + 8, -(int)hit.transform.position.z + 8] = 3;
-                        mapdata[(int)hit.transform.position.x + 8 + 1, -(int)hit.transform.position.z + 8] = 3;
+                        mapdata[(int)hit.transform.position.x, -(int)hit.transform.position.z] = 3;
+                        mapdata[(int)hit.transform.position.x + 1, -(int)hit.transform.position.z] = 3;
                         break;
                     case ObstacleState.VERTICAL:
-                        mapdata[(int)hit.transform.position.x + 8, -(int)hit.transform.position.z + 8] = 3;
-                        mapdata[(int)hit.transform.position.x + 8, -(int)hit.transform.position.z + 8 + 1] = 3;
+                        mapdata[(int)hit.transform.position.x, -(int)hit.transform.position.z] = 3;
+                        mapdata[(int)hit.transform.position.x, -((int)hit.transform.position.z - 1)] = 3;
                         break;
                 }
             }
@@ -89,24 +88,6 @@ public class CreateObstacle : MonoBehaviour
 
     }
 
-    private void printLog(Transform t)
-    {
-        string debugMsg = "";
-        switch (obstacleState)
-        {
-            case ObstacleState.HORIZONTAL:
-                debugMsg = debugMsg + "orgin arr value: " + mapdata[(int)t.position.x + 8, -(int)t.position.z + 8];
-                debugMsg = debugMsg + "right arr value: " + mapdata[(int)t.position.x + 8 + 1, -(int)t.position.z + 8];
-                Debug.Log(debugMsg);
-                break;
-            case ObstacleState.VERTICAL:
-                debugMsg = "";
-                debugMsg = debugMsg + "orgin arr value: " + mapdata[(int)t.position.x + 8, -(int)t.position.z + 8];
-                debugMsg = debugMsg + "down arr value: " + mapdata[(int)t.position.x + 8, -(int)t.position.z + 8 + 1];
-                Debug.Log(debugMsg);
-                break;
-        }
-    }
     private void PlaceObstacle(Vector3 cursorPosition)
     {
         GameObject go = Instantiate(obstaclePrefab, cursorPosition, Quaternion.identity);
@@ -118,12 +99,12 @@ public class CreateObstacle : MonoBehaviour
         switch (obstacleState)
         { 
             case ObstacleState.HORIZONTAL:
-                if ((int)t.position.x + 8 == 16) return false;
-                if (mapdata[(int)t.position.x + 8, -(int)t.position.z + 8] == 0 && mapdata[(int)t.position.x + 8 + 1, -(int)t.position.z + 8] == 0) return true;
+                if ((int)t.position.x == 16) return false;
+                if (mapdata[(int)t.position.x, -(int)t.position.z] == 0 && mapdata[(int)t.position.x + 1, -(int)t.position.z] == 0) return true;
                 else return false;
             case ObstacleState.VERTICAL:
-                if (-(int)t.position.z + 8 == 16) return false;
-                if (mapdata[(int)t.position.x + 8, -(int)t.position.z + 8] == 0 && mapdata[(int)t.position.x + 8, -(int)t.position.z + 8 + 1] == 0) return true;
+                if (-(int)t.position.z == 16) return false;
+                if (mapdata[(int)t.position.x, -(int)t.position.z] == 0 && mapdata[(int)t.position.x, -((int)t.position.z - 1)] == 0) return true;
                 else return false;
             default: return false;
         }
