@@ -52,8 +52,6 @@ public class PlayerManager : MonoBehaviour
                         playermoving = 0;
                     }
                 }
-
-
             }
         }
         else
