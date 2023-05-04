@@ -35,9 +35,9 @@ public class GameManager : MonoBehaviour
     private void CreatePlayers()
     {
         player[0] = Instantiate(playerPrefab, new Vector3(board[16, 8].transform.position.x, 0, board[16, 8].transform.position.z), Quaternion.identity);
-        board[16, 8].GetComponent<TileManager>().isOccupied = 1;
+        board[16, 8].GetComponent<TileManager>().occupiedPlayer = 1;
         player[1] = Instantiate(playerPrefab, new Vector3(board[0, 8].transform.position.x, 0, board[0, 8].transform.position.z), Quaternion.identity);
-        board[0, 8].GetComponent<TileManager>().isOccupied = 1;
+        board[0, 8].GetComponent<TileManager>().occupiedPlayer = 1;
         
         turn = player[0];    
     }
