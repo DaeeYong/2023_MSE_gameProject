@@ -7,6 +7,7 @@ TagManager:
   - Timer
   - Board
   - Tile
+  - Obstacle
   layers:
   - Default
   - TransparentFX

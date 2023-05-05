@@ -10,15 +10,15 @@ public class TileManager : MonoBehaviour
     public GameObject objectInThisTile = null;
 
     //Save if the tile space is occupied or not
-    public bool isOccupied = false;
+    public int isOccupied = 0;
 
 
     private void OnMouseEnter() {
-        gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+        //gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
     }
 
     private void OnMouseExit() {
-        gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+        //gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
     }
 
     //Set the position of this tile

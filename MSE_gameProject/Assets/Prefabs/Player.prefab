@@ -143,3 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c8a6d1ca8d60b7408716c9e32bf145c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TileLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  playermoving: 0
+  obstacleMaterial:
+  - {fileID: 2100000, guid: db68d82e7aac42f489bd00e31d95ac2a, type: 2}
+  - {fileID: 2100000, guid: f2c194fac370b994a98489173553838e, type: 2}
+  - {fileID: 2100000, guid: 2788459815baa2f47939dec06ad8392c, type: 2}
