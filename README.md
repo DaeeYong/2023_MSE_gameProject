@@ -1,3 +1,10 @@
+## Server Specification
+  * project : gradle-Groovy
+  * Language : java
+  * Spring Boot Version : 2.7.11
+  * Java Version : 11
+  * 참고 홈페이지 : [https://start.spring.io/](https://start.spring.io/)
+
 ## api 사용법
 
 1. 회원가입       
