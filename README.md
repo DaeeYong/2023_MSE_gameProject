@@ -1,16 +1,20 @@
 ## api 사용법
 
 1. 회원가입       
-  method : post
-  data type : Json       
-  url : "http://localhost:8080/sign-up"  
-  input format : {"name" : {string}}  
-  output format<br>
-  회원가입 성공 -> {"response" : true}  
-  회원가입 실패(중복 존재) -> {"response" false}  
+  * method : post
+  * data type : Json       
+  * url : "http://localhost:8080/sign-up"  
+  * input format : {"name" : {string}}  
+  * output format<br>
+  * 회원가입 성공 -> {"response" : true}  
+  * 회원가입 실패(중복 존재) -> {"response" false}  
 
-1. 로그인  
-   (해당 부분 작성 중)
+2. 모든 유저 조회  
+  * method : get
+  * url : http://localhost:8080/find-all
+  * 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
+  * output 예시 : [ {"id" : 1, "name" : "성호"}, {"id" : 2, "name" : "팔달"},{"id" : 3, "name" : "율곡"} ]
+  <br><br>
 
 ## 계층 구조
   ### DB 구조  
