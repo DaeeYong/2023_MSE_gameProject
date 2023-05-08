@@ -1,4 +1,4 @@
-package PlayerDatabase;
+package anido.MSEproject.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
