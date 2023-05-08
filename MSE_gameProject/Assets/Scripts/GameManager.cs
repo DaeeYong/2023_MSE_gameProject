@@ -72,4 +72,6 @@ public class GameManager : MonoBehaviour
         buttons[1].SetActive(false);
         GameObject.FindGameObjectWithTag("Obstacle").GetComponent<CreateObstacle>().createobstacle = 1;
     }
+
+    public int getIndex() { return index; }
 }

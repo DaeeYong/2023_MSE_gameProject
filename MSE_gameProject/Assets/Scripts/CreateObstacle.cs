@@ -12,8 +12,8 @@ public class CreateObstacle : MonoBehaviour
 {
     [SerializeField] GameObject obstaclePrefab;
     [SerializeField] Material[] obstacleMaterial;
+    [SerializeField] Material[] playerObstacleMaterial;
     [SerializeField] LayerMask layerMask;
-    private GameObject preCell;
     private GameObject cursorObj;
     private bool canPlace;
     private ObstacleState obstacleState;
@@ -31,8 +31,6 @@ public class CreateObstacle : MonoBehaviour
         obstacleState = ObstacleState.HORIZONTAL;
         cursorObj = Instantiate(obstaclePrefab, Vector3.zero, Quaternion.identity);
         cursorObj.SetActive(false);
-        preCell = null;
-        //mapdata = new int[17, 17];
         canPlace = true;
 
         timer = GameObject.FindGameObjectWithTag("Timer");
@@ -43,25 +41,19 @@ public class CreateObstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(createobstacle == 1)
-        {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ChangeObstacleState();
-        }
+        if (createobstacle == 0) return;
+
+        if (Input.GetKeyDown(KeyCode.R)) ChangeObstacleState();
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
             cursorObj.SetActive(true);
             Vector3 cursorPosition = new Vector3(hit.transform.position.x + (cursorObj.transform.localScale.x * 0.5f), hit.transform.position.y + (hit.transform.GetChild(0).localScale.y + cursorObj.transform.localScale.y)*0.5f, hit.transform.position.z);
 
-            if ((preCell == null || preCell != hit.transform.gameObject))
-            { 
-                cursorObj.transform.position = cursorPosition;
-                preCell = hit.transform.gameObject;
-            }
+            if (cursorObj.transform.position != cursorPosition) cursorObj.transform.position = cursorPosition;
 
             if (!CheckValid(hit.transform))
             {
@@ -81,14 +73,10 @@ public class CreateObstacle : MonoBehaviour
                 switch (obstacleState)
                 {
                     case ObstacleState.HORIZONTAL:
-                        //mapdata[(int)hit.transform.position.x, -(int)hit.transform.position.z] = 3;
-                        //mapdata[(int)hit.transform.position.x + 1, -(int)hit.transform.position.z] = 3;
                         board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().isOccupied = 1;
                         board[(int)hit.transform.position.x+1, -(int)hit.transform.position.z].GetComponent<TileManager>().isOccupied = 1;
                         break;
                     case ObstacleState.VERTICAL:
-                        //mapdata[(int)hit.transform.position.x, -(int)hit.transform.position.z] = 3;
-                        //mapdata[(int)hit.transform.position.x, -((int)hit.transform.position.z - 1)] = 3;
                         board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().isOccupied = 1;
                         board[(int)hit.transform.position.x, -(int)hit.transform.position.z + 1].GetComponent<TileManager>().isOccupied = 1;
                         break;
@@ -104,25 +92,22 @@ public class CreateObstacle : MonoBehaviour
         {
             cursorObj.SetActive(false);
         }
-
-        }
-
     }
 
     private void PlaceObstacle(Vector3 cursorPosition)
     {
-        GameObject go = Instantiate(obstaclePrefab, cursorPosition, Quaternion.identity);
-        go.transform.GetChild(0).localPosition = cursorObj.transform.GetChild(0).localPosition;
-        go.transform.GetChild(0).localRotation = cursorObj.transform.GetChild(0).localRotation;
+        Transform go = Instantiate(obstaclePrefab, cursorPosition, Quaternion.identity).transform.GetChild(0);
+        go.localPosition = cursorObj.transform.GetChild(0).localPosition;
+        go.localRotation = cursorObj.transform.GetChild(0).localRotation;
+        go.gameObject.GetComponent<Renderer>().material = playerObstacleMaterial[gameManager.GetComponent<GameManager>().getIndex()];
     }
     private bool CheckValid(Transform t)
-    {   board = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardManager>().gameBoard;
+    {  
+        board = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardManager>().gameBoard;
         switch (obstacleState)
         { 
             case ObstacleState.HORIZONTAL:
                 if ((int)t.position.x == 16) return false;
-                Debug.Log((int)t.position.x + " " + -(int)t.position.z);
-                //if (mapdata[(int)t.position.x, -(int)t.position.z] == 0 && mapdata[(int)t.position.x + 1, -(int)t.position.z] == 0)
                 if (board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().isOccupied == 0
                 && board[(int)t.position.x+1, -(int)t.position.z].GetComponent<TileManager>().isOccupied == 0)
                 {
@@ -131,7 +116,6 @@ public class CreateObstacle : MonoBehaviour
                 return false;
             case ObstacleState.VERTICAL:
                 if (-(int)t.position.z == 16) return false;
-                //if (mapdata[(int)t.position.x, -(int)t.position.z] == 0 && mapdata[(int)t.position.x, -((int)t.position.z - 1)] == 0)
                 if (board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().isOccupied == 0
                 && board[(int)t.position.x, -(int)t.position.z+1].GetComponent<TileManager>().isOccupied == 0)
                     return true;

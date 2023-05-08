@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -269,6 +269,9 @@ MonoBehaviour:
   obstacleMaterial:
   - {fileID: 2100000, guid: f2c194fac370b994a98489173553838e, type: 2}
   - {fileID: 2100000, guid: db68d82e7aac42f489bd00e31d95ac2a, type: 2}
+  playerObstacleMaterial:
+  - {fileID: 2100000, guid: 7ea754b31ed3ccc48aa0a239a442df54, type: 2}
+  - {fileID: 2100000, guid: f9c77203a096da148819dc1d21b23a6e, type: 2}
   layerMask:
     serializedVersion: 2
     m_Bits: 64
