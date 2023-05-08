@@ -1,4 +1,4 @@
-package anido.MSEproject.domain;
+package anido.MSEproject.controller;
 
 import java.util.Map;
 
