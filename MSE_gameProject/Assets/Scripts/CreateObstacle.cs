@@ -73,12 +73,12 @@ public class CreateObstacle : MonoBehaviour
                 switch (obstacleState)
                 {
                     case ObstacleState.HORIZONTAL:
-                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().isOccupied = 1;
-                        board[(int)hit.transform.position.x+1, -(int)hit.transform.position.z].GetComponent<TileManager>().isOccupied = 1;
+                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().occupiedOtc = 1;
+                        board[(int)hit.transform.position.x+1, -(int)hit.transform.position.z].GetComponent<TileManager>().occupiedOtc = 1;
                         break;
                     case ObstacleState.VERTICAL:
-                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().isOccupied = 1;
-                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z + 1].GetComponent<TileManager>().isOccupied = 1;
+                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().occupiedOtc = 1;
+                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z + 1].GetComponent<TileManager>().occupiedOtc = 1;
                         break;
                 }
                 
@@ -108,16 +108,20 @@ public class CreateObstacle : MonoBehaviour
         { 
             case ObstacleState.HORIZONTAL:
                 if ((int)t.position.x == 16) return false;
-                if (board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().isOccupied == 0
-                && board[(int)t.position.x+1, -(int)t.position.z].GetComponent<TileManager>().isOccupied == 0)
+                if (board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().occupiedOtc == 0
+                && board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().occupiedPlayer == 0
+                && board[(int)t.position.x+1, -(int)t.position.z].GetComponent<TileManager>().occupiedOtc == 0
+                && board[(int)t.position.x+1, -(int)t.position.z].GetComponent<TileManager>().occupiedPlayer == 0)
                 {
                     return true;
                 }
                 return false;
             case ObstacleState.VERTICAL:
                 if (-(int)t.position.z == 16) return false;
-                if (board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().isOccupied == 0
-                && board[(int)t.position.x, -(int)t.position.z+1].GetComponent<TileManager>().isOccupied == 0)
+                if (board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().occupiedOtc == 0
+                && board[(int)t.position.x, -(int)t.position.z].GetComponent<TileManager>().occupiedPlayer == 0
+                && board[(int)t.position.x, -(int)t.position.z+1].GetComponent<TileManager>().occupiedOtc == 0
+                && board[(int)t.position.x, -(int)t.position.z+1].GetComponent<TileManager>().occupiedPlayer == 0)
                     return true;
                 else return false;
             default: return false;
