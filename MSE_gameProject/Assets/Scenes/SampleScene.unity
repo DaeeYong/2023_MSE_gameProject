@@ -990,7 +990,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1147729174}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: setActionMovement
+        m_MethodName: SetActionMovement
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1447,6 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1871307061}
+  leftTime: 30
   inTurn: 0
 --- !u!1 &1957287090
 GameObject:
@@ -1534,7 +1535,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1147729174}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: setActionObstacle
+        m_MethodName: SetActionObstacle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

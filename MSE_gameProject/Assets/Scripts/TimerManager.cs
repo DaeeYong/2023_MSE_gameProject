@@ -6,7 +6,7 @@ using TMPro;
 public class TimerManager : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    private float leftTime = 30;
+    public float leftTime = 30;
     public bool inTurn;
 
     private void Start() {
@@ -21,13 +21,8 @@ public class TimerManager : MonoBehaviour
 
             if(leftTime <= 0)
             {
-                leftTime = 30;
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().TurnChange();
             }
         }
-    }
-
-    public void makeZerotime()
-    {
-        leftTime = 0;
     }
 }
