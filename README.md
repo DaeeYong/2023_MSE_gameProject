@@ -47,3 +47,7 @@ Controller : MVC에서 Controller를 의미한다.
 service : 핵심 로직들을 구현한 곳.  
 repository : DB 접근을 위한 것들.  
 domain : 서비스와 관련된 객체들이 들어있는 곳
+
+## UML
+  ### Class Diagram
+  ![class diagram](/readmeImg/classDiagram.png)
