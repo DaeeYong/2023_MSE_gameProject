@@ -107,7 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3357589272266235115}
-  - component: {fileID: 3242490983148442064}
+  - component: {fileID: 6832521064219441860}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -131,7 +131,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3242490983148442064
+--- !u!114 &6832521064219441860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,14 +140,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8993018416401690165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c8a6d1ca8d60b7408716c9e32bf145c, type: 3}
+  m_Script: {fileID: 11500000, guid: 45172b1f40d52c4469acaa15f7edeb48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TileLayer:
     serializedVersion: 2
     m_Bits: 64
   playermoving: 0
-  obstacleMaterial:
-  - {fileID: 2100000, guid: db68d82e7aac42f489bd00e31d95ac2a, type: 2}
-  - {fileID: 2100000, guid: f2c194fac370b994a98489173553838e, type: 2}
+  availableMaterial:
+  - {fileID: 2100000, guid: a9a5af0d9584251429a68545b2c983ff, type: 2}
   - {fileID: 2100000, guid: 2788459815baa2f47939dec06ad8392c, type: 2}

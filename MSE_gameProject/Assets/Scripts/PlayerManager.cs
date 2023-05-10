@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -8,16 +9,15 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject[,] board;
     public int playermoving;
-    private GameObject timer;
     private GameObject gameManager;
-    [SerializeField] Material[] obstacleMaterial;
-    Vector3[] available = new Vector3[4];
+    [SerializeField] Material[] availableMaterial;
+    private ArrayList available;
 
     // Start is called before the first frame update
     void Start()
     {
+        available = new ArrayList();
         board = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardManager>().gameBoard;
-        timer = GameObject.FindGameObjectWithTag("Timer");
         gameManager = GameObject.FindGameObjectWithTag("GameController");
         playermoving = 0;
     }
@@ -27,63 +27,176 @@ public class PlayerManager : MonoBehaviour
     {
         if(playermoving == 1)
         {
-            available[0] = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
-            available[1] = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
-            available[2] = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
-            available[3] = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
-
-            showAvailable();
+            CalculateAvailable();
+            ShowAvailable();
             TileManager tileMouseOver = IsMouseOverATile();
             
-            if(tileMouseOver != null && tileMouseOver.isOccupied == 0)
+            if(tileMouseOver != null && tileMouseOver.occupiedOtc == 0 && tileMouseOver.occupiedPlayer == 0)
             {
                 if(Input.GetMouseButtonDown(0))
                 {
-                    if(isValid(tileMouseOver.transform.position))
+                    if(IsValid(tileMouseOver.transform.position))
                     {
-                        board[(int)transform.position.x, -(int)transform.position.z].GetComponent<TileManager>().isOccupied = 0;
-                        tileMouseOver.isOccupied = 1;
+                        board[(int)transform.position.x, -(int)transform.position.z].GetComponent<TileManager>().occupiedPlayer = 0;
+                        tileMouseOver.occupiedPlayer = 1;
                         Vector3 pos = tileMouseOver.transform.position;
                         Debug.Log(pos);
                     
                         transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-                        timer.GetComponent<TimerManager>().makeZerotime();
-                        gameManager.GetComponent<GameManager>().TurnChange();
                         playermoving = 0;
+                        gameManager.GetComponent<GameManager>().TurnChange();
+                    }
+                }
+
+
+            }
+        }
+        else 
+        {
+             RemoveAvailable();
+             available.Clear();
+        }
+    }
+
+    private void CalculateAvailable() 
+    {
+        if(InBoard(new Vector2(transform.position.x - 1, -(int)transform.position.z)))
+        {
+            if(board[(int)transform.position.x - 1, -(int)transform.position.z].GetComponent<TileManager>().occupiedPlayer == 0)
+            {
+                available.Add(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z));
+            }
+            else
+            {
+                if(InBoard(new Vector2(transform.position.x - 2, -(int)transform.position.z)))
+                {
+                    if(board[(int)transform.position.x - 2, -(int)transform.position.z].GetComponent<TileManager>().occupiedOtc == 0)
+                    {
+                        available.Add(new Vector3(transform.position.x - 2, transform.position.y, transform.position.z));
+                    }
+                    else
+                    {
+                        if(InBoard(new Vector2(transform.position.x - 1, -((int)transform.position.z - 1))))
+                            available.Add(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z - 1));
+                        if(InBoard(new Vector2(transform.position.x - 1, -((int)transform.position.z + 1))))
+                            available.Add(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z + 1));
                     }
                 }
             }
         }
-        else
-            removeAvailable();
-    }
-
-    private void showAvailable()
-    {
-        for(int i = 0; i < available.Length; i++)
+        
+        if(InBoard(new Vector2(transform.position.x + 1, -(int)transform.position.z)))
         {
-            if(available[i].x >= 0 && available[i].x < 17 && -(int)available[i].z >= 0 && -(int)available[i].z < 17)
+            if(board[(int)transform.position.x + 1, -(int)transform.position.z].GetComponent<TileManager>().occupiedPlayer == 0)
             {
-                board[(int)available[i].x, -(int)available[i].z].transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[1];
+                available.Add(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z));
+            }
+            else
+            {
+                if(InBoard(new Vector2(transform.position.x + 2, -(int)transform.position.z)))
+                {
+                    if(board[(int)transform.position.x + 2, -(int)transform.position.z].GetComponent<TileManager>().occupiedOtc == 0)
+                    {
+                        available.Add(new Vector3(transform.position.x + 2, transform.position.y, transform.position.z));
+                    }
+                    else
+                    {
+                        if(InBoard(new Vector2(transform.position.x + 1, -((int)transform.position.z - 1))))
+                            available.Add(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z - 1));
+                        if(InBoard(new Vector2(transform.position.x + 1, -((int)transform.position.z + 1))))
+                            available.Add(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z + 1));
+                    }
+                }
+            }
+        }
+
+        if(InBoard(new Vector2(transform.position.x, -((int)transform.position.z - 1))))
+        {
+            if(board[(int)transform.position.x, -((int)transform.position.z - 1)].GetComponent<TileManager>().occupiedPlayer == 0)
+            {
+                available.Add(new Vector3(transform.position.x, transform.position.y, transform.position.z - 1));
+            }
+            else
+            {
+                if(InBoard(new Vector2(transform.position.x, -((int)transform.position.z - 2))))
+                {
+                    if(board[(int)transform.position.x, -((int)transform.position.z - 2)].GetComponent<TileManager>().occupiedOtc == 0)
+                    {
+                        available.Add(new Vector3(transform.position.x, transform.position.y, transform.position.z - 2));
+                    }
+                    else
+                    {
+                        if(InBoard(new Vector2(transform.position.x - 1, -((int)transform.position.z - 1))))
+                            available.Add(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z - 1));
+                        if(InBoard(new Vector2(transform.position.x + 1, -((int)transform.position.z - 1))))
+                            available.Add(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z - 1));
+                    }
+                }
+            }
+        }
+
+        if(InBoard(new Vector2(transform.position.x, -((int)transform.position.z + 1))))
+        {
+            if(board[(int)transform.position.x, -((int)transform.position.z + 1)].GetComponent<TileManager>().occupiedPlayer == 0)
+            {
+                available.Add(new Vector3(transform.position.x, transform.position.y, transform.position.z + 1));
+            }
+            else
+            {
+                if(InBoard(new Vector2(transform.position.x, -((int)transform.position.z + 2))))
+                {
+                    if(board[(int)transform.position.x, -((int)transform.position.z + 2)].GetComponent<TileManager>().occupiedOtc == 0)
+                    {
+                        available.Add(new Vector3(transform.position.x, transform.position.y, transform.position.z + 2));
+                    }
+                    else
+                    {
+                        if(InBoard(new Vector2(transform.position.x - 1, -((int)transform.position.z + 1))))
+                            available.Add(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z + 1));
+                        if(InBoard(new Vector2(transform.position.x + 1, -((int)transform.position.z + 1))))
+                            available.Add(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z + 1));
+                    }
+                }
             }
         }
     }
-    private void removeAvailable()
+
+    private bool InBoard(Vector2 point) 
     {
-        for(int i = 0; i < available.Length; i++)
+        if(point.x >= 0 && point.x < 17 && point.y >= 0 && point.y < 17)
         {
-            if(available[i].x >= 0 && available[i].x < 17 && -(int)available[i].z >= 0 && -(int)available[i].z < 17)
+            return true;
+        }
+        return false;
+    }
+
+    private void ShowAvailable()
+    {
+        for(int i = 0; i < available.Count; i++)
+        {
+            if(InBoard(new Vector2(((Vector3)available[i]).x, -((int)((Vector3)available[i]).z))))
             {
-                board[(int)available[i].x, -(int)available[i].z].transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[2];
+                board[(int)((Vector3)available[i]).x, -(int)((Vector3)available[i]).z].transform.GetChild(0).GetComponent<Renderer>().material = availableMaterial[0];
+            }
+        }
+    }
+    
+    private void RemoveAvailable()
+    {
+        for(int i = 0; i < available.Count; i++)
+        {
+            if(InBoard(new Vector2(((Vector3)available[i]).x, -((int)((Vector3)available[i]).z))))
+            {
+                board[(int)((Vector3)available[i]).x, -(int)((Vector3)available[i]).z].transform.GetChild(0).GetComponent<Renderer>().material = availableMaterial[1];
             }
         }
     }
 
-    private bool isValid(Vector3 click)
+    private bool IsValid(Vector3 click)
     {
-        for(int i = 0; i < available.Length; i++)
+        for(int i = 0; i < available.Count; i++)
         {
-            if(click == available[i])
+            if(click.Equals(available[i]))
             {
                 return true;
             }
