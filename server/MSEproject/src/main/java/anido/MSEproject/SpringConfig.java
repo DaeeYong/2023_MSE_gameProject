@@ -18,12 +18,10 @@ public class SpringConfig {
 
     @Bean
     public UserRepository userRepository(){return new MemoryUserRepository();}
-
+*/
     @Bean
     public Validation validation() {return new Validation();}
-<<<<<<< HEAD
-*/
-=======
+
 
     @Bean
     public BoardManager boardManager(){return new BoardManager(originBoard(), testBoard());}
