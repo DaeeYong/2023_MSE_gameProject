@@ -36,4 +36,10 @@ public class User {
     }
     
     public User(){ }
+
+	public User(String name) {
+		super();
+		this.name = name;
+	}
+    
 }
