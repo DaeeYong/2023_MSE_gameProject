@@ -11,6 +11,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
+	@Autowired
     private final UserService userService;
     private final Validation validation = new Validation();
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SpringConfig {
-
+/*
     @Bean
     public UserService userService() {return new UserService(userRepository());}
 
@@ -18,4 +18,5 @@ public class SpringConfig {
 
     @Bean
     public Validation validation() {return new Validation();}
+*/
 }
