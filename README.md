@@ -16,7 +16,14 @@
   * 회원가입 성공 -> {"response" : true}  
   * 회원가입 실패(중복 존재) -> {"response" false}  
 
-2. 모든 유저 조회  
+2. 로그인
+  * method : get
+    * url : http://localhost:8080/sign-in
+    * 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
+    * input : name
+    * output : {"valid" : {Boolean} } //로그인에 성공한 경우 true, 실패한 경우 false
+  
+3. 모든 유저 조회  
   * method : get
   * url : http://localhost:8080/find-all
   * 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
@@ -40,3 +47,7 @@ Controller : MVC에서 Controller를 의미한다.
 service : 핵심 로직들을 구현한 곳.  
 repository : DB 접근을 위한 것들.  
 domain : 서비스와 관련된 객체들이 들어있는 곳
+
+## UML
+  ### Class Diagram
+  ![class diagram](/readmeImg/classDiagram.png)
