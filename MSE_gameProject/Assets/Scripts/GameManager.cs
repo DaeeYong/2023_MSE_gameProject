@@ -66,35 +66,41 @@ public class GameManager : MonoBehaviour
 
     public void TurnChange()
     {
-        if(index == player.Length-1)
+        if(timer.GetComponent<TimerManager>().leftTime <= 0)
         {
-            Debug.Log(index);
-            turn = player[0];
-            index = 0;
+            turn.GetComponent<PlayerManager>().playermoving = 0;
+            GameObject.FindGameObjectWithTag("Obstacle").GetComponent<CreateObstacle>().createobstacle = 0;
         }
-        else
-        {
-            Debug.Log(index);
-            index++;
-            turn = player[index];
-        }
-        buttons[0].SetActive(true);
-        buttons[1].SetActive(true);
+         timer.GetComponent<TimerManager>().leftTime = 30;
+            if(index == player.Length-1)
+            {
+                Debug.Log(index);
+                turn = player[0];
+                index = 0;
+            }
+            else
+            {
+                Debug.Log(index);
+                index++;
+                turn = player[index];
+            }
+            buttons[0].SetActive(true);
+            buttons[1].SetActive(true);
     }
 
-    public void setActionMovement()
+    public void SetActionMovement()
     {
         buttons[0].SetActive(false);
         buttons[1].SetActive(false);
         turn.GetComponent<PlayerManager>().playermoving = 1;
     }
-    public void setActionObstacle()
+    public void SetActionObstacle()
     {
         buttons[0].SetActive(false);
         buttons[1].SetActive(false);
         GameObject.FindGameObjectWithTag("Obstacle").GetComponent<CreateObstacle>().createobstacle = 1;
     }
 
-    public int getIndex() { return index; }
+    public int GetIndex() { return index; }
 }
 

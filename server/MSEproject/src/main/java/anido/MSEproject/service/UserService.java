@@ -47,4 +47,9 @@ public class UserService {
     public Optional<User> findOne(Long userId){
         return userRepository.findById(userId);
     }
+
+    //이름으로 user 조회
+    public Optional<User> findByName(String name){
+        return userRepository.findByName(name);
+    }
 }
