@@ -50,4 +50,3 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 
 ## UML
   ### Class Diagram
-  ![class diagram](/readmeImg/classDiagram.png)
