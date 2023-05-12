@@ -5,8 +5,11 @@ import anido.MSEproject.domain.User;
 import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository {
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
     //회원을 저장하면 저장된 유저 반환
     User save(User user);

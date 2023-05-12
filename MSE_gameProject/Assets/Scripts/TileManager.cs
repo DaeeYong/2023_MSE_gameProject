@@ -9,8 +9,11 @@ public class TileManager : MonoBehaviour
     //Save a reference to the gameobject that gets placed on this tile
     public GameObject objectInThisTile = null;
 
-    //Save if the tile space is occupied or not
-    public int isOccupied = 0;
+    //Save if the tile space is occupied or not by player
+    public int occupiedPlayer = 0;
+
+    //Save if the tile space is occupied or not by obstacle
+    public int occupiedOtc = 0;
 
 
     private void OnMouseEnter() {
