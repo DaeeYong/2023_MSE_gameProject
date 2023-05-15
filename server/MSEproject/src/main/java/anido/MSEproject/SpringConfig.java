@@ -1,8 +1,8 @@
 package anido.MSEproject;
 
 import anido.MSEproject.controller.Validation;
-import anido.MSEproject.domain.OriginBoard;
-import anido.MSEproject.domain.TestBoard;
+import anido.MSEproject.domain.BoardOrigin;
+import anido.MSEproject.domain.BoardBuffer;
 import anido.MSEproject.repository.MemoryUserRepository;
 import anido.MSEproject.repository.UserRepository;
 import anido.MSEproject.service.BoardManager;
@@ -23,14 +23,16 @@ public class SpringConfig {
     public Validation validation() {return new Validation();}
 
     @Bean
-    public BoardManager boardManager(){return new BoardManager(originBoard(), testBoard());}
+    public BoardManager boardManager(){return new BoardManager( boardOrigin() , boardBuffer());}
 
-    @Bean public OriginBoard originBoard() {
-        return new OriginBoard();
+    @Bean
+    public BoardOrigin boardOrigin() {
+        return new BoardOrigin();
     }
 
-    @Bean public TestBoard testBoard(){
-        return new TestBoard();
+    @Bean
+    public BoardBuffer boardBuffer(){
+        return new BoardBuffer();
     }
 
 }

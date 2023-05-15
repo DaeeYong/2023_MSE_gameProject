@@ -1,18 +1,22 @@
 	package anido.MSEproject.domain;
 
-public class Player {
-	private String id;
-	private String name;
-	private boolean isMyTurn;
-	
+public class Player extends User{
+	private boolean myTurn;
+
+	private int x;
+	private int y;
+
 	// constructor, getter, setter
-	public Player(String id, String name, boolean isMyTurn) {
+	public Player(){}
+	public Player(String name, boolean isMyTurn, int x, int y) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.isMyTurn = isMyTurn;
+		this.x = x;
+		this.y = y;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -32,5 +36,19 @@ public class Player {
 		this.isMyTurn = isMyTurn;
 	}
 
-	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 }

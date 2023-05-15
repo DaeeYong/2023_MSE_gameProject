@@ -49,4 +49,25 @@ repository : DB 접근을 위한 것들.
 domain : 서비스와 관련된 객체들이 들어있는 곳
 
 ## UML
-  ### Class Diagram
+  ### Class Diagram  
+
+# server 회의 내용    
+![폴더 구조](/readmeImg/gameService.png) 
+
+## 함수 설명
+  * BoardUpdate() : void
+    * input : void
+    * output : void
+    * 역할 : 차례인 플레이어의 좌표를 게임판에 업데이트
+  * setPlayerTurn(Player, Boolean) : void
+    * input : Player, Boolean
+    * output : void
+    * 역할 : 플레이어의 myTurn 필드를 변경
+  * InitPlayerTurn() : void
+    * input : void
+    * output : void
+    * 역할 : 플레이어의 초기 턴을 설정
+  * updatePlayerCoord(Player, int x, int y, int value) : void
+    * input : 생략...
+    * output : void
+    * 역할 : 플레이어의 좌표를 업데이트
