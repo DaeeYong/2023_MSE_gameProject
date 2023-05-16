@@ -32,10 +32,25 @@ public class GameService {
         player.setMyTurn(setTurn);
     }
 
-    public void InitPlayerTurn(){
-
+    /*
+     * id값 비교 -> id절대값 낮은 플레이어가 첫 턴
+     */
+    public void InitPlayerTurn() {
+        if (player1.getId() < player2.getId()) {
+            setPlayerTurn(player1, true); 
+            setPlayerTurn(player2, false); 
+        } else {
+            setPlayerTurn(player1, false); 
+            setPlayerTurn(player2, true); 
+        }
     }
-    public void updatePlayerCoordinate(Player player, int x, int y){
 
+    public void updatePlayerCoordinate(Player player, int x, int y) {
+        player.setxPre(player.getxNow());
+        player.setyPre(player.getyNow());
+        player.setxNow(x);
+        player.setyNow(y);
+
+        boardUpdate(player);
     }
 }
