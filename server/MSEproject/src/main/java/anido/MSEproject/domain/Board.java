@@ -28,11 +28,11 @@ public class Board {
             }
         }
     }
-    public void setBoardValue(int x, int y, int value){
-        board[x][y] = value;
+    public void setBoardValue(int y, int x, int value){
+        board[y][x] = value;
     }
-    public int getBoardValue(int x, int y){
-        return board[x][y];
+    public int getBoardValue(int y, int x){
+        return board[y][x];
     }
 
     public void copyTo(Board dest){

@@ -16,10 +16,22 @@ public class GameService {
         this.boardOrigin = new Board();
         this.boardBuffer = new Board();
     }
-    public void boardUpdate(){}
-    public void setPlayerTurn(Player player, boolean setTurn){
+    //player 위치 보드에 반영
+    //board 업데이트 -> 플레이어 좌표 업데이트
+    public void boardUpdate(Player player){
+        int p_xPre = player.getxPre();
+        int p_yPre = player.getyPre();
+        int p_xNow = player.getxNow();
+        int p_yNow = player.getyNow();
+
+        boardOrigin.setBoardValue(p_yPre, p_xPre, 0);
+        boardOrigin.setBoardValue(p_yNow, p_xNow, 1);   
 
     }
+    public void setPlayerTurn(Player player, boolean setTurn){
+        player.setMyTurn(setTurn);
+    }
+
     public void InitPlayerTurn(){
 
     }
