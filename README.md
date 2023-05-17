@@ -49,5 +49,52 @@ repository : DB 접근을 위한 것들.
 domain : 서비스와 관련된 객체들이 들어있는 곳
 
 ## UML
-  ### Class Diagram
-  ![class diagram](/readmeImg/classDiagram.png)
+  ### Class Diagram  
+
+# server 회의 내용    
+![폴더 구조](/readmeImg/gameService.png) 
+
+## <이동관련한 내용만 포함됨>
+## GameService
+  * BoardUpdate() : void
+    * input : void
+    * output : void
+    * 역할 : 차례인 플레이어의 좌표를 게임판에 업데이트
+  * setPlayerTurn(Player player, Boolean turn) : void
+    * input : Player, Boolean
+    * output : void
+    * 역할 : 플레이어의 myTurn 필드를 변경
+  * InitPlayerTurn() : void
+    * input : void
+    * output : void
+    * 역할 : 플레이어의 초기 턴을 설정
+  * updatePlayerCoord(Player player, int x, int y, int value) : void
+    * input : 생략...
+    * output : void
+    * 역할 : 플레이어의 좌표를 업데이트
+
+## server-client
+
+p1이동 -> p1 위치 update -> p2모니터에 p1 그려줌 -> p2 차례
+
+## Controller
+  * updateLocationPlayer1
+    * url : http://localhost:8080/location/update/player1  
+    * method : get
+    * input : x,y
+    * output : {valid : true}
+  * updateLocationPlayer2
+      * url : http://localhost:8080/location/update/player2
+      * method : get
+      * input : x,y
+      * output : {valid : true}
+  * fetchLocationPlayer1
+    * url : http://localhost:8080/location/current/player1
+    * method : get
+    * intput : 없음
+    * output : {x : {int}, y : {int} }
+  * fetchLocationPlayer2
+    * url : http://localhost:8080/location/current/player2
+    * method : get
+    * intput : 없음
+    * output : {x : {int}, y : {int} }
