@@ -30,8 +30,8 @@ public class UserController {
      */
     @GetMapping("sign-in")
     @ResponseBody
-    public Validation signIn(@RequestParam("name")String name){
-        Optional<User> result = userService.findByName(name);
+    public Validation signIn(@RequestBody UserForm userForm){
+        Optional<User> result = userService.findByName(userForm.getName());
 
         if(result.isPresent()) validation.setValid(true);
         else validation.setValid(false);
