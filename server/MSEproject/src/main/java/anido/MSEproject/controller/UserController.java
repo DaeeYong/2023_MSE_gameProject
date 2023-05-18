@@ -21,13 +21,13 @@ public class UserController {
     }
 
     /*
-    * 로그인 기능
-    * method : get
-    * url : http://localhost:8080/sign-in
-    * 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
-    * input : name
-    * output : {"valid" : {Boolean} } //로그인에 성공한 경우 true, 실패한 경우 false
-    */
+     * 로그인 기능
+     * method : get
+     * url : http://localhost:8080/sign-in
+     * 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
+     * input : name
+     * output : {"valid" : {Boolean} } //로그인에 성공한 경우 true, 실패한 경우 false
+     */
     @GetMapping("sign-in")
     @ResponseBody
     public Validation signIn(@RequestParam("name")String name){
