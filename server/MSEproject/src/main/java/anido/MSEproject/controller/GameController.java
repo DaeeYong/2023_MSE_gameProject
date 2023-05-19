@@ -1,5 +1,7 @@
 package anido.MSEproject.controller;
 
+import anido.MSEproject.domain.User;
+import anido.MSEproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,18 @@ import anido.MSEproject.service.GameService;
 @RequestMapping("/location")
 public class GameController {
     private final GameService gameService;
+    private final UserService userService;
     private final Player player1;
     private final Player player2;
 
     @Autowired
-    public GameController(GameService gameService,Player player1, Player player2) {
+    public GameController(GameService gameService, UserService userService) {
         this.gameService = gameService;
+        this.userService = userService;
+
+        User user1 = new User();
+        User user2 = new User();
+
         this.player1 = new Player(player1, 0, 0, false);
         this.player2 = new Player(player2, 0, 0, false);
     }
