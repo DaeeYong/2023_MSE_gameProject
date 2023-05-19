@@ -46,6 +46,7 @@ public class GameController {
         return ResponseEntity.ok().body("{x: " + x + ", y: " + y + "}");
     }
 
+    //test
     @GetMapping("/current/player2")
     public ResponseEntity<?> fetchLocationPlayer2() {
         int x = player2.getxNow();
