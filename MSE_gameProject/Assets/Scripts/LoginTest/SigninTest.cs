@@ -10,6 +10,7 @@ public class SigninTest : MonoBehaviour
     public TMP_InputField signinName;
 
     public GameObject signinFailPop;
+    public GameObject signinSucPop;
     public GameObject GameStartButton;
 
     public void SignIn()
@@ -54,6 +55,10 @@ public class SigninTest : MonoBehaviour
                 Debug.Log("Data sent successfully!");
                 ValidData validdata = JsonUtility.FromJson<ValidData>(webRequest.downloadHandler.text);
                 if(validdata.valid) {
+                    signinSucPop.SetActive(true);
+                    TextMeshProUGUI name = signinSucPop.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                    name.text = "Welcome!\n";
+                    name.text += signinName.text;
                     GameStartButton.SetActive(true);
                 }
                 else {
