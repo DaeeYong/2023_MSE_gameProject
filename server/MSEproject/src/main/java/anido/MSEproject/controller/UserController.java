@@ -1,6 +1,7 @@
 package anido.MSEproject.controller;
 
 import anido.MSEproject.domain.User;
+import anido.MSEproject.service.GameService;
 import anido.MSEproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +14,13 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final GameService gameService;
     private final Validation validation = new Validation();
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, GameService gameService) {
         this.userService = userService;
+        this.gameService = gameService;
     }
 
     /*
@@ -31,8 +34,7 @@ public class UserController {
     @GetMapping("sign-in")
     @ResponseBody
     public Validation signIn(@RequestBody UserForm userForm){
-        Optional<User> result = userService.findByName(userForm.getName());
-
+        boolean isValid = userService.signIn(userForm.getName(), userForm.getPassword());
         if(result.isPresent()) validation.setValid(true);
         else validation.setValid(false);
 

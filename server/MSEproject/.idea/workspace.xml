@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/SpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/SpringConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,12 +29,7 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="MSEproject" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -84,7 +86,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0e016a6e-f6ec-4fed-b036-9ee4eb969262" name="Changes" comment="" />
+      <changelist id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="" />
       <created>1683264755626</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -104,6 +106,9 @@
       <workItem from="1684201490817" duration="29000" />
       <workItem from="1684214344056" duration="93000" />
       <workItem from="1684385396430" duration="312000" />
+      <workItem from="1684560263439" duration="29000" />
+      <workItem from="1684560444936" duration="851000" />
+      <workItem from="1684570534758" duration="1221000" />
     </task>
     <servers />
   </component>

@@ -20,7 +20,7 @@ public class UserService {
     회원가입 실패시 false
     중복 name 허용x
      */
-    public Boolean join(User user) {
+    public Boolean signUp(User user) {
         boolean isDuplicate = userRepository.findByName(user.getName()).isPresent();
 
         if(isDuplicate) return false;
@@ -28,7 +28,17 @@ public class UserService {
         return true;
     }
 
-
+    /*
+    <로그인>
+     */
+    public Boolean signIn(String name, String password){
+        Optional<User> result = userRepository.findByName(name);
+        if(result.isPresent()){
+            boolean isMatch = result.get().getPassword().equals(password);
+            if(isMatch) return true;
+        }
+        return false;
+    }
     /*
     전체 user 조회
      */
