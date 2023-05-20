@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/SpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/SpringConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/UserService.java" afterDir="false" />
     </list>
@@ -108,7 +106,7 @@
       <workItem from="1684385396430" duration="312000" />
       <workItem from="1684560263439" duration="29000" />
       <workItem from="1684560444936" duration="851000" />
-      <workItem from="1684570534758" duration="1221000" />
+      <workItem from="1684570534758" duration="4772000" />
     </task>
     <servers />
   </component>

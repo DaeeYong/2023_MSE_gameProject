@@ -1,20 +1,12 @@
 package anido.MSEproject.controller;
 
-import anido.MSEproject.domain.User;
 import anido.MSEproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-import anido.MSEproject.domain.Player;
 import anido.MSEproject.service.GameService;
 
-@RestController
-@RequestMapping("/location")
+@Controller
 public class GameController {
     private final GameService gameService;
     private final UserService userService;
@@ -24,7 +16,7 @@ public class GameController {
         this.gameService = gameService;
         this.userService = userService;
     }
-
+    /*
     @GetMapping("/update/player1")
     public ResponseEntity<?> updateLocationPlayer1(@RequestParam int x, @RequestParam int y) {
         gameService.updatePlayerCoordinate(player1, x, y);
@@ -53,4 +45,5 @@ public class GameController {
         int y = player2.getyNow();
         return ResponseEntity.ok().body("{x: " + x + ", y: " + y + "}");
     }
+     */
 }

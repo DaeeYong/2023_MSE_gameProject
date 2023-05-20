@@ -1,5 +1,6 @@
 package anido.MSEproject.controller;
 
+import anido.MSEproject.domain.Player;
 import anido.MSEproject.domain.User;
 import anido.MSEproject.service.GameService;
 import anido.MSEproject.service.UserService;
@@ -31,12 +32,18 @@ public class UserController {
      * input : name
      * output : {"valid" : {Boolean} } //로그인에 성공한 경우 true, 실패한 경우 false
      */
-    @GetMapping("sign-in")
+    @PostMapping("/user/sign-in")
     @ResponseBody
     public Validation signIn(@RequestBody UserForm userForm){
-        boolean isValid = userService.signIn(userForm.getName(), userForm.getPassword());
-        if(result.isPresent()) validation.setValid(true);
-        else validation.setValid(false);
+        Optional<User> result = userService.signIn(userForm.getName(), userForm.getPassword());
+        //로그인 성공한 경우
+        if(result.isPresent()) {
+            //로그인한 유저 정보를 이용해서 플레이어 객체 생성
+            Player player = new Player(result.get(), -1, -1, false);
+            //게임 서비스에 플레이어 리스트에 넣어줌.
+            gameService.addPlayer(player);
+            validation.setValid(true);
+        } else validation.setValid(false);
 
         return validation;
     }
@@ -48,19 +55,16 @@ public class UserController {
      * input : { "name" : {string} }
      * output : {"valid" : {Boolean} } //회원가입에 성공한 경우 true, 실패한 경우 false
      */
-    @PostMapping("sign-up")
+    @PostMapping("/user/sign-up")
     @ResponseBody
     public Validation signUp(@RequestBody UserForm userForm){
         User user = new User();
-
         user.setName(userForm.getName());
-        Boolean result = userService.join(user);
-        if(result == false){
-            validation.setValid(false);
-            return validation;
-        }
-
-        validation.setValid(true);
+        user.setPassword(userForm.getPassword());
+        //sign-up
+        boolean isValid = userService.signUp(user);
+        if(isValid) validation.setValid(true);
+        else validation.setValid(false);
         return validation;
     }
     /*
@@ -83,7 +87,7 @@ public class UserController {
          }
      ]
      */
-    @GetMapping("find-all")
+    @GetMapping("/user/find-all")
     @ResponseBody
     public List<User> findAll(){
         return userService.findAllUsers();
