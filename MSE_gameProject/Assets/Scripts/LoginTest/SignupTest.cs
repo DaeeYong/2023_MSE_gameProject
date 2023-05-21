@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.UI;
 
 public class SignupTest : MonoBehaviour
 {
-    private string signup_url = "http://localhost:8080/sign-up";
-    public TMP_InputField signupName;
+    private string signup_url = "http://localhost:8080/user/sign-up";
+    public InputField signupName;
+    public InputField signupPassword;
 
     public GameObject signupFailPop;
     public GameObject signupSuccPop;
@@ -21,6 +23,7 @@ public class SignupTest : MonoBehaviour
     {
         MemberData m = new MemberData();
         m.name = signupName.text;
+        m.password = signupPassword.text;
         string json = JsonUtility.ToJson(m);
         return json;
     }
@@ -60,6 +63,8 @@ public class SignupTest : MonoBehaviour
                 else {
                     signupFailPop.SetActive(true);
                 }
+                signupName.text = "";
+                signupPassword.text = "";
                 webRequest.downloadHandler.Dispose();
                 webRequest.Dispose();
                 break;
