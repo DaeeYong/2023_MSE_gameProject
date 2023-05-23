@@ -1,5 +1,15 @@
-package anido.MSEproject.domain;
+package anido.MSEproject.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+// @Entity
+@Getter
+@Setter
+// @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     private Long id;
@@ -13,6 +23,7 @@ public class User {
         this.win = 0;
         this.lose = 0;
     }
+
 
     public String getPassword() {
         return password;
