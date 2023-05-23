@@ -14,7 +14,6 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
-	@Autowired
     private final UserService userService;
     private final GameService gameService;
     private final Validation validation = new Validation();
