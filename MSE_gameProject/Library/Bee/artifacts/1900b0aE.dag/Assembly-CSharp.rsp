@@ -357,9 +357,11 @@
 "Assets/Scripts/BoardManager.cs"
 "Assets/Scripts/CreateObstacle.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/LoginTest/MemberData.cs"
+"Assets/Scripts/LoginTest/SigninTest.cs"
+"Assets/Scripts/LoginTest/SignupTest.cs"
+"Assets/Scripts/LoginTest/ValidData.cs"
 "Assets/Scripts/PlayerManager.cs"
-"Assets/Scripts/TestData.cs"
-"Assets/Scripts/TestMember.cs"
 "Assets/Scripts/TileManager.cs"
 "Assets/Scripts/TimerManager.cs"
 -langversion:9.0

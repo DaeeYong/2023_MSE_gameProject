@@ -4,6 +4,7 @@ public class User {
 
     private Long id;
     private String name;
+    private String password;
 
     private int win;
     private int lose;
@@ -11,6 +12,14 @@ public class User {
     public User() {
         this.win = 0;
         this.lose = 0;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
