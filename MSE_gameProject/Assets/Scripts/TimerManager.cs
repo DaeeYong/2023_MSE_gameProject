@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour
 {
-    public TextMeshProUGUI timerText;
-    public float leftTime = 30;
+    public Slider sliderTime;
+
+
+    public float leftTime;
     public bool inTurn;
 
     private void Start() {
@@ -17,7 +20,7 @@ public class TimerManager : MonoBehaviour
         if(inTurn)
         {
             leftTime -= 1 * Time.deltaTime;
-            timerText.text = ("Turn Time : " + (int)leftTime).ToString();
+            sliderTime.value = leftTime;
 
             if(leftTime <= 0)
             {
