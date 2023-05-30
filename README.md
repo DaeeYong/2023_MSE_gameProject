@@ -66,23 +66,49 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
   <br><br>
 
 
-## GameController(작업중 : 동작안함)  
-- BoardUpdate() : void
-  - input : void
-  - output : void
-  - 역할 : 차례인 플레이어의 좌표를 게임판에 업데이트
-- setPlayerTurn(Player player, Boolean turn) : void
-  - input : Player, Boolean
-  - output : void
-  - 역할 : 플레이어의 myTurn 필드를 변경
-- InitPlayerTurn() : void
-  - input : void
-  - output : void
-  - 역할 : 플레이어의 초기 턴을 설정
-- updatePlayerCoord(Player player, int x, int y, int value) : void
-  - input : 생략...
-  - output : void
-  - 역할 : 플레이어의 좌표를 업데이트
+## GameController 
+### 1. 순서 설정
+  - setPlayerTurnInfo(TurnForm) : Validation 
+  - url : http://localhost:8080/current/player-turn-set
+  - method : Post
+  - input : TurnForm --> {"turn" {String}}
+  - 주의점 : turn이 가질 수 있는 문자열은 "player1" 또는 "player2"
+  - output : Validation
+  - 역할 : 플레이어 차례 set 
+
+### 2. 순서 조회
+  - getPlayerTurnInfo() : TurnForm
+  - url : http://localhost:8080/current/player-turn-info
+  - method : Get
+  - input : x
+  - output : TurnForm
+  - 역할 : 플레이어 차례 조회
+
+### 3. 플레이어 위치정보 업데이트
+- updatePlayerInfo(PlayerForm) : Validation
+- input : {<br>
+    "playerNumber" :{int},<br>
+    "action" : {String},<br>
+    "x1" : {int},<br>
+    "y1" : {int},<br>
+    "x2" : {int/ default는 -1},<br>
+    "y2" : {int/ default는 -1}<br>
+}
+- 주의점 : action이 가질 수 있는 상태는 "moving" 또는 "blocking"
+- playerNumber는 1 또는 
+- output : void
+- 역할 : 플레이어의 초기 턴을 설정
+
+### 4. 플레이어 이동 조회
+- getPlayerInfo(int playerNum) : Player
+- url : http://localhost:8080/move/info/player
+- input : int playerNum
+- output : Player
+  - input : {
+    "action" : {"moving" | "blocking"}
+    "posX" : {int}
+    "posY" : {int}
+  - }
 
 ## server-client
 

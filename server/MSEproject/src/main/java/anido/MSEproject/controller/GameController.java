@@ -1,10 +1,15 @@
 package anido.MSEproject.controller;
 
+import anido.MSEproject.domain.Player;
 import anido.MSEproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import anido.MSEproject.service.GameService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class GameController {
@@ -15,6 +20,67 @@ public class GameController {
     public GameController(GameService gameService, UserService userService) {
         this.gameService = gameService;
         this.userService = userService;
+    }
+    //플레이어 정보 조회
+    /*
+    @GetMapping("/current/player-turn-Info")
+    @ResponseBody
+    public Player getPlayerTurnInfo(@RequestParam("playerNumber") int playerNumber){
+        return gameService.getPlayerInfo(playerNumber);
+    }
+    */
+
+    //순서 set
+    @PostMapping("/current/player-turn-set")
+    @ResponseBody
+    public Validation setPlayerTurnInfo(@RequestBody TurnForm turnForm) {
+        Validation validation = new Validation();
+        gameService.setTurn(turnForm.getTurn());
+
+        validation.setValid(true);
+
+        return validation;
+    }
+
+    //순서 조회
+    @GetMapping("/current/player-turn-info")
+    @ResponseBody
+    public TurnForm getPlayerTurnInfo() {
+        TurnForm turnForm = new TurnForm();
+        turnForm.setTurn(gameService.getTurn());
+        return turnForm;
+    }
+
+    //플레이어 이동 업데이트
+    /*
+    private int playerNumber;
+    private String action;
+    private int x1;
+    private int y1;
+    private int x2;
+    private int y2;
+     */
+    @PostMapping("/move/update/player")
+    @ResponseBody
+    public Validation updatePlayerInfo(@RequestBody PlayerForm playerForm) {
+        Validation validation = new Validation();
+        gameService.updatePlayerInfo(playerForm); //블럭설치 처리x
+        validation.setValid(true);
+        return validation;
+    }
+
+    //플레이어 이동 조회
+    @GetMapping("/move/info/player")
+    @ResponseBody
+    public Player getPlayerInfo(@RequestParam int playerNum) {
+        Player player = gameService.getPlayerInfo(playerNum);
+        return player;
+    }
+
+    @GetMapping("/findAllPlayer")
+    @ResponseBody
+    public List<Player> getAllPlayer(){
+        return gameService.getPlayers();
     }
     /*
     @GetMapping("/update/player1")

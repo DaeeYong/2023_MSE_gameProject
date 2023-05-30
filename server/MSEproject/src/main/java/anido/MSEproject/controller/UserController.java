@@ -39,7 +39,7 @@ public class UserController {
         //로그인 성공한 경우
         if(result.isPresent()) {
             //로그인한 유저 정보를 이용해서 플레이어 객체 생성
-            Player player = new Player(result.get(), -1, -1, false);
+            Player player = new Player(result.get(), -1, -1);
             //게임 서비스에 플레이어 리스트에 넣어줌.
             gameService.addPlayer(player);
             validation.setValid(true);

@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/UserService.java" afterDir="false" />
-    </list>
+    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +31,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -62,7 +56,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/code/GitHub/2023_MSE_gameProject/server/MSEproject/build.gradle&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/code/GitHub/2023_MSE_gameProject/server/MSEproject/build.gradle&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -72,6 +66,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="anido.MSEproject.domain" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="MsEprojectApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="MSEproject.main" />
@@ -106,7 +105,19 @@
       <workItem from="1684385396430" duration="312000" />
       <workItem from="1684560263439" duration="29000" />
       <workItem from="1684560444936" duration="851000" />
-      <workItem from="1684570534758" duration="4772000" />
+      <workItem from="1684570534758" duration="5597000" />
+      <workItem from="1684714553325" duration="1769000" />
+      <workItem from="1684723872204" duration="716000" />
+      <workItem from="1684744150503" duration="7145000" />
+      <workItem from="1684895347367" duration="2755000" />
+      <workItem from="1684919184780" duration="896000" />
+      <workItem from="1684939257012" duration="3466000" />
+      <workItem from="1684976704538" duration="760000" />
+      <workItem from="1684989957952" duration="2699000" />
+      <workItem from="1685422769485" duration="3035000" />
+      <workItem from="1685430179872" duration="980000" />
+      <workItem from="1685437541711" duration="730000" />
+      <workItem from="1685446393365" duration="1243000" />
     </task>
     <servers />
   </component>
