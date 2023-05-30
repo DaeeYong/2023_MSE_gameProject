@@ -7,4 +7,5 @@ using System;
 public class MemberData
 {
     public string name;
+    public string password;
 }
