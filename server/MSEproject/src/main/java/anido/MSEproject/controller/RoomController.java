@@ -1,6 +1,6 @@
-package anido.MSEproject.controller;
+package MSE_SERVER.mse_server.controller;
 
-import anido.MSEproject.domain.User;
+import MSE_SERVER.mse_server.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +22,11 @@ public class RoomController {
      * Endpoint: '/room/join1'
      * Input:
      *  {
-     *   "id":1, // 얘는 나중에 JPA 적용하면 PK로 줄거라서 input에서 뺼거임
-     *   "name": "testNAME1",
-     *   "password": "123456",
-     *   "win": 10,
-     *   "lose": 5
+     *      "id":1, // 얘는 나중에 JPA 적용하면 PK로 줄거라서 input에서 뺼거임
+     *      "name": "testNAME1",
+     *      "password": "123456",
+     *      "win": 10,
+     *      "lose": 5
      *  }
      * Output:
      *     - roomStatus: The status of the room after the player joins.
@@ -48,11 +48,11 @@ public class RoomController {
      * Endpoint: '/room/join2'
      * Input:
      *  {
-     *   "id":2, // 얘는 나중에 JPA 적용하면 PK로 줄거라서 input에서 뺼거임
-     *   "name": "testNAME2",
-     *   "password": "123456",
-     *   "win": 10,
-     *   "lose": 5
+     *      "id":2, // 얘는 나중에 JPA 적용하면 PK로 줄거라서 input에서 뺼거임
+     *      "name": "testNAME2",
+     *      "password": "123456",
+     *      "win": 10,
+     *      "lose": 5
      *  }
      * Output:
      *     - roomStatus: The status of the room after the player joins.
@@ -74,17 +74,20 @@ public class RoomController {
      * Endpoint: '/room/start'
      * Input:
      *     - gameStartButtonPressed: Boolean indicating if the game start button was pressed.
+     *
+     *     client -> localhost:8080/start?button=value
+     *
      * Output:
      *  {
-     *   "isHost": boolean,
-     *   "isGameStarted": boolean,
-     *   "message": String
+     *      "isHost": boolean,
+     *      "isGameStarted": boolean,
+     *      "message": String,
      *  }
      */
-    @PostMapping("/start")
-    public ResponseEntity<RoomStatus> startGame(@RequestParam(required = false, defaultValue = "false") boolean gameStartButtonPressed) {
+    @GetMapping("/start")
+    public ResponseEntity<RoomStatus> startGame(@RequestParam(required = true, name="button") boolean button) {
         if (host != null && waitingPlayer != null && !gameStarted) {
-            if (gameStartButtonPressed) {
+            if (button) {
                 gameStarted = true;
                 return ResponseEntity.ok(new RoomStatus(true, true, "Game started!"));
             } else {
@@ -94,6 +97,8 @@ public class RoomController {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatus(false, false, "Unable to start the game."));
     }
+
+
 
     public class RoomStatus {
         private boolean isHost;
@@ -130,4 +135,5 @@ public class RoomController {
             this.message = message;
         }
     }
+
 }
