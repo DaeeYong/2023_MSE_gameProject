@@ -14,7 +14,8 @@ public class RoomController {
 
     private User host;
     private User waitingPlayer;
-    private boolean gameStarted;
+    private boolean game
+        ed;
 
     /**
      * API: Join Room
@@ -94,7 +95,7 @@ public class RoomController {
      * Input:
      *     - gameStartButtonPressed: Boolean indicating if the game start button was pressed.
      *
-     *     client -> localhost:8080/start?button=value
+     *     client -> localhost:8080/room/start?button=value
      *
      * Output:
      *  {
