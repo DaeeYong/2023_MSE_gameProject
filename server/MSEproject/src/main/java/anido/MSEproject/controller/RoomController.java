@@ -1,5 +1,6 @@
 package MSE_SERVER.mse_server.controller;
 
+import MSE_SERVER.mse_server.domain.RoomStatusDTO;
 import MSE_SERVER.mse_server.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,21 @@ public class RoomController {
      *     - roomStatus: The status of the room after the player joins.
      */
     @PostMapping("/join1")
-    public ResponseEntity<RoomStatus> joinRoom1(@RequestBody User user) {
+    public ResponseEntity<RoomStatusDTO> joinRoom1(@RequestBody User user) {
+        RoomStatusDTO roomStatusDTO = new RoomStatusDTO();
         if (host == null) {
             host = user;
-            return ResponseEntity.ok(new RoomStatus(true, false, "You are the host."));
+            roomStatusDTO.setHost(true);
+            roomStatusDTO.setGameStarted(false);
+            roomStatusDTO.setMessage("You are the host");
+            return ResponseEntity.ok(roomStatusDTO);
+            // return ResponseEntity.ok(new RoomStatusDTO(true, false, "You are the host."));
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatus(false, false, "The room is already full."));
+            roomStatusDTO.setHost(false);
+            roomStatusDTO.setGameStarted(false);
+            roomStatusDTO.setMessage("The room is already full.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatusDTO);
+            // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatusDTO(false, false, "The room is already full."));
         }
     }
 
@@ -58,12 +68,21 @@ public class RoomController {
      *     - roomStatus: The status of the room after the player joins.
      */
     @PostMapping("/join2")
-    public ResponseEntity<RoomStatus> joinRoom2(@RequestBody User user) {
+    public ResponseEntity<RoomStatusDTO> joinRoom2(@RequestBody User user) {
+        RoomStatusDTO roomStatusDTO = new RoomStatusDTO();
         if (waitingPlayer == null) {
             waitingPlayer = user;
-            return ResponseEntity.ok(new RoomStatus(false, false, "Waiting for the host to start the game."));
+            roomStatusDTO.setHost(false);
+            roomStatusDTO.setGameStarted(false);
+            roomStatusDTO.setMessage("Waiting for the host to start the game.");
+            return ResponseEntity.ok(roomStatusDTO);
+           // return ResponseEntity.ok(new RoomStatusDTO(false, false, "Waiting for the host to start the game."));
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatus(false, false, "The room is already full."));
+            roomStatusDTO.setHost(false);
+            roomStatusDTO.setGameStarted(false);
+            roomStatusDTO.setMessage("The room is already full.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatusDTO);
+            // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatusDTO(false, false, "The room is already full."));
         }
     }
 
@@ -85,55 +104,27 @@ public class RoomController {
      *  }
      */
     @GetMapping("/start")
-    public ResponseEntity<RoomStatus> startGame(@RequestParam(required = true, name="button") boolean button) {
+    public ResponseEntity<RoomStatusDTO> startGame(@RequestParam(required = true, name="button") boolean button) {
+        RoomStatusDTO roomStatusDTO = new RoomStatusDTO();
         if (host != null && waitingPlayer != null && !gameStarted) {
             if (button) {
                 gameStarted = true;
-                return ResponseEntity.ok(new RoomStatus(true, true, "Game started!"));
+                roomStatusDTO.setGameStarted(true);
+                roomStatusDTO.setHost(true);
+                roomStatusDTO.setMessage("Game started!");
+                return ResponseEntity.ok(roomStatusDTO);
+                // return ResponseEntity.ok(new RoomStatusDTO(true, true, "Game started!"));
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatus(false, false, "Cannot start the game."));
+                roomStatusDTO.setGameStarted(false);
+                roomStatusDTO.setHost(false);
+                roomStatusDTO.setMessage("Cannot start the game.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatusDTO);
+                // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatusDTO(false, false, "Cannot start the game."));
             }
         }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RoomStatus(false, false, "Unable to start the game."));
+        roomStatusDTO.setGameStarted(false);
+        roomStatusDTO.setHost(false);
+        roomStatusDTO.setMessage("Unable to start the game.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatusDTO);
     }
-
-
-
-    public class RoomStatus {
-        private boolean isHost;
-        private boolean isGameStarted;
-        private String message;
-
-        public RoomStatus(boolean isHost, boolean isGameStarted, String message) {
-            this.isHost = isHost;
-            this.isGameStarted = isGameStarted;
-            this.message = message;
-        }
-
-        public boolean isHost() {
-            return isHost;
-        }
-
-        public void setHost(boolean host) {
-            isHost = host;
-        }
-
-        public boolean isGameStarted() {
-            return isGameStarted;
-        }
-
-        public void setGameStarted(boolean gameStarted) {
-            isGameStarted = gameStarted;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-    }
-
 }
