@@ -4,23 +4,63 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public enum PlayerState
+{
+    MYTURN,
+    SENDING,
+    UPDATING,
+    WAITING,
+    OTHERTURN
+}
+
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance = null;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] Material[] playerMaterial;
     [SerializeField] private GameObject[] buttons;
+    [SerializeField] private GameObject actionBTN;
+    private GameClient client;
     private GameObject[,] board;
     private GameObject[] player = new GameObject[2]; 
     private GameObject turn;
     private int index;
     private GameObject timer;
+    private bool myturn = false;
+    private Vector2 fetchedData;
+    public int playerType = 0;
+    public PlayerState state;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     // Start is called before the first frame update
     private void Start()
     {   
         CreateBoard();
         CreatePlayers();
         timer = GameObject.FindGameObjectWithTag("Timer");
+        client = GameClient.GetInstance();
+        myturn = client.turnindex > 1 ? false : true;
+        if (myturn)
+        {
+            SetPlayerState(PlayerState.MYTURN);
+            playerType = 1;
+        }
+        else
+        {
+            SetPlayerState(PlayerState.OTHERTURN);
+            playerType = 2;
+            GetData();
+        }
     }
 
     // Update is called once per frame
@@ -102,5 +142,60 @@ public class GameManager : MonoBehaviour
     }
 
     public int GetIndex() { return index; }
+
+    public void SetPlayerState(PlayerState state)
+    {
+        if (state == PlayerState.MYTURN) actionBTN.SetActive(true);
+        if (state == PlayerState.OTHERTURN) actionBTN.SetActive(false);
+        this.state = state;
+        Debug.Log("State change: " + state);
+    }
+
+    //상대 턴 일 때 데이터 풀링
+    public void GetData()
+    {
+        StartCoroutine(GetDataPooling());
+    }
+    IEnumerator GetDataPooling()
+    {
+        while (state == PlayerState.OTHERTURN)
+        {
+            yield return StartCoroutine(client.EFetchPosition(playerType));
+
+            Debug.Log(fetchedData + ": " + new Vector2(turn.transform.position.x, -turn.transform.position.z));
+            if (fetchedData.x == -1 && fetchedData.y == -1)
+                yield return 0.1;
+            else if (Vector2.Distance(fetchedData, new Vector2(turn.transform.position.x, -turn.transform.position.z)) < Mathf.Epsilon)
+                yield return 0.1;
+            else
+            {
+                Debug.Log("received changed data");
+                SetPlayerState(PlayerState.UPDATING);
+                turn.transform.position = new Vector3(fetchedData.x, turn.transform.position.y, -fetchedData.y);
+                Debug.Log("GetDataPooling: Update finish");
+                yield return StartCoroutine(client.ESetTurn(playerType));
+            }
+        }
+    }
+
+    public void WaitUpdateFinish()
+    {
+        StartCoroutine(WaitUpdateEnd());
+    }
+    IEnumerator WaitUpdateEnd()
+    {
+        while(state == PlayerState.WAITING)
+        {
+            yield return StartCoroutine(client.EGetTurn(playerType));
+        }
+        yield return null;
+    }
+    //client 에서 받아온 데이터 받기
+    public void setFetchedData(int x, int y)
+    {
+        fetchedData = new Vector2(x, y);
+    }
+
+    public static GameManager GetInstance() { return instance; }
 }
 

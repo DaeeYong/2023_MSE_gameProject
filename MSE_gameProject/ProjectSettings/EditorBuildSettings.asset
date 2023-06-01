@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/settrunscene.unity
+    guid: 97acbac451065724cbbf15c50dc9c04e
+  - enabled: 1
+    path: Assets/Scenes/Fall.unity
+    guid: 0415c8077ee849347b5ecae376be2790
   m_configObjects: {}

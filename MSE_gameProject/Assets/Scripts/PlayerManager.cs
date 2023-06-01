@@ -9,7 +9,8 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject[,] board;
     public int playermoving;
-    private GameObject gameManager;
+    private GameManager gameManager;
+    private GameClient client;
     [SerializeField] Material[] availableMaterial;
     private ArrayList available;
 
@@ -18,14 +19,15 @@ public class PlayerManager : MonoBehaviour
     {
         available = new ArrayList();
         board = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardManager>().gameBoard;
-        gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameManager = GameManager.GetInstance();
+        client = GameClient.GetInstance();
         playermoving = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(playermoving == 1)
+        if(playermoving == 1 && gameManager.state == PlayerState.MYTURN)
         {
             CalculateAvailable();
             ShowAvailable();
@@ -43,12 +45,9 @@ public class PlayerManager : MonoBehaviour
                         Debug.Log(pos);
                     
                         transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-                        playermoving = 0;
-                        gameManager.GetComponent<GameManager>().TurnChange();
+                        StartCoroutine(SendData(gameManager.playerType, (int)pos.x, -(int)pos.z));
                     }
                 }
-
-
             }
         }
         else 
@@ -56,6 +55,14 @@ public class PlayerManager : MonoBehaviour
              RemoveAvailable();
              available.Clear();
         }
+    }
+
+    IEnumerator SendData(int playerType, int x, int y)
+    {
+        Debug.Log("SendData: Send Data");
+        gameManager.SetPlayerState(PlayerState.SENDING);
+        yield return StartCoroutine(client.ESendData(playerType,"moving",x, y,-1,-1));
+        playermoving = 0;
     }
 
     private void CalculateAvailable() 
