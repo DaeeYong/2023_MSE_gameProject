@@ -2,10 +2,18 @@ package anido.MSEproject.domain;
 
 public class Board {
 
-    final int BOARD_SIZE = 17;
+    final static int BOARD_SIZE = 17;
     private int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
 
     public Board(){
+        for(int i=0; i<BOARD_SIZE; i++){
+            for(int j=0; j<BOARD_SIZE; j++){
+                this.board[i][j] = 0;
+            }
+        }
+    }
+
+    public void clearBoard(){
         for(int i=0; i<BOARD_SIZE; i++){
             for(int j=0; j<BOARD_SIZE; j++){
                 this.board[i][j] = 0;
