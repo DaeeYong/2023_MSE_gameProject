@@ -387,8 +387,10 @@
 "Assets/Scripts/domain/Player.cs"
 "Assets/Scripts/domain/PlayerForm.cs"
 "Assets/Scripts/domain/TurnForm.cs"
+"Assets/Scripts/domain/User.cs"
 "Assets/Scripts/GameClient.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/LobbyManager.cs"
 "Assets/Scripts/LoginTest/MemberData.cs"
 "Assets/Scripts/LoginTest/SigninTest.cs"
 "Assets/Scripts/LoginTest/SignupTest.cs"
@@ -396,6 +398,7 @@
 "Assets/Scripts/PlayerManager.cs"
 "Assets/Scripts/TileManager.cs"
 "Assets/Scripts/TimerManager.cs"
+"Assets/Scripts/WaitingRoomManager.cs"
 -langversion:9.0
 
 /deterministic

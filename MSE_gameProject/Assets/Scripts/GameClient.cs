@@ -13,6 +13,9 @@ public class GameClient : MonoBehaviour
     private static string fetchPlayerInfoURL = "http://localhost:8080/move/info/player";
     private static string fetchPlayerTurnInfoURL = "http://localhost:8080/current/player-turn-info";
     private static string setPlayerTurnInfoURL = "http://localhost:8080/current/player-turn-set";
+    private static string createRoomURL = "http://localhost:8080/room/join1";
+    private static string joinRoomURL = "http://localhost:8080/room/join2";
+    private static string gameStartURL = "http://localhost:8080/room/start";
     private void Awake()
     {
         //init singleton
@@ -166,10 +169,70 @@ public class GameClient : MonoBehaviour
             webRequest.Dispose();
         }
     }
+
+    //create matching room
+    public IEnumerator JoinRoom(User user, int type)
+    {   
+        Debug.Log("Join Room");
+        string url = type == 1 ? createRoomURL : joinRoomURL;
+        string jsonData = JsonUtility.ToJson(user);
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(url, jsonData))
+        {
+            webRequest.uploadHandler.Dispose();
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError("Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError("The room is already full" + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    // everything is ok.
+                    Debug.Log("create room successfully!");
+                    LoadScene("WaitingRoom");
+                    break;
+            }
+            webRequest.Dispose();
+        }
+    }
+
+    public IEnumerator StartGame(TextMeshProUGUI text) 
+    {
+        string url = gameStartURL + "?button=" + "true";
+        UnityWebRequest webRequest = UnityWebRequest.Get(url);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+                text.text = "Cannot start the game";
+                break;
+            case UnityWebRequest.Result.Success:
+                // everything is ok.
+                Debug.Log("Game Start");
+                LoadScene("Fall");
+                break;
+        }
+    }
     public void LoadScene(string name)
     {
-        turnindex = int.Parse(inputfeild.text);
-        Debug.Log(this.GetInstanceID());
+        if (inputfeild != null)
+        {
+            turnindex = int.Parse(inputfeild.text);
+            Debug.Log(this.GetInstanceID());
+        }
         UnityEngine.SceneManagement.SceneManager.LoadScene(name);
     }
 }
