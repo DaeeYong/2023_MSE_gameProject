@@ -110,6 +110,29 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
     "posY" : {int}
   - }
 
+### 장애물 유효성 검사
+- IsValidInstall(Obstacle) : Validation
+- method : post
+- url : http://localhost:8080/install/block/valid
+- input : {<br>
+  "row1" : {int}
+  "col1" : {int}
+  "row2" : {int}
+  "col2" : {int}
+}
+- output : Validation
+
+### 블럭설치
+- IsValidInstall(Obstacle) : Validation
+- method : post
+- url : http://localhost:8080/install/block
+- input : {<br>
+  "row1" : {int}
+  "col1" : {int}
+  "row2" : {int}
+  "col2" : {int}
+}
+- output : Validation
 ## server-client
 
 p1이동 -> p1 위치 update -> p2모니터에 p1 그려줌 -> p2 차례

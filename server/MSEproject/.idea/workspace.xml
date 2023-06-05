@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/template/Pair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/MsEprojectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/MsEprojectApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/PlayerForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/PlayerForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Obstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Obstacle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +125,7 @@
       <workItem from="1685682068851" duration="5042000" />
       <workItem from="1685691861683" duration="1199000" />
       <workItem from="1685783062633" duration="741000" />
-      <workItem from="1685969999535" duration="6538000" />
+      <workItem from="1685969999535" duration="6816000" />
     </task>
     <servers />
   </component>
