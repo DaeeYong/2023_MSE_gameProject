@@ -2,7 +2,7 @@ package anido.MSEproject.controller;
 
 public class PlayerForm {
     private int playerNumber;
-    private String action;
+    private String action; //"moving, blocking, timeout"
     private int x1; //플레이어 위치
     private int y1; //플레이어 위치
     private int x2; //장애물 설치는 여기까지 사용

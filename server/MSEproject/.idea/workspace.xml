@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="" />
+    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/SpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/SpringConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/PlayerForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/PlayerForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Obstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Obstacle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +125,11 @@
       <workItem from="1685422769485" duration="3035000" />
       <workItem from="1685430179872" duration="980000" />
       <workItem from="1685437541711" duration="730000" />
-      <workItem from="1685446393365" duration="1243000" />
+      <workItem from="1685446393365" duration="2046000" />
+      <workItem from="1685629107027" duration="1645000" />
+      <workItem from="1685682068851" duration="5042000" />
+      <workItem from="1685691861683" duration="1199000" />
+      <workItem from="1685783062633" duration="741000" />
     </task>
     <servers />
   </component>

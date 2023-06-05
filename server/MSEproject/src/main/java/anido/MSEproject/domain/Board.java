@@ -36,6 +36,10 @@ public class Board {
             }
         }
     }
+    public void installObstacle(Obstacle obstacle){
+        setBoardValue(obstacle.getY1(), obstacle.getX1(), 1);
+        setBoardValue(obstacle.getY2(), obstacle.getX2(), 1);
+    }
     public void setBoardValue(int y, int x, int value){
         board[y][x] = value;
     }

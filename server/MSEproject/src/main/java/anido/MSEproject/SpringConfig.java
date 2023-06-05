@@ -2,6 +2,7 @@ package anido.MSEproject;
 
 import anido.MSEproject.controller.Validation;
 
+import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.repository.MemoryUserRepository;
 import anido.MSEproject.repository.UserRepository;
 
@@ -27,5 +28,7 @@ public class SpringConfig {
         return new GameService();
     }
 
+    @Bean
+    public Obstacle obstacle(){return new Obstacle();}
 
 }

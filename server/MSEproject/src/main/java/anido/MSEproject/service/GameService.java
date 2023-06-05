@@ -37,13 +37,14 @@ public class GameService {
     }
     public void updatePlayerInfo(PlayerForm playerForm){
         Player player = getPlayerInfo(playerForm.getPlayerNumber());
-        player.setPosX(player.getPosX());
-        player.setPosY(player.getPosY());
+        player.setPosX(playerForm.getX1());
+        player.setPosY(playerForm.getX1());
         player.setAction(playerForm.getAction());
     }
 
-    public Boolean isValidInstall(){
-        return false;
+    public Boolean isValidInstall(Obstacle obstacle){
+        boardOrigin.copyTo(boardBuffer); //원래 보드 상태 복사
+
     }
     public void installObstacle(Obstacle obstacle){
         boardOrigin.setBoardValue(obstacle.getY1(), obstacle.getX1(), 3);
