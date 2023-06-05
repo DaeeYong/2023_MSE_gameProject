@@ -5,20 +5,23 @@ import anido.MSEproject.domain.Board;
 import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.domain.Player;
 import anido.MSEproject.domain.WhoTurn;
+import anido.MSEproject.template.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GameService {
+
+    static final int[] dx = {-1,0,1,0};
+    static final int[] dy = {0,1,0,-1};
     private String turn;
     private Board boardOrigin;
-    private Board boardBuffer;
+    private Board vist;
     //일단 사이즈 최대 2 가정
     private List<Player> players;
 
     public GameService(){
         this.boardOrigin = new Board();
-        this.boardBuffer = new Board();
+        this.vist = new Board();
         this.players = new ArrayList<>();
         this.turn = "player1";
     }
@@ -37,18 +40,60 @@ public class GameService {
     }
     public void updatePlayerInfo(PlayerForm playerForm){
         Player player = getPlayerInfo(playerForm.getPlayerNumber());
-        player.setPosX(playerForm.getX1());
-        player.setPosY(playerForm.getX1());
+        player.setRow(playerForm.getRow1());
+        player.setCol(playerForm.getCol1());
         player.setAction(playerForm.getAction());
     }
 
     public Boolean isValidInstall(Obstacle obstacle){
-        boardOrigin.copyTo(boardBuffer); //원래 보드 상태 복사
+        //player1에 대해서 테스트
+        Boolean result1 = _isValidInstall(getPlayerInfo(1).getRow(),
+                getPlayerInfo(1).getCol(),obstacle, 16);
+
+        //player2에 대해서 테스트
+        Boolean result2 = _isValidInstall(getPlayerInfo(2).getRow(),
+                getPlayerInfo(2).getCol(),obstacle, 0);
+        
+        //결과
+        if(result1 == true && result2 == true) return true;
+        return false;
+    }
+    private Boolean _isValidInstall(int x, int y, Obstacle obstacle, int dest_y_idx){
+        vist.clear();
+        Stack<Pair> stack = new Stack<>();
+
+        //시작 위치
+        vist.setBoardValue(x, y,1);
+        stack.push(new Pair(x, y));
+        //DFS
+        int flag = 0;
+        while (!stack.isEmpty()){
+            Pair cur = stack.peek(); stack.pop();
+            for(int direction = 0; direction < 4; direction++){
+                int nx = cur.x + dx[direction];
+                int ny = cur.y + dy[direction];
+                //조건 확인
+                if(nx < 0 || nx >= Board.BOARD_SIZE || ny <0 || ny >= Board.BOARD_SIZE) continue;
+                if(boardOrigin.getBoardValue(nx,ny) == 1 || vist.getBoardValue(nx,ny) == 1) continue;
+                if(nx == dest_y_idx){
+                    flag = 1;
+                    break;
+                }
+                vist.setBoardValue(nx, ny,1);
+                stack.push(new Pair(nx, ny));
+            }
+            if(flag == 1) break;
+        }
+        //다시 원래대로
+        vist.setBoardValue(x, y,0);
+
+        if(flag == 1) return true;
+        else return false;
 
     }
     public void installObstacle(Obstacle obstacle){
-        boardOrigin.setBoardValue(obstacle.getY1(), obstacle.getX1(), 3);
-        boardOrigin.setBoardValue(obstacle.getY2(), obstacle.getX2(), 3);
+        boardOrigin.setBoardValue(obstacle.getRow1(), obstacle.getCol1(), 3);
+        boardOrigin.setBoardValue(obstacle.getRow2(), obstacle.getCol2(), 3);
     }
     //player 위치 보드에 반영
     //board 업데이트 -> 플레이어 좌표 업데이트

@@ -2,7 +2,7 @@ package anido.MSEproject.domain;
 
 public class Board {
 
-    final static int BOARD_SIZE = 17;
+    public static final int BOARD_SIZE = 17;
     private int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
 
     public Board(){
@@ -13,16 +13,8 @@ public class Board {
         }
     }
 
-    public void clearBoard(){
-        for(int i=0; i<BOARD_SIZE; i++){
-            for(int j=0; j<BOARD_SIZE; j++){
-                this.board[i][j] = 0;
-            }
-        }
-    }
-
-    public int getBOARD_SIZE() {
-        return BOARD_SIZE;
+    public void setBoard(int[][] board) {
+        this.board = board;
     }
 
     public int[][] getBoard() {
@@ -37,14 +29,14 @@ public class Board {
         }
     }
     public void installObstacle(Obstacle obstacle){
-        setBoardValue(obstacle.getY1(), obstacle.getX1(), 1);
-        setBoardValue(obstacle.getY2(), obstacle.getX2(), 1);
+        setBoardValue(obstacle.getRow1(), obstacle.getCol1(), 1);
+        setBoardValue(obstacle.getRow2(), obstacle.getCol2(), 1);
     }
-    public void setBoardValue(int y, int x, int value){
-        board[y][x] = value;
+    public void setBoardValue(int x, int y, int value){
+        board[x][y] = value;
     }
-    public int getBoardValue(int y, int x){
-        return board[y][x];
+    public int getBoardValue(int x, int y){
+        return board[x][y];
     }
 
     public void copyTo(Board dest){

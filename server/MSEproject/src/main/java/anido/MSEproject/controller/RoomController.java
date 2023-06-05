@@ -1,7 +1,7 @@
-package MSE_SERVER.mse_server.controller;
+package anido.MSEproject.controller;
 
-import MSE_SERVER.mse_server.domain.RoomStatusDTO;
-import MSE_SERVER.mse_server.domain.User;
+import anido.MSEproject.domain.RoomStatusDTO;
+import anido.MSEproject.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,7 @@ public class RoomController {
 
     private User host;
     private User waitingPlayer;
-    private boolean game
-        ed;
+    private boolean gameStarted;
 
     /**
      * API: Join Room

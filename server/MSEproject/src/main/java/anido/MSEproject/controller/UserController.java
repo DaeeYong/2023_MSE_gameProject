@@ -34,7 +34,7 @@ public class UserController {
      */
     @PostMapping("/user/sign-in")
     @ResponseBody
-    public Validation signIn(@RequestBody UserForm userForm){
+    public User signIn(@RequestBody UserForm userForm){
         Optional<User> result = userService.signIn(userForm.getName(), userForm.getPassword());
         //로그인 성공한 경우
         if(result.isPresent()) {
@@ -42,10 +42,10 @@ public class UserController {
             Player player = new Player(result.get(), -1, -1);
             //게임 서비스에 플레이어 리스트에 넣어줌.
             gameService.addPlayer(player);
-            validation.setValid(true);
-        } else validation.setValid(false);
+            return result.get();
+        }
 
-        return validation;
+        return null;
     }
     /*
      * 회원가입 기능

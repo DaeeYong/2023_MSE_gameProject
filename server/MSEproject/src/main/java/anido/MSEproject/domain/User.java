@@ -1,4 +1,4 @@
-package anido.MSEproject.controller;
+package anido.MSEproject.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

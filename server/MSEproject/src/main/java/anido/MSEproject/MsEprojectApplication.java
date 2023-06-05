@@ -1,5 +1,7 @@
 package anido.MSEproject;
 
+import anido.MSEproject.domain.Board;
+import anido.MSEproject.service.GameService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

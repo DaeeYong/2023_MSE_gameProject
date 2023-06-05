@@ -1,46 +1,40 @@
 package anido.MSEproject.domain;
 
 public class Obstacle {
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
+    private int row1;
+    private int col1;
+    private int row2;
+    private int col2;
 
-    public void setObstacle(int x1, int y1, int x2, int y2){
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-    }
-    public int getX1() {
-        return x1;
+    public int getRow1() {
+        return row1;
     }
 
-    public void setX1(int x1) {
-        this.x1 = x1;
+    public void setRow1(int row1) {
+        this.row1 = row1;
     }
 
-    public int getY1() {
-        return y1;
+    public int getCol1() {
+        return col1;
     }
 
-    public void setY1(int y1) {
-        this.y1 = y1;
+    public void setCol1(int col1) {
+        this.col1 = col1;
     }
 
-    public int getX2() {
-        return x2;
+    public int getRow2() {
+        return row2;
     }
 
-    public void setX2(int x2) {
-        this.x2 = x2;
+    public void setRow2(int row2) {
+        this.row2 = row2;
     }
 
-    public int getY2() {
-        return y2;
+    public int getCol2() {
+        return col2;
     }
 
-    public void setY2(int y2) {
-        this.y2 = y2;
+    public void setCol2(int col2) {
+        this.col2 = col2;
     }
 }

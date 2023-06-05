@@ -36,11 +36,11 @@ public class GameController {
         Player player2 = getPlayerInfo(2);
         
         //플레이어 초기 좌표 세팅
-        player1.setPosX(0);
-        player1.setPosY(8);
+        player1.setRow(8);
+        player1.setCol(0);
 
-        player2.setPosX(16);
-        player2.setPosY(8);
+        player2.setRow(8);
+        player2.setCol(16);
 
         validation.setValid(true);
         
@@ -112,7 +112,29 @@ public class GameController {
         private int y2; //장애물 설치는 여기까지 사용
     output : { "valid" : true | false }
      */
+    //유효성 검사
+    @PostMapping("/install/block/valid")
+    @ResponseBody
+    public Validation IsValidInstall(@RequestBody Obstacle obstacle){
+        Boolean result = gameService.isValidInstall(obstacle);
 
+        Validation validation = new Validation();
+        validation.setValid(result);
+
+        return validation;
+    }
+
+    @PostMapping("/install/block")
+    @ResponseBody
+    public Validation installBlock(@RequestBody Obstacle obstacle){
+        gameService.installObstacle(obstacle);
+        Validation validation = new Validation();
+        validation.setValid(true);
+
+        return validation;
+    }
+    
+    /*
     @PostMapping("/install/block/validation")
     @ResponseBody
     public Validation installBlockValidation(@RequestBody PlayerForm playerForm){
@@ -127,40 +149,11 @@ public class GameController {
         return validation;
 
     }
-
+*/
     @GetMapping("/findAllPlayer")
     @ResponseBody
     public List<Player> getAllPlayer(){
         return gameService.getPlayers();
     }
-    /*
-    @GetMapping("/update/player1")w
-    public ResponseEntity<?> updateLocationPlayer1(@RequestParam int x, @RequestParam int y) {
-        gameService.updatePlayerCoordinate(player1, x, y);
-        return ResponseEntity.ok().body("{valid: true}");
-      //return new ResponseEntity<>(player1,HttpStatus.OK);
-    }
 
-    @GetMapping("/update/player2")
-    public ResponseEntity<?> updateLocationPlayer2(@RequestParam int x, @RequestParam int y) {
-        gameService.updatePlayerCoordinate(player2, x, y);
-        return ResponseEntity.ok().body("{valid: true}");
-        //return new ResponseEntity<>(player2,HttpStatus.OK);
-    }
-
-    @GetMapping("/current/player1")
-    public ResponseEntity<?> fetchLocationPlayer1() {
-        int x = player1.getxNow();
-        int y = player1.getyNow();
-        return ResponseEntity.ok().body("{x: " + x + ", y: " + y + "}");
-    }
-
-    //test
-    @GetMapping("/current/player2")
-    public ResponseEntity<?> fetchLocationPlayer2() {
-        int x = player2.getxNow();
-        int y = player2.getyNow();
-        return ResponseEntity.ok().body("{x: " + x + ", y: " + y + "}");
-    }
-     */
 }
