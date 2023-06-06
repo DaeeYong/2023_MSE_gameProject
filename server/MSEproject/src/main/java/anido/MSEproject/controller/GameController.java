@@ -83,11 +83,11 @@ public class GameController {
 
         Validation validation = new Validation();
         //플레이어 위치만 업데이트
-        if(playerForm.getAction() == "moving") {
+        if(playerForm.getAction().equals("moving")) {
             gameService.updatePlayerInfo(playerForm);
         }
         //블럭설치
-        else if(playerForm.getAction() == "blocking") {
+        else if(playerForm.getAction().equals("blocking")) {
                 gameService.getPlayerInfo(playerForm.getPlayerNumber()).
                         setAction("blocking");
                 obstacle.setCoord(row1, col1, row2, col2);
@@ -107,9 +107,9 @@ public class GameController {
 
         playerForm.setPlayerNumber(playerNum);
         playerForm.setAction(player.getAction());
-        if(player.getAction() == "moving"){
+        if(player.getAction().equals("moving")){
             playerForm.setCoord(player.getRow(), player.getCol(),-1,-1);
-        } else if(player.getAction() == " blocking"){
+        } else if(player.getAction().equals("blocking")){
             playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
                     obstacle.getRow2(), obstacle.getCol2());
         } else{
