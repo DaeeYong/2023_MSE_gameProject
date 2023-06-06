@@ -99,15 +99,17 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 - output : void
 - 역할 : 플레이어의 좌표 업데이트 || 블럭 설치 정보 업데이트
 
-### 4. 플레이어 이동 조회
+### 4. 플레이어 정보 조회
 - getPlayerInfo(int playerNum) : Player
-- url : http://localhost:8080/move/info/player
+- url : http://localhost:8080/fetch/info/player
 - input : int playerNum
 - output : Player
   - input : {
-    "action" : {"moving" | "blocking"}
-    "posX" : {int}
-    "posY" : {int}
+    "action" : {"moving" | "blocking"}  
+    "row1" : {int}  
+    "col1" : {int}  
+    "row2" : {int}  
+    "col2" : {int}  
   - }
 
 ### 장애물 유효성 검사
