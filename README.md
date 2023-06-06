@@ -135,6 +135,16 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
   "col2" : {int}
 }
 - output : Validation
+
+### 게임 끝 이후 결과 반영
+- recordWinLose(WinLose) : Validation
+- method : post
+- url : http://localhost:8080/game/end
+- input : {<br>
+  "winner" : {int}  
+  "loser" : {int}  
+}
+- output : Validation
 ## server-client 통신 api 호출 시나리오
 --------------------------
 ### 플레이어1 차례로 가정
