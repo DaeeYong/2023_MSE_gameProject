@@ -5,6 +5,7 @@ import anido.MSEproject.domain.Player;
 import anido.MSEproject.domain.User;
 import anido.MSEproject.service.GameService;
 import anido.MSEproject.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final GameService gameService;
     private final Validation validation = new Validation();
 
-    @Autowired
-    public UserController(UserService userService, GameService gameService) {
-        this.userService = userService;
-        this.gameService = gameService;
-    }
+
 
     /*
      * 로그인 기능
