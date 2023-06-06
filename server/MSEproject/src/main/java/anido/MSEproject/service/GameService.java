@@ -40,9 +40,11 @@ public class GameService {
         return player;
     }
     public void updatePlayerInfo(PlayerForm playerForm){
+        //해당 플레이어 객체 가져옴
         Player player = getPlayerInfo(playerForm.getPlayerNumber());
         player.setRow(playerForm.getRow1());
         player.setCol(playerForm.getCol1());
+        //행동 설정
         player.setAction(playerForm.getAction());
     }
 

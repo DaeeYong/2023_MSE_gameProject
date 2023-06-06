@@ -86,20 +86,35 @@ public class GameController {
         }
         //블럭설치
         else if(playerForm.getAction() == "blocking") {
+                gameService.getPlayerInfo(playerForm.getPlayerNumber()).
+                        setAction("blocking");
                 obstacle.setCoord(row1, col1, row2, col2);
                 gameService.installObstacle(obstacle);
         }
-        
+
         validation.setValid(true);
         return validation;
     }
 
-    //플레이어 이동 조회
-    @GetMapping("/move/info/player")
+    //플레이어 action 조회
+    @GetMapping("/fetch/info/player")
     @ResponseBody
-    public Player getPlayerInfo(@RequestParam(name="playerNum") int playerNum) {
+    public PlayerForm getPlayerInfo(@RequestParam(name="playerNum") int playerNum) {
         Player player = gameService.getPlayerInfo(playerNum);
-        return player;
+        PlayerForm playerForm = new PlayerForm();
+
+        playerForm.setPlayerNumber(playerNum);
+        playerForm.setAction(player.getAction());
+        if(player.getAction() == "moving"){
+            playerForm.setCoord(player.getRow(), player.getCol(),-1,-1);
+        } else if(player.getAction() == " blocking"){
+            playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
+                    obstacle.getRow2(), obstacle.getCol2());
+        } else{
+            //나중을 위해서 비워둠.
+        }
+
+        return playerForm;
     }
 
     //블럭 설치 유효성 검사
