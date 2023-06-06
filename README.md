@@ -122,7 +122,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 }
 - output : Validation
 
-### 블럭설치
+### 장애물 설치
 - IsValidInstall(Obstacle) : Validation
 - method : post
 - url : http://localhost:8080/install/block
@@ -133,7 +133,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
   "col2" : {int}
 }
 - output : Validation
-## server-client
+## server-client 통신 api 호출 시나리오
 
 p1이동 -> p1 위치 update -> p2모니터에 p1 그려줌 -> p2 차례
 

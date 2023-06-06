@@ -1,4 +1,4 @@
-package anido.MSEproject.controller;
+package anido.MSEproject.Form;
 
 public class UserForm {
     private String name;

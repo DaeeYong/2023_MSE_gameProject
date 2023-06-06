@@ -1,18 +1,19 @@
 package anido.MSEproject.service;
 
-import anido.MSEproject.controller.PlayerForm;
+import anido.MSEproject.Form.PlayerForm;
 import anido.MSEproject.domain.Board;
 import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.domain.Player;
-import anido.MSEproject.domain.WhoTurn;
 import anido.MSEproject.template.Pair;
 
 import java.util.*;
 
 public class GameService {
-
+    
+    //상대좌표
     static final int[] dx = {-1,0,1,0};
     static final int[] dy = {0,1,0,-1};
+    //player turn
     private String turn;
     private Board boardOrigin;
     private Board vist;

@@ -1,5 +1,6 @@
-package anido.MSEproject.controller;
+package anido.MSEproject.Form;
 
+//input 용
 public class PlayerForm {
     private int playerNumber;
     private String action; //"moving, blocking, timeout"

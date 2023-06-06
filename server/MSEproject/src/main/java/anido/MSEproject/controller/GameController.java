@@ -1,5 +1,8 @@
 package anido.MSEproject.controller;
 
+import anido.MSEproject.Form.ObstacleCoordForm;
+import anido.MSEproject.Form.PlayerForm;
+import anido.MSEproject.Form.TurnForm;
 import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.domain.Player;
 import anido.MSEproject.service.UserService;
@@ -9,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import anido.MSEproject.service.GameService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,14 +47,6 @@ public class GameController {
         
         return validation;
     }
-    //플레이어 정보 조회
-    /*
-    @GetMapping("/current/player-turn-Info")
-    @ResponseBody
-    public Player getPlayerTurnInfo(@RequestParam("playerNumber") int playerNumber){
-        return gameService.getPlayerInfo(playerNumber);
-    }
-    */
 
     //순서 set
     @PostMapping("/current/player-turn-set")
@@ -76,20 +69,25 @@ public class GameController {
         return turnForm;
     }
 
-    //플레이어 이동 업데이트
-    /*
-    private int playerNumber;
-    private String action;
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
-     */
-    @PostMapping("/move/update/player")
+    @PostMapping("/action/update/player")
     @ResponseBody
     public Validation updatePlayerInfo(@RequestBody PlayerForm playerForm) {
+        int row1, col1, row2, col2;
+
+        row1 = playerForm.getRow1();
+        col1 = playerForm.getCol1();
+        row2 = playerForm.getRow2();
+        col2 = playerForm.getCol2();
+
         Validation validation = new Validation();
-        gameService.updatePlayerInfo(playerForm); //블럭설치 처리x
+        //플레이어 위치만 업데이트
+        gameService.updatePlayerInfo(playerForm);
+        
+        //블럭설치
+        if(playerForm.getRow2() != -1 && playerForm.getCol2() != -1){
+            obstacle.setCoord(row1, col1, row2, col2);
+        }
+
         validation.setValid(true);
         return validation;
     }
@@ -101,21 +99,16 @@ public class GameController {
         Player player = gameService.getPlayerInfo(playerNum);
         return player;
     }
-    //플레이어 장애물 설치
-    /*
-    input : {playerForm}
-        private int playerNumber;
-        private String action;
-        private int x1; //플레이어 위치
-        private int y1; //플레이어 위치
-        private int x2; //장애물 설치는 여기까지 사용
-        private int y2; //장애물 설치는 여기까지 사용
-    output : { "valid" : true | false }
-     */
-    //유효성 검사
+
+    //블럭 설치 유효성 검사
     @PostMapping("/install/block/valid")
     @ResponseBody
-    public Validation IsValidInstall(@RequestBody Obstacle obstacle){
+    public Validation IsValidInstall(@RequestBody ObstacleCoordForm obstacleCoordForm){
+        obstacle.setRow1(obstacle.getRow1());
+        obstacle.setCol1(obstacle.getCol1());
+        obstacle.setRow2(obstacle.getRow2());
+        obstacle.setCol2(obstacle.getCol2());
+    
         Boolean result = gameService.isValidInstall(obstacle);
 
         Validation validation = new Validation();
@@ -123,7 +116,9 @@ public class GameController {
 
         return validation;
     }
-
+    
+    
+    //블럭 설치
     @PostMapping("/install/block")
     @ResponseBody
     public Validation installBlock(@RequestBody Obstacle obstacle){
@@ -134,22 +129,6 @@ public class GameController {
         return validation;
     }
 
-    /*
-    @PostMapping("/install/block/validation")
-    @ResponseBody
-    public Validation installBlockValidation(@RequestBody PlayerForm playerForm){
-        obstacle.setObstacle(playerForm.getX1(), playerForm.getY1(),
-                playerForm.getX2(), playerForm.getY2());
-
-        Validation validation = new Validation();
-        boolean result =  gameService.isValidInstall(obstacle);
-        if(result == true) validation.setValid(true);
-        else validation.setValid(false);
-
-        return validation;
-
-    }
-*/
     @GetMapping("/findAllPlayer")
     @ResponseBody
     public List<Player> getAllPlayer(){

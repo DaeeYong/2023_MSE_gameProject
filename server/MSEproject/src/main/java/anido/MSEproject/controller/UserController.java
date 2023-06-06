@@ -1,5 +1,6 @@
 package anido.MSEproject.controller;
 
+import anido.MSEproject.Form.UserForm;
 import anido.MSEproject.domain.Player;
 import anido.MSEproject.domain.User;
 import anido.MSEproject.service.GameService;

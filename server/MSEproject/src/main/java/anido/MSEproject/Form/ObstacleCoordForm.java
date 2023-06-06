@@ -1,8 +1,6 @@
-package anido.MSEproject.domain;
+package anido.MSEproject.Form;
 
-import org.springframework.context.annotation.Bean;
-
-public class Obstacle {
+public class ObstacleCoordForm {
     private int row1;
     private int col1;
     private int row2;
@@ -38,13 +36,5 @@ public class Obstacle {
 
     public void setCol2(int col2) {
         this.col2 = col2;
-    }
-
-    public void setCoord(int row1, int col1, int row2, int col2){
-        this.row1 = row1;
-        this.col1 = col1;
-        this.row2 = row2;
-        this.col2 = col2;
-
     }
 }
