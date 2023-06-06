@@ -3,8 +3,10 @@ package anido.MSEproject.controller;
 import anido.MSEproject.Form.ObstacleCoordForm;
 import anido.MSEproject.Form.PlayerForm;
 import anido.MSEproject.Form.TurnForm;
+import anido.MSEproject.Form.WinLose;
 import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.domain.Player;
+import anido.MSEproject.domain.User;
 import anido.MSEproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -152,4 +154,18 @@ public class GameController {
         return gameService.getPlayers();
     }
 
+    //승패 기록 컨트롤러
+    @PostMapping("/game/end")
+    @ResponseBody
+    public Validation recordWinLose(@RequestBody WinLose winLose){
+        User winnerUser = gameService.getPlayerInfo(winLose.getWinner());
+        User loserUser = gameService.getPlayerInfo(winLose.getLoser());
+
+        winnerUser.setWin(winnerUser.getWin() + 1);
+        loserUser.setLose(loserUser.getLose() + 1);
+
+        Validation validation =  new Validation();
+        validation.setValid(true);
+        return validation;
+    }
 }

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/Form/WinLose.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
     </list>
@@ -130,6 +131,8 @@
       <workItem from="1686023063487" duration="2302000" />
       <workItem from="1686025416362" duration="340000" />
       <workItem from="1686051739765" duration="1184000" />
+      <workItem from="1686053088940" duration="40000" />
+      <workItem from="1686054183973" duration="1189000" />
     </task>
     <servers />
   </component>
