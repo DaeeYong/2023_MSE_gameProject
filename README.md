@@ -84,7 +84,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
   - output : TurnForm
   - 역할 : 플레이어 차례 조회
 
-### 3. 플레이어 위치정보 업데이트
+### 3. 플레이어 위치&블럭 설치 정보 업데이트
 - updatePlayerInfo(PlayerForm) : Validation
 - input : {<br>
     "playerNumber" :{int},<br>
@@ -97,7 +97,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 - 주의점 : action이 가질 수 있는 상태는 "moving" 또는 "blocking"
 - playerNumber는 1 또는 
 - output : void
-- 역할 : 플레이어의 초기 턴을 설정
+- 역할 : 플레이어의 좌표 업데이트 || 블럭 설치 정보 업데이트
 
 ### 4. 플레이어 이동 조회
 - getPlayerInfo(int playerNum) : Player
@@ -134,7 +134,16 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 }
 - output : Validation
 ## server-client 통신 api 호출 시나리오
-
-p1이동 -> p1 위치 update -> p2모니터에 p1 그려줌 -> p2 차례
-
-
+--------------------------
+### 플레이어1 차례로 가정
+  1. 이동한 경우
+      - step1 : updatePlayerInfo(PlayerForm) : Validation
+      - step2 : setPlayerTurnInfo(TurnForm) : Validation   
+      [플레이엉 좌표정보 업데이트 -> 차례 넘김]
+      
+  <br><br>
+  1. 장애물을 설치하는 경우  
+     - step1 : IsValidInstall(Obstacle) : Validation
+     - step2 : updatePlayerInfo(PlayerForm) : Validation
+     - step3 : - step2 : setPlayerTurnInfo(TurnForm) : Validation  
+      [장애물 유효성 검사 -->장애물 설치 정보 반영 -> 차례넘김]

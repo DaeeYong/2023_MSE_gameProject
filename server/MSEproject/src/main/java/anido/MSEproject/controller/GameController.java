@@ -86,6 +86,7 @@ public class GameController {
         //블럭설치
         if(playerForm.getRow2() != -1 && playerForm.getCol2() != -1){
             obstacle.setCoord(row1, col1, row2, col2);
+            gameService.installObstacle(obstacle);
         }
 
         validation.setValid(true);
