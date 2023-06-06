@@ -33,8 +33,8 @@ public class GameController {
     public Validation initGame(){
         Validation validation = new Validation();
 
-        Player player1 = getPlayerInfo(1);
-        Player player2 = getPlayerInfo(2);
+        Player player1 = gameService.getPlayerInfo(1);
+        Player player2 = gameService.getPlayerInfo(2);
         
         //플레이어 초기 좌표 세팅
         player1.setRow(8);
