@@ -81,14 +81,15 @@ public class GameController {
 
         Validation validation = new Validation();
         //플레이어 위치만 업데이트
-        gameService.updatePlayerInfo(playerForm);
-        
-        //블럭설치
-        if(playerForm.getRow2() != -1 && playerForm.getCol2() != -1){
-            obstacle.setCoord(row1, col1, row2, col2);
-            gameService.installObstacle(obstacle);
+        if(playerForm.getAction() == "moving") {
+            gameService.updatePlayerInfo(playerForm);
         }
-
+        //블럭설치
+        else if(playerForm.getAction() == "blocking") {
+                obstacle.setCoord(row1, col1, row2, col2);
+                gameService.installObstacle(obstacle);
+        }
+        
         validation.setValid(true);
         return validation;
     }
