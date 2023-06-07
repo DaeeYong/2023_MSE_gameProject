@@ -1,7 +1,7 @@
 package anido.MSEproject.domain;
 
 public class Player extends User{
-    private String action; //moving, blocking
+    private String action = null; //moving, blocking
     private int row; //현재위치?
     private int col; //현재위치
 

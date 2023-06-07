@@ -107,15 +107,16 @@ public class GameController {
 
         playerForm.setPlayerNumber(playerNum);
         playerForm.setAction(player.getAction());
-        if(player.getAction().equals("moving")){
-            playerForm.setCoord(player.getRow(), player.getCol(),-1,-1);
-        } else if(player.getAction().equals("blocking")){
-            playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
-                    obstacle.getRow2(), obstacle.getCol2());
-        } else{
-            //나중을 위해서 비워둠.
-        }
+        if(player.getAction() != null) {
+            if (player.getAction().equals("moving")) {
+                playerForm.setCoord(player.getRow(), player.getCol(), -1, -1);
+            } else if (player.getAction().equals("blocking")) {
+                playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
+                        obstacle.getRow2(), obstacle.getCol2());
+            } else {
+            }
 
+        }
         return playerForm;
     }
 
