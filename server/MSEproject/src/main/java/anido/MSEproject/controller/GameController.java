@@ -8,7 +8,7 @@ import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.domain.Player;
 import anido.MSEproject.domain.User;
 import anido.MSEproject.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 import anido.MSEproject.service.GameService;
@@ -17,17 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class GameController {
     private final GameService gameService;
     private final UserService userService;
     private final Obstacle obstacle;
 
-    @Autowired
-    public GameController(GameService gameService, UserService userService, Obstacle obstacle) {
-        this.gameService = gameService;
-        this.userService = userService;
-        this.obstacle = obstacle;
-    }
+
+
 
     //플레이어 좌표 초기 세팅
     @GetMapping("/game/init")
@@ -164,6 +161,8 @@ public class GameController {
 
         winnerUser.setWin(winnerUser.getWin() + 1);
         loserUser.setLose(loserUser.getLose() + 1);
+
+
 
         Validation validation =  new Validation();
         validation.setValid(true);
