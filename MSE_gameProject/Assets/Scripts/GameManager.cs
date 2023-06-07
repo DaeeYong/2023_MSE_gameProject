@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
         if (myturn)
         {
             SetPlayerState(PlayerState.MYTURN);
-            StartCoroutine(client.InitGame());
             playerType = 1;
         }
         else
@@ -99,9 +98,11 @@ public class GameManager : MonoBehaviour
     {
         player[0] = Instantiate(playerPrefab, new Vector3(board[16, 8].transform.position.x, 0, board[16, 8].transform.position.z), Quaternion.identity);
         player[0].transform.GetChild(0).GetComponent<Renderer>().material = playerMaterial[0];
+        player[0].transform.GetChild(0).localRotation = Quaternion.Euler(0, -90, 0);
         board[16, 8].GetComponent<TileManager>().occupiedPlayer = 1;
         player[1] = Instantiate(playerPrefab, new Vector3(board[0, 8].transform.position.x, 0, board[0, 8].transform.position.z), Quaternion.identity);
         player[1].transform.GetChild(0).GetComponent<Renderer>().material = playerMaterial[1];
+        player[1].transform.GetChild(0).localRotation = Quaternion.Euler(0, 90, 0);
         board[0, 8].GetComponent<TileManager>().occupiedPlayer = 1;
         
         turn = player[0];    
@@ -165,20 +166,6 @@ public class GameManager : MonoBehaviour
         {
             yield return StartCoroutine(client.EFetchPosition(playerType));
 
-            /*Debug.Log(fetchedData + ": " + new Vector2(turn.transform.position.x, -turn.transform.position.z));
-            if (fetchedData.x == -1 && fetchedData.y == -1)
-                yield return 0.1;
-            else if (Vector2.Distance(fetchedData, new Vector2(turn.transform.position.x, -turn.transform.position.z)) < Mathf.Epsilon)
-                yield return 0.1;
-            else
-            {
-                Debug.Log("received changed data");
-                SetPlayerState(PlayerState.UPDATING);
-                turn.transform.position = new Vector3(fetchedData.x, turn.transform.position.y, -fetchedData.y);
-                Debug.Log("GetDataPooling: Update finish");
-                yield return StartCoroutine(client.ESetTurn(playerType));
-            }*/
-
             if (fetchedData.getCol1() == -1 && fetchedData.getRow1() == -1 && fetchedData.getCol2() == -1 && fetchedData.getRow2() == -1)
                 yield return 0.1;
             else if (fetchedData.getAction() == "moving"){
@@ -187,8 +174,11 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     Debug.Log("received changed player data");
-                    SetPlayerState(PlayerState.UPDATING);
-                    turn.transform.position = new Vector3(fetchedData.getCol1(), turn.transform.position.y, -fetchedData.getRow1());
+                    SetPlayerState(PlayerState.UPDATING); 
+                    board[(int)turn.transform.position.x, -(int)turn.transform.position.z].GetComponent<TileManager>().occupiedPlayer = 0;
+                    board[(int)fetchedData.getCol1(), (int)fetchedData.getRow1()].GetComponent<TileManager>().occupiedPlayer = 1;
+                    yield return StartCoroutine(turn.GetComponent<PlayerManager>().MoveCharacter(new Vector3(fetchedData.getCol1(), turn.transform.position.y, -fetchedData.getRow1())));
+                    //turn.transform.position = new Vector3(fetchedData.getCol1(), turn.transform.position.y, -fetchedData.getRow1());
                     Debug.Log("GetDataPooling: Update finish");
                     yield return StartCoroutine(client.ESetTurn(playerType));
                 }
@@ -202,15 +192,17 @@ public class GameManager : MonoBehaviour
                     Debug.Log("received changed obstacle data");
                     SetPlayerState(PlayerState.UPDATING);
                     if(fetchedData.getCol1() != fetchedData.getCol2()) {
-                        creatingObstacle.setObstacleState(1);
+                        creatingObstacle.setObstacleState(0);
                     }
                     else if(fetchedData.getRow1() != fetchedData.getRow2()) {
-                        creatingObstacle.setObstacleState(0);
+                        creatingObstacle.setObstacleState(1);
                     }
                     Vector3 pos = new Vector3(fetchedData.getCol1() + (creatingObstacle.cursorObj.transform.localScale.x * 0.5f), 
                     (creatingObstacle.offset + creatingObstacle.cursorObj.transform.localScale.y)*0.5f, 
                     -fetchedData.getRow1());
                     creatingObstacle.PlaceObstacle(pos);
+                    board[fetchedData.getCol1(), fetchedData.getRow1()].GetComponent<TileManager>().occupiedOtc = 1;
+                    board[fetchedData.getCol2(), fetchedData.getRow2()].GetComponent<TileManager>().occupiedOtc = 1;
                     Debug.Log("GetDataPooling: Update finish");
                     yield return StartCoroutine(client.ESetTurn(playerType));
                 }

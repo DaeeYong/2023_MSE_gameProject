@@ -79,12 +79,12 @@ public class CreateObstacle : MonoBehaviour
                     switch (obstacleState)
                     {
                         case ObstacleState.HORIZONTAL:
-                            StartCoroutine(SendObstacleValidData((int)clickTile.x, (int)clickTile.y,
-                            (int)clickTile.x+1, (int)clickTile.y));
+                            StartCoroutine(SendObstacleValidData((int)clickTile.y, (int)clickTile.x,
+                            (int)clickTile.y, (int)clickTile.x+1));
                             break;
                         case ObstacleState.VERTICAL:
-                            StartCoroutine(SendObstacleValidData((int)clickTile.x, (int)clickTile.y,
-                            (int)clickTile.x, (int)clickTile.y+1));
+                            StartCoroutine(SendObstacleValidData((int)clickTile.y, (int)clickTile.x,
+                            (int)clickTile.y+1, (int)clickTile.x));
                             break;
                     }
                 }
@@ -110,12 +110,12 @@ public class CreateObstacle : MonoBehaviour
                     case ObstacleState.HORIZONTAL:
                         board[(int)clickTile.x, (int)clickTile.y].GetComponent<TileManager>().occupiedOtc = 1;
                         board[(int)clickTile.x+1, (int)clickTile.y].GetComponent<TileManager>().occupiedOtc = 1;
-                        StartCoroutine(SendObstacleData(gameManager.playerType, (int)clickTile.x, (int)clickTile.y, (int)clickTile.x+1, (int)clickTile.y));
+                        StartCoroutine(SendObstacleData(gameManager.playerType, (int)clickTile.y, (int)clickTile.x, (int)clickTile.y, (int)clickTile.x+1));
                         break;
                     case ObstacleState.VERTICAL:
                         board[(int)clickTile.x, (int)clickTile.y].GetComponent<TileManager>().occupiedOtc = 1;
                         board[(int)clickTile.x, (int)clickTile.y+1].GetComponent<TileManager>().occupiedOtc = 1;
-                        StartCoroutine(SendObstacleData(gameManager.playerType, (int)clickTile.x, (int)clickTile.y, (int)clickTile.x, (int)clickTile.y+1));
+                        StartCoroutine(SendObstacleData(gameManager.playerType, (int)clickTile.y, (int)clickTile.x, (int)clickTile.y+1, (int)clickTile.x));
                         break;
                 }
             }

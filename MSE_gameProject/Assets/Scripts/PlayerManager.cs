@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject[,] board;
     public int playermoving;
+    public float movingSpeed = 2;
     private GameManager gameManager;
     private GameClient client;
     [SerializeField] Material[] availableMaterial;
@@ -42,10 +43,11 @@ public class PlayerManager : MonoBehaviour
                         board[(int)transform.position.x, -(int)transform.position.z].GetComponent<TileManager>().occupiedPlayer = 0;
                         tileMouseOver.occupiedPlayer = 1;
                         Vector3 pos = tileMouseOver.transform.position;
+                        board[(int)pos.x, -(int)pos.z].GetComponent<TileManager>().occupiedPlayer = 1;
                         Debug.Log(pos);
                     
-                        transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-                        StartCoroutine(SendData(gameManager.playerType, (int)pos.x, -(int)pos.z));
+                        StartCoroutine(SendData(gameManager.playerType, -(int)pos.z, (int)pos.x));
+                        StartCoroutine(MoveCharacter(new Vector3(pos.x, transform.position.y, pos.z)));
                     }
                 }
             }
@@ -57,11 +59,42 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    IEnumerator SendData(int playerType, int x, int y)
+    public IEnumerator MoveCharacter(Vector3 targetpos)
+    {
+        this.transform.GetChild(0).GetComponent<Animator>().SetBool("isWalking", true);
+
+        float angle = Vector3.Angle(transform.GetChild(0).forward, targetpos - transform.position);
+        angle = Vector3.Dot(transform.GetChild(0).right, targetpos - transform.position) > 0 ? angle : -angle;
+        float i = 0;
+        while (i < 1 && angle != 0)
+        {
+            i += 0.05f;
+            transform.GetChild(0).Rotate(Vector3.up, Mathf.LerpAngle(0, angle, 1 / 20f));
+            yield return null;
+        }
+        while (true)
+        {
+            if (Vector3.Distance(transform.position, targetpos) < Mathf.Epsilon) break;
+            transform.position = Vector3.MoveTowards(transform.position, targetpos, Time.deltaTime * movingSpeed);
+            yield return null;
+        }
+        transform.position = targetpos; //위치 보정
+        i = 0;
+        while (i < 1 && angle != 0)
+        {
+            i += 0.05f;
+            transform.GetChild(0).Rotate(Vector3.up, Mathf.Lerp(0, -angle, 1 / 20f));
+            yield return null;
+        }
+
+        this.transform.GetChild(0).GetComponent<Animator>().SetBool("isWalking", false);
+    }
+
+    IEnumerator SendData(int playerType, int row, int col)
     {
         Debug.Log("SendData: Send Data");
         gameManager.SetPlayerState(PlayerState.SENDING);
-        yield return StartCoroutine(client.ESendData(playerType,"moving",x, y,-1,-1));
+        yield return StartCoroutine(client.ESendData(playerType,"moving",row, col,-1,-1));
         playermoving = 0;
     }
 

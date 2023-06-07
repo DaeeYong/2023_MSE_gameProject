@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class User
 {
-    private long id;
-    private string name;
-    private string password;
+    public long id;
+    public string name;
+    public string password;
 
-    private int win;
-    private int lose;
+    public int win;
+    public int lose;
 
     public User(long id, string name, string password)
     {
@@ -66,5 +66,16 @@ public class User
     public void setLose(int lose)
     {
         this.lose = lose;
+    }
+
+    public int getTotal()
+    {
+        return win + lose;
+    }
+
+    public int getWinnigRate()
+    {
+        int rate = win != 0 ? (int)((win / (float)getTotal()) * 100) : 0;
+        return rate;
     }
 }

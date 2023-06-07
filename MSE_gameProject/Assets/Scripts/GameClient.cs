@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.Networking;
 using TMPro;
 
@@ -8,11 +9,14 @@ public class GameClient : MonoBehaviour
 {
     [SerializeField] private TMP_InputField inputfeild;
     private static GameClient instance;
+    public User MyData;
+    public User OtherData;
     public int turnindex = 0;
     private static string initGameURL = "http://localhost:8080/game/init";
     private static string updatePlayerInfoURL = "http://localhost:8080/action/update/player";
     private static string fetchPlayerInfoURL = "http://localhost:8080/fetch/info/player";
-
+    private static string getWaitingplayerURL = "http://localhost:8080/room/waitingPlayer";
+    private static string getStartstateURL = "http://localhost:8080/room/startstatus";
 
     private static string validObsInfoURL = "http://localhost:8080/install/block/valid";
     //private static string fetchValidObsInfoURL = "";
@@ -341,7 +345,16 @@ public class GameClient : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
                     // everything is ok.
-                    Debug.Log("create room successfully!");
+                    if (type == 2)
+                    {
+                        Debug.Log("Join the room successfully!");
+                        string hostinfo = webRequest.downloadHandler.text;
+                        OtherData = JsonUtility.FromJson<User>(hostinfo);
+                    }
+                    else
+                    {
+                        Debug.Log("create room successfully!");
+                    }
                     LoadScene("WaitingRoom");
                     break;
             }
@@ -367,18 +380,62 @@ public class GameClient : MonoBehaviour
             case UnityWebRequest.Result.Success:
                 // everything is ok.
                 Debug.Log("Game Start");
+                webRequest = UnityWebRequest.Get(initGameURL);
+                yield return webRequest.SendWebRequest();
                 LoadScene("Fall");
                 break;
         }
     }
-    
+
+    public IEnumerator getWaitingPlayer()
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get(getWaitingplayerURL);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+            case UnityWebRequest.Result.Success:
+                string data = webRequest.downloadHandler.text;
+                if (data.CompareTo("") != 0)
+                {
+                    Debug.Log("Enter other player!");
+                    Debug.Log(data);
+                    OtherData = JsonUtility.FromJson<User>(data);
+                }
+                break;
+        }
+    }
+
+    public IEnumerator getStartState(Action callback)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get(getStartstateURL);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+            case UnityWebRequest.Result.Success:
+                string data = webRequest.downloadHandler.text;
+                if (data.CompareTo("true") == 0)
+                {
+                    Debug.Log("Start Game");
+                    callback();
+                }
+                break;
+        }
+    }
+
     public void LoadScene(string name)
     {
-        if (inputfeild != null)
-        {
-            turnindex = int.Parse(inputfeild.text);
-            Debug.Log(this.GetInstanceID());
-        }
         UnityEngine.SceneManagement.SceneManager.LoadScene(name);
     }
 }
