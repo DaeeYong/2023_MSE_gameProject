@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
             if(player[0].transform.position.x == 0 && playerType == 1) //host only call
             {
                 //host ½Â
+                player[0].transform.GetChild(0).GetComponent<Animator>().SetBool("isWin", true);
+                player[1].transform.GetChild(0).GetComponent<Animator>().SetBool("isLose", true);
                 WinLose result = new WinLose(1, 2);
                 StartCoroutine(client.sendResult(result, GameOver));
             }
@@ -95,16 +97,32 @@ public class GameManager : MonoBehaviour
             if(player[1].transform.position.x == 16 && playerType == 1)
             {
                 //host ÆÐ
+                player[0].transform.GetChild(0).GetComponent<Animator>().SetBool("isLose", true);
+                player[1].transform.GetChild(0).GetComponent<Animator>().SetBool("isWin", true);
                 WinLose result = new WinLose(2, 1);
                 StartCoroutine(client.sendResult(result, GameOver));
             }
-            
-            if(playerType != 1) GameOver(); //client´Â ³ª°¡¸é µÊ.
+
+            if (player[0].transform.position.x == 0 && playerType == 2) //client only call
+            {
+                //host ½Â
+                player[0].transform.GetChild(0).GetComponent<Animator>().SetBool("isWin", true);
+                player[1].transform.GetChild(0).GetComponent<Animator>().SetBool("isLose", true);
+                GameOver();
+            }
+
+            if (player[1].transform.position.x == 16 && playerType == 2)
+            {
+                //host ÆÐ
+                player[0].transform.GetChild(0).GetComponent<Animator>().SetBool("isLose", true);
+                player[1].transform.GetChild(0).GetComponent<Animator>().SetBool("isWin", true);
+                GameOver();
+            }
         }
     }
 
     private void GameOver()
-    {
+    {   
         buttons[2].SetActive(true);
     }
 
