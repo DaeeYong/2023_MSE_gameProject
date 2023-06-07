@@ -14,13 +14,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name="player_table")
 public class Player extends User{
-
+  
     @Column(name="player_action")
     @Transient
     private String action; //moving, blocking
 
     @Column(name="cur_row")
     @Transient
+    private String action = null; //moving, blocking
+
     private int row; //현재위치?
 
     @Column(name="cur_col")

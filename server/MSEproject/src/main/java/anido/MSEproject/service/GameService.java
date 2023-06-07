@@ -63,7 +63,12 @@ public class GameService {
     }
     private Boolean _isValidInstall(int x, int y, Obstacle obstacle, int dest_y_idx){
         vist.clear();
+        boardOrigin.copyTo(vist);
         Stack<Pair> stack = new Stack<>();
+
+        //장애물 설치
+        vist.setBoardValue(obstacle.getRow1(), obstacle.getCol1(), 1);
+        vist.setBoardValue(obstacle.getRow2(), obstacle.getCol2(), 1);
 
         //시작 위치
         vist.setBoardValue(x, y,1);
@@ -78,7 +83,7 @@ public class GameService {
                 //조건 확인
                 if(nx < 0 || nx >= Board.BOARD_SIZE || ny <0 || ny >= Board.BOARD_SIZE) continue;
                 if(boardOrigin.getBoardValue(nx,ny) == 1 || vist.getBoardValue(nx,ny) == 1) continue;
-                if(nx == dest_y_idx){
+                if(ny == dest_y_idx){
                     flag = 1;
                     break;
                 }
