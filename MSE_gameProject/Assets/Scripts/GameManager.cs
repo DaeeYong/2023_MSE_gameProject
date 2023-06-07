@@ -192,10 +192,10 @@ public class GameManager : MonoBehaviour
                     Debug.Log("received changed obstacle data");
                     SetPlayerState(PlayerState.UPDATING);
                     if(fetchedData.getCol1() != fetchedData.getCol2()) {
-                        creatingObstacle.setObstacleState(0);
+                        creatingObstacle.setObstacleState(1);
                     }
                     else if(fetchedData.getRow1() != fetchedData.getRow2()) {
-                        creatingObstacle.setObstacleState(1);
+                        creatingObstacle.setObstacleState(0);
                     }
                     Vector3 pos = new Vector3(fetchedData.getCol1() + (creatingObstacle.cursorObj.transform.localScale.x * 0.5f), 
                     (creatingObstacle.offset + creatingObstacle.cursorObj.transform.localScale.y)*0.5f, 

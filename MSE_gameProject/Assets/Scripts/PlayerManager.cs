@@ -46,7 +46,7 @@ public class PlayerManager : MonoBehaviour
                         board[(int)pos.x, -(int)pos.z].GetComponent<TileManager>().occupiedPlayer = 1;
                         Debug.Log(pos);
                     
-                        StartCoroutine(SendData(gameManager.playerType, -(int)pos.z, (int)pos.x));
+                        StartCoroutine(SendData(gameManager.playerType, (int)pos.x, -(int)pos.z));
                         StartCoroutine(MoveCharacter(new Vector3(pos.x, transform.position.y, pos.z)));
                     }
                 }
@@ -90,11 +90,11 @@ public class PlayerManager : MonoBehaviour
         this.transform.GetChild(0).GetComponent<Animator>().SetBool("isWalking", false);
     }
 
-    IEnumerator SendData(int playerType, int row, int col)
+    IEnumerator SendData(int playerType, int col, int row)
     {
         Debug.Log("SendData: Send Data");
         gameManager.SetPlayerState(PlayerState.SENDING);
-        yield return StartCoroutine(client.ESendData(playerType,"moving",row, col,-1,-1));
+        yield return StartCoroutine(client.ESendData(playerType,"moving",col, row,-1,-1));
         playermoving = 0;
     }
 
