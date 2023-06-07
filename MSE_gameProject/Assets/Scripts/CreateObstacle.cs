@@ -14,11 +14,18 @@ public class CreateObstacle : MonoBehaviour
     [SerializeField] Material[] obstacleMaterial;
     [SerializeField] Material[] playerObstacleMaterial;
     [SerializeField] LayerMask layerMask;
-    private GameObject cursorObj;
+    public GameObject cursorObj;
+    public GameObject tileObj;
+    public float offset;
     private bool canPlace;
     private ObstacleState obstacleState;
     public int createobstacle;
-    private GameObject gameManager;
+    private GameManager gameManager;
+    private GameClient client;
+    private Vector3 clickPos;
+    private Vector2 clickTile;
+    public bool validPlace;
+
     private GameObject[,] board;
 
     //public int[,] mapdata;
@@ -26,69 +33,120 @@ public class CreateObstacle : MonoBehaviour
         // Start is called before the first frame update
     void Start()
     {
+        client = GameClient.GetInstance();
         obstacleState = ObstacleState.HORIZONTAL;
         cursorObj = Instantiate(obstaclePrefab, Vector3.zero, Quaternion.identity);
         cursorObj.SetActive(false);
         canPlace = true;
-        gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameManager = GameManager.GetInstance();
         createobstacle = 0;
+        offset = tileObj.transform.GetChild(0).localScale.y;
+        validPlace = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (createobstacle == 0) return;
-
-        if (Input.GetKeyDown(KeyCode.R)) ChangeObstacleState();
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 100, layerMask))
+        if (createobstacle == 1 && gameManager.state == PlayerState.MYTURN )
         {
-            cursorObj.SetActive(true);
-            Vector3 cursorPosition = new Vector3(hit.transform.position.x + (cursorObj.transform.localScale.x * 0.5f), hit.transform.position.y + (hit.transform.GetChild(0).localScale.y + cursorObj.transform.localScale.y)*0.5f, hit.transform.position.z);
+            if (Input.GetKeyDown(KeyCode.R)) ChangeObstacleState();
 
-            if (cursorObj.transform.position != cursorPosition) cursorObj.transform.position = cursorPosition;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            if (!CheckValid(hit.transform))
+            if (Physics.Raycast(ray, out hit, 100, layerMask))
             {
-                canPlace = false;
-                cursorObj.transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[1];
+                cursorObj.SetActive(true);
+                Vector3 cursorPosition = new Vector3(hit.transform.position.x + (cursorObj.transform.localScale.x * 0.5f), hit.transform.position.y + (hit.transform.GetChild(0).localScale.y + cursorObj.transform.localScale.y)*0.5f, hit.transform.position.z);
+
+                if (cursorObj.transform.position != cursorPosition) cursorObj.transform.position = cursorPosition;
+
+                if (!CheckValid(hit.transform))
+                {
+                    canPlace = false;
+                    cursorObj.transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[1];
+                }
+                else
+                {
+                    cursorObj.transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[0];
+                    canPlace = true;
+                }
+
+                if (Input.GetMouseButtonDown(0) && hit.transform != null && canPlace)
+                {
+                    clickPos = cursorPosition;
+                    clickTile = new Vector2((int)hit.transform.position.x, -(int)hit.transform.position.z);
+                    switch (obstacleState)
+                    {
+                        case ObstacleState.HORIZONTAL:
+                            StartCoroutine(SendObstacleValidData((int)clickTile.x, (int)clickTile.y,
+                            (int)clickTile.x+1, (int)clickTile.y));
+                            break;
+                        case ObstacleState.VERTICAL:
+                            StartCoroutine(SendObstacleValidData((int)clickTile.x, (int)clickTile.y,
+                            (int)clickTile.x, (int)clickTile.y+1));
+                            break;
+                    }
+                }
+
             }
             else
             {
-                cursorObj.transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[0];
-                canPlace = true;
+                cursorObj.SetActive(false);
             }
+        }
 
-            if (Input.GetMouseButtonDown(0) && hit.transform != null && canPlace)
+        
+
+        if (createobstacle == 1 && gameManager.state == PlayerState.AFTERVALID)
+        {
+
+            if(validPlace)
             {
-                PlaceObstacle(cursorPosition);
+                PlaceObstacle(clickPos);
 
                 switch (obstacleState)
                 {
                     case ObstacleState.HORIZONTAL:
-                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().occupiedOtc = 1;
-                        board[(int)hit.transform.position.x+1, -(int)hit.transform.position.z].GetComponent<TileManager>().occupiedOtc = 1;
+                        board[(int)clickTile.x, (int)clickTile.y].GetComponent<TileManager>().occupiedOtc = 1;
+                        board[(int)clickTile.x+1, (int)clickTile.y].GetComponent<TileManager>().occupiedOtc = 1;
+                        StartCoroutine(SendObstacleData(gameManager.playerType, (int)clickTile.x, (int)clickTile.y, (int)clickTile.x+1, (int)clickTile.y));
                         break;
                     case ObstacleState.VERTICAL:
-                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z].GetComponent<TileManager>().occupiedOtc = 1;
-                        board[(int)hit.transform.position.x, -(int)hit.transform.position.z + 1].GetComponent<TileManager>().occupiedOtc = 1;
+                        board[(int)clickTile.x, (int)clickTile.y].GetComponent<TileManager>().occupiedOtc = 1;
+                        board[(int)clickTile.x, (int)clickTile.y+1].GetComponent<TileManager>().occupiedOtc = 1;
+                        StartCoroutine(SendObstacleData(gameManager.playerType, (int)clickTile.x, (int)clickTile.y, (int)clickTile.x, (int)clickTile.y+1));
                         break;
                 }
-                createobstacle = 0;
-                gameManager.GetComponent<GameManager>().TurnChange();
             }
-
+            else
+            {
+                //경고메시지
+                gameManager.SetPlayerState(PlayerState.MYTURN);
+            }
         }
-        else
+
+        if(createobstacle == 0)
         {
             cursorObj.SetActive(false);
         }
     }
 
-    private void PlaceObstacle(Vector3 cursorPosition)
+    IEnumerator SendObstacleData(int playerType, int x1, int y1, int x2, int y2)
+    {
+        Debug.Log("SendObstacleData: Send Data");
+        gameManager.SetPlayerState(PlayerState.SENDING);
+        yield return StartCoroutine(client.ESendData(playerType,"blocking",x1, y1, x2, y2));
+        createobstacle = 0;
+    }
+    IEnumerator SendObstacleValidData(int x1, int y1, int x2, int y2)
+    {
+        Debug.Log("SendOstacleValidData: Send Data");
+        gameManager.SetPlayerState(PlayerState.SENDING);
+        yield return StartCoroutine(client.ESendOValidData(x1, y1,x2, y2));
+    }
+
+    public void PlaceObstacle(Vector3 cursorPosition)
     {
         Transform go = Instantiate(obstaclePrefab, cursorPosition, Quaternion.identity).transform.GetChild(0);
         go.localPosition = cursorObj.transform.GetChild(0).localPosition;
@@ -137,4 +195,21 @@ public class CreateObstacle : MonoBehaviour
             cursorObj.transform.GetChild(0).localPosition = new Vector3(0.5f, 0f, - 0.5f);
         }
     }
+
+    public void setObstacleState(int state)
+    {
+        if (state == 0)
+        {   
+            obstacleState = ObstacleState.VERTICAL;
+            cursorObj.transform.GetChild(0).localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+            cursorObj.transform.GetChild(0).localPosition = new Vector3(0, 0f, -1);
+        }
+        else if (state == 1)
+        {
+            obstacleState = ObstacleState.HORIZONTAL;
+            cursorObj.transform.GetChild(0).localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            cursorObj.transform.GetChild(0).localPosition = new Vector3(0.5f, 0f, - 0.5f);
+        }
+    }
+
 }
