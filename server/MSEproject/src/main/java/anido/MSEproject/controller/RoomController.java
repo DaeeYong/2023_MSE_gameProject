@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Random;
+
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/room")
@@ -22,6 +26,7 @@ public class RoomController {
     private boolean isGameStart = false;
 
     private final RoomService roomService;
+    private String[] themes = {"Fall", "Summer"};
 
     /**
      * API: Join Room
@@ -93,17 +98,19 @@ public class RoomController {
     public ResponseEntity<?> joinRoom2(@RequestBody Player player) {
         RoomStatus roomStatus = new RoomStatus();
 
-        waitingPlayerInfo = player;
+        if (hostInfo == null) {
+            return createBadRequestResponse(roomStatus,"Cannot join room. There is no Host.");
+        }
 
+        waitingPlayerInfo = player;
         roomService.saveWaitingPlayerInfo(waitingPlayerInfo);
-//        roomService.saveRoomStatus(roomStatus);
+        // roomService.saveRoomStatus(roomStatus);
 
         if (waitingPlayerInfo == null) {
             return createBadRequestResponse(roomStatus,"Room is already full.");
         }
 
         return ResponseEntity.ok(hostInfo);
-
     }
 
 
@@ -213,10 +220,34 @@ public class RoomController {
         return ResponseEntity.ok(isGameStart);
     }
 
+
+    /**
+     * API: Get Map by Index
+     * Description: Returns the map theme at the specified index.
+     * Method: GET
+     * Endpoint: '/room/maps'
+     *
+     * @param idx The index of the theme in the array
+     *            localhost:8080/room/maps?idx=value (0 or 1)
+     * @return The map theme at the specified index.
+     */
+    @GetMapping("/maps")
+    public ResponseEntity<String> getMapByIndex(@RequestParam int idx) {
+        if (idx < 0 || idx >= themes.length) {
+            return ResponseEntity.badRequest().body("Invalid index");
+        }
+
+        String theme = themes[idx];
+        return ResponseEntity.ok(theme);
+    }
+
     private ResponseEntity<RoomStatus> createBadRequestResponse(RoomStatus roomStatus, String message) {
 
         roomStatus.setMessage(message);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatus);
     }
+
+
+
 }
