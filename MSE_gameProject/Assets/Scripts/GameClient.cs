@@ -9,8 +9,14 @@ public class GameClient : MonoBehaviour
     [SerializeField] private TMP_InputField inputfeild;
     private static GameClient instance;
     public int turnindex = 0;
-    private static string updatePlayerInfoURL = "http://localhost:8080/move/update/player";
-    private static string fetchPlayerInfoURL = "http://localhost:8080/move/info/player";
+    private static string initGameURL = "http://localhost:8080/game/init";
+    private static string updatePlayerInfoURL = "http://localhost:8080/action/update/player";
+    private static string fetchPlayerInfoURL = "http://localhost:8080/fetch/info/player";
+
+
+    private static string validObsInfoURL = "http://localhost:8080/install/block/valid";
+    //private static string fetchValidObsInfoURL = "";
+
     private static string fetchPlayerTurnInfoURL = "http://localhost:8080/current/player-turn-info";
     private static string setPlayerTurnInfoURL = "http://localhost:8080/current/player-turn-set";
     private static string createRoomURL = "http://localhost:8080/room/join1";
@@ -31,6 +37,40 @@ public class GameClient : MonoBehaviour
     public static GameClient GetInstance()
     {
         return instance;
+    }
+
+    public IEnumerator InitGame() 
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get(initGameURL);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+                Debug.LogError("HTTP Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.Success:
+                Debug.Log("Get valid data");
+                string data = webRequest.downloadHandler.text;
+                Debug.Log(data);
+                ValidData valid = JsonUtility.FromJson<ValidData>(data);
+                
+                //valid data 사용
+                bool validValue = valid.valid;
+                    
+                if(validValue == true)
+                {
+                    Debug.Log("Success to init game");
+                }
+                else
+                    Debug.Log("Fail to init game");
+        
+                break;
+        }
     }
 
     //send player's action data
@@ -92,11 +132,116 @@ public class GameClient : MonoBehaviour
                 Debug.Log("data get successfully!");
                 string data = webRequest.downloadHandler.text;
                 Debug.Log(data);
-                Player form = JsonUtility.FromJson<Player>(data);
-                GameManager.GetInstance().setFetchedData(form.getPosX(), form.getPosY());
+                PlayerForm form = JsonUtility.FromJson<PlayerForm>(data);
+                GameManager.GetInstance().setFetchedData(form);
                 break;
         }
     }
+
+    //----------------------------------------
+
+    
+    //send Obstacle's valid action data
+    public IEnumerator ESendOValidData(int x1, int y1, int x2, int y2)
+    {
+        Obstacle form = new Obstacle(x1, y1, x2, y2);
+        string jsonData = JsonUtility.ToJson(form);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(validObsInfoURL, jsonData))
+        {
+            webRequest.uploadHandler.Dispose();
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError("Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError("HTTP Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    // everything is ok.
+                    Debug.Log("data sent successfully!");
+                    
+                    Debug.Log("Get valid data");
+                    string data = webRequest.downloadHandler.text;
+                    Debug.Log(data);
+                    ValidData valid = JsonUtility.FromJson<ValidData>(data);
+                
+                    //valid data 사용
+                    bool validValue = valid.valid;
+                    
+                    if(validValue == true)
+                    {
+                        GameManager.GetInstance().SetValidPlace(true);
+                        GameManager.GetInstance().SetPlayerState(PlayerState.AFTERVALID);
+                    }
+                    else if(validValue == false)
+                    {
+                        GameManager.GetInstance().SetValidPlace(false);
+                        GameManager.GetInstance().SetPlayerState(PlayerState.AFTERVALID);
+                    }
+        
+                    break;
+            }
+            webRequest.Dispose();
+        }
+    }
+
+    // get obstacle valid data validation
+    /*public IEnumerator EFetchOValid()
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get(fetchValidObsInfoURL);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+                Debug.LogError("HTTP Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.Success:
+                // everything is ok.
+                Debug.Log("data get successfully!");
+                string data = webRequest.downloadHandler.text;
+                Debug.Log(data);
+                ValidData valid = JsonUtility.FromJson<ValidData>(data);
+                //valid data 사용
+                //bool validValue = valid.getValid();
+                if(validValue == ) //데이터 못받음
+                {
+
+                }
+                else //데이터 받음 
+                {
+                    if(validVale == true)
+                    {
+                        createobstacle.validPlace = true;
+                    }
+                    else if(validValue == false)
+                    {
+                        createobstacle.validPlace = false;
+                    }
+                    GameManager.GetInstance().SetPlayerState(PlayerState.AFTERVALID);
+                }
+                break;
+        }
+    }*/
+
+
+     //----------------------------------------
+
+
     //state == waiting
     public IEnumerator EGetTurn(int playerNum)
     {
@@ -226,6 +371,7 @@ public class GameClient : MonoBehaviour
                 break;
         }
     }
+    
     public void LoadScene(string name)
     {
         if (inputfeild != null)

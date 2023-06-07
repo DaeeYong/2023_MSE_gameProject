@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.172768, g: 0.21589169, b: 0.29782546, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2226,7 +2226,11 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  cursorObj: {fileID: 0}
+  tileObj: {fileID: 2104889419624321447, guid: dc35a9c7897b1d347a0e5204d2baab8e, type: 3}
+  offset: 0
   createobstacle: 0
+  validPlace: 0
 --- !u!4 &386078927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6873483975007021233, guid: a644c6867551b4cb5be2ad8b783a7362, type: 3}
@@ -5671,6 +5675,7 @@ MonoBehaviour:
   - {fileID: 1429653731}
   - {fileID: 2095700381}
   actionBTN: {fileID: 61334546}
+  creatingObstacle: {fileID: 381619943}
   playerType: 0
   state: 0
 --- !u!4 &1164989824 stripped
