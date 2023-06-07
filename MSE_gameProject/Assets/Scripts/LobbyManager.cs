@@ -32,4 +32,9 @@ public class LobbyManager : MonoBehaviour
         string winnigrate = "Winnig rate: " + mydata.getWinnigRate() + "%(" + mydata.getWin() + "/" + mydata.getTotal() + ")";
         UIController.UIController.UpdateProfile(nameTXT, WinningrateTXT, "ID: " + client.MyData.getName(), winnigrate);
     }
+
+    public void SetMapindex(int idx)
+    {
+        client.mapIndex = idx;
+    }
 }

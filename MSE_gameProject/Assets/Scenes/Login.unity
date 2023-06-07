@@ -2826,6 +2826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputfeild: {fileID: 0}
   turnindex: 0
+  mapIndex: 0
 --- !u!1 &1148199415
 GameObject:
   m_ObjectHideFlags: 0

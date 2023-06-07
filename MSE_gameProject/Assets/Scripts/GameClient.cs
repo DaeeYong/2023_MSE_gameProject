@@ -12,6 +12,7 @@ public class GameClient : MonoBehaviour
     public User MyData;
     public User OtherData;
     public int turnindex = 0;
+    public int mapIndex = 0;
     private static string initGameURL = "http://localhost:8080/game/init";
     private static string updatePlayerInfoURL = "http://localhost:8080/action/update/player";
     private static string fetchPlayerInfoURL = "http://localhost:8080/fetch/info/player";
@@ -26,6 +27,7 @@ public class GameClient : MonoBehaviour
     private static string createRoomURL = "http://localhost:8080/room/join1";
     private static string joinRoomURL = "http://localhost:8080/room/join2";
     private static string gameStartURL = "http://localhost:8080/room/start";
+    private static string fetchMapNametURL = "http://localhost:8080/room/maps";
     private static string updateGameResultURL = "http://localhost:8080/game/end";
     private void Awake()
     {
@@ -325,6 +327,11 @@ public class GameClient : MonoBehaviour
     {   
         Debug.Log("Join Room");
         string url = type == 1 ? createRoomURL : joinRoomURL;
+        if(type == 1)
+        {
+            string temp = mapIndex == 0 ? "Fall" : "Summer";
+            url = url + "?map=" + temp;
+        }
         string jsonData = JsonUtility.ToJson(user);
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, jsonData))
         {
@@ -383,7 +390,8 @@ public class GameClient : MonoBehaviour
                 Debug.Log("Game Start");
                 webRequest = UnityWebRequest.Get(initGameURL);
                 yield return webRequest.SendWebRequest();
-                LoadScene("Fall");
+                string mapName = mapIndex == 0 ? "Fall" : "Summer";
+                LoadScene(mapName);
                 break;
         }
     }
@@ -412,7 +420,7 @@ public class GameClient : MonoBehaviour
         }
     }
 
-    public IEnumerator getStartState(Action callback)
+    public IEnumerator getStartState(Action<string> callback)
     {
         UnityWebRequest webRequest = UnityWebRequest.Get(getStartstateURL);
         webRequest.SetRequestHeader("Accept", "application/json");
@@ -429,7 +437,19 @@ public class GameClient : MonoBehaviour
                 if (data.CompareTo("true") == 0)
                 {
                     Debug.Log("Start Game");
-                    callback();
+                    webRequest = UnityWebRequest.Get(fetchMapNametURL);
+                    webRequest.SetRequestHeader("Accept", "application/json");
+                    yield return webRequest.SendWebRequest();
+                    if (webRequest.result == UnityWebRequest.Result.Success)
+                    {
+                        string mapName = webRequest.downloadHandler.text;
+                        Debug.Log("Map Name: " + mapName);
+                        callback(mapName);
+                    }
+                    else
+                    {
+                        callback("Fall");
+                    }
                 }
                 break;
         }

@@ -73,11 +73,11 @@ public class WaitingRoomManager : MonoBehaviour
         }
     }
 
-    private void StartGame()
+    private void StartGame(string mapName)
     {
         StopCoroutine(waitingGamestart());
         Debug.Log("Callback:");
-        client.LoadScene("Fall");
+        client.LoadScene(mapName);
     }
 
 }
