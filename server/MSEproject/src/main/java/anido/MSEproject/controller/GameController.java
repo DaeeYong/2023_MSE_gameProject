@@ -156,8 +156,11 @@ public class GameController {
     @PostMapping("/game/end")
     @ResponseBody
     public Validation recordWinLose(@RequestBody WinLose winLose){
-        User winnerUser = gameService.getPlayerInfo(winLose.getWinner());
-        User loserUser = gameService.getPlayerInfo(winLose.getLoser());
+        Player winner = gameService.getPlayerInfo(winLose.getWinner());
+        Player loser = gameService.getPlayerInfo(winLose.getLoser());
+
+        User winnerUser = userService.findOne(winner.getId()).get();
+        User loserUser = userService.findOne(loser.getId()).get();
 
         winnerUser.setWin(winnerUser.getWin() + 1);
         loserUser.setLose(loserUser.getLose() + 1);
