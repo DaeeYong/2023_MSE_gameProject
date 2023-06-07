@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="" />
+    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/RoomStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/RoomStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/User.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

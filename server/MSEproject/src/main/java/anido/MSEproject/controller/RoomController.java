@@ -150,9 +150,11 @@ public class RoomController {
             return createBadRequestResponse(roomStatus, "Cannot start the game.");
         }
 
-        // 이거 왜 안되는지 해결해야함
-       //  roomStatus.setHost(hostInfo);
-       //  roomStatus.setWaitingPlayer(waitingPlayerInfo);
+        // 이거 왜 안되는지 해결해야함 -> 되네?
+       roomStatus.setHost(hostInfo);
+       roomStatus.setWaitingPlayer(waitingPlayerInfo);
+       //roomService.saveRoomStatus(roomStatus);
+
 
         roomStatus.setHostReady(true);
         roomStatus.setWaitingPlayerReady(true);
@@ -162,9 +164,6 @@ public class RoomController {
         roomStatus.setMessage("Game started!");
 
 //        roomService.saveRoomStatus(roomStatus);
-
-
-
 
         return ResponseEntity.ok(roomStatus);
     }
@@ -220,5 +219,4 @@ public class RoomController {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatus);
     }
-
 }
