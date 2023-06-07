@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UIController;
 
 public enum PlayerState
 {
@@ -11,7 +13,8 @@ public enum PlayerState
     UPDATING,
     WAITING,
     OTHERTURN,
-    AFTERVALID
+    AFTERVALID,
+    GAMEOVER
 }
 
 public class GameManager : MonoBehaviour
@@ -21,6 +24,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Material[] playerMaterial;
     [SerializeField] private GameObject[] buttons;
     [SerializeField] private GameObject actionBTN;
+    [SerializeField] private TextMeshProUGUI[] profileID;
+    [SerializeField] private TextMeshProUGUI[] profileRate;
+    [SerializeField] private Image[] profileBackground;
+    [SerializeField] private Sprite[] turnIMG;
     private GameClient client;
     private GameObject[,] board;
     private GameObject[] player = new GameObject[2]; 
@@ -56,35 +63,54 @@ public class GameManager : MonoBehaviour
         {
             SetPlayerState(PlayerState.MYTURN);
             playerType = 1;
+            updateProfile(client.MyData, profileID[0], profileRate[0]);
+            updateProfile(client.OtherData, profileID[1], profileRate[1]);
+            
         }
         else
         {
             SetPlayerState(PlayerState.OTHERTURN);
             playerType = 2;
+            updateProfile(client.OtherData, profileID[0], profileRate[0]);
+            updateProfile(client.MyData, profileID[1], profileRate[1]);
             GetData();
         }
+        profileBackground[0].sprite = turnIMG[0];
+        profileBackground[1].sprite = turnIMG[1];
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(player[0].transform.position.x == 0 || player[1].transform.position.x == 16)
+        if((player[0].transform.position.x == 0 || player[1].transform.position.x == 16)&& state != PlayerState.GAMEOVER)
         {
-            GameOver();
+            SetPlayerState(PlayerState.GAMEOVER);
+            if(player[0].transform.position.x == 0 && playerType == 1) //host only call
+            {
+                //host ½Â
+                WinLose result = new WinLose(1, 2);
+                StartCoroutine(client.sendResult(result, GameOver));
+            }
+
+            if(player[1].transform.position.x == 16 && playerType == 1)
+            {
+                //host ÆÐ
+                WinLose result = new WinLose(2, 1);
+                StartCoroutine(client.sendResult(result, GameOver));
+            }
+            
+            if(playerType != 1) GameOver(); //client´Â ³ª°¡¸é µÊ.
         }
     }
 
     private void GameOver()
     {
         buttons[2].SetActive(true);
-        Destroy(buttons[0]);
-        Destroy(buttons[1]);
-        Destroy(timer);
     }
 
-    public void GameRestart() 
+    public void ExitGame() 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Lobby");
     }
 
     private void CreateBoard()
@@ -118,15 +144,19 @@ public class GameManager : MonoBehaviour
          timer.GetComponent<TimerManager>().leftTime = 30;
             if(index == player.Length-1)
             {
+                profileBackground[index].sprite = turnIMG[1];
                 Debug.Log(index);
                 turn = player[0];
                 index = 0;
+                profileBackground[index].sprite = turnIMG[0];
             }
             else
             {
+                profileBackground[index].sprite = turnIMG[1];
                 Debug.Log(index);
                 index++;
                 turn = player[index];
+                profileBackground[index].sprite = turnIMG[0];
             }
             buttons[0].SetActive(true);
             buttons[1].SetActive(true);
@@ -149,8 +179,14 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerState(PlayerState state)
     {
-        if (state == PlayerState.MYTURN) actionBTN.SetActive(true);
-        if (state == PlayerState.OTHERTURN) actionBTN.SetActive(false);
+        if (state == PlayerState.MYTURN)
+        {
+            actionBTN.SetActive(true);
+        }
+        if (state == PlayerState.OTHERTURN)
+        {
+            actionBTN.SetActive(false);
+        }
         this.state = state;
         Debug.Log("State change: " + state);
     }
@@ -246,6 +282,12 @@ public class GameManager : MonoBehaviour
     public void SetValidPlace(bool valid)
     {
         creatingObstacle.validPlace = valid;
+    }
+
+    public void updateProfile(User user, TextMeshProUGUI nameTXT, TextMeshProUGUI WinningrateTXT)
+    {
+        string winnigrate = "Winnig rate: " + user.getWinnigRate() + "%(" + user.getWin() + "/" + user.getTotal() + ")";
+        UIController.UIController.UpdateProfile(nameTXT, WinningrateTXT, "ID: " + user.getName(), winnigrate);
     }
 
     public static GameManager GetInstance() { return instance; }

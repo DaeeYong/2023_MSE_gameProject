@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TestLoginconnectroom.unity
+    path: Assets/Scenes/Login.unity
     guid: 8a4b1015a3167f94cb244112dab9ecff
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Fall.unity
     guid: 0415c8077ee849347b5ecae376be2790
+  - enabled: 1
+    path: Assets/Scenes/Summer.unity
+    guid: b5b853db288170144bcab635dfd2223a
   m_configObjects: {}

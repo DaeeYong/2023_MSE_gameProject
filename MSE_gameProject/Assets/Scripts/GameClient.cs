@@ -26,6 +26,7 @@ public class GameClient : MonoBehaviour
     private static string createRoomURL = "http://localhost:8080/room/join1";
     private static string joinRoomURL = "http://localhost:8080/room/join2";
     private static string gameStartURL = "http://localhost:8080/room/start";
+    private static string updateGameResultURL = "http://localhost:8080/game/end";
     private void Awake()
     {
         //init singleton
@@ -434,6 +435,37 @@ public class GameClient : MonoBehaviour
         }
     }
 
+    public IEnumerator sendResult(WinLose result, Action callback)
+    {
+        Debug.Log("Send Game Result");
+        string jsonData = JsonUtility.ToJson(result);
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(updateGameResultURL, jsonData))
+        {
+            webRequest.uploadHandler.Dispose();
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError("Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError("The room is already full" + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    // everything is ok.
+                    Debug.Log("Send Result successfully");
+                    callback();
+                    break;
+            }
+            webRequest.Dispose();
+        }
+    }
     public void LoadScene(string name)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(name);

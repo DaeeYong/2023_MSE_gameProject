@@ -14,10 +14,12 @@ public class PlayerManager : MonoBehaviour
     private GameClient client;
     [SerializeField] Material[] availableMaterial;
     private ArrayList available;
+    private AudioSource audio;
 
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         available = new ArrayList();
         board = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardManager>().gameBoard;
         gameManager = GameManager.GetInstance();
@@ -74,10 +76,15 @@ public class PlayerManager : MonoBehaviour
         }
         while (true)
         {
+            if (!audio.isPlaying)
+            {
+                audio.Play();
+            }
             if (Vector3.Distance(transform.position, targetpos) < Mathf.Epsilon) break;
             transform.position = Vector3.MoveTowards(transform.position, targetpos, Time.deltaTime * movingSpeed);
             yield return null;
         }
+        audio.Stop();
         transform.position = targetpos; //위치 보정
         i = 0;
         while (i < 1 && angle != 0)
@@ -216,7 +223,7 @@ public class PlayerManager : MonoBehaviour
         {
             if(InBoard(new Vector2(((Vector3)available[i]).x, -((int)((Vector3)available[i]).z))))
             {
-                board[(int)((Vector3)available[i]).x, -(int)((Vector3)available[i]).z].transform.GetChild(0).GetComponent<Renderer>().material = availableMaterial[0];
+                board[(int)((Vector3)available[i]).x, -(int)((Vector3)available[i]).z].transform.GetChild(1).GetComponent<Renderer>().material = availableMaterial[0];
             }
         }
     }
@@ -227,7 +234,7 @@ public class PlayerManager : MonoBehaviour
         {
             if(InBoard(new Vector2(((Vector3)available[i]).x, -((int)((Vector3)available[i]).z))))
             {
-                board[(int)((Vector3)available[i]).x, -(int)((Vector3)available[i]).z].transform.GetChild(0).GetComponent<Renderer>().material = availableMaterial[1];
+                board[(int)((Vector3)available[i]).x, -(int)((Vector3)available[i]).z].transform.GetChild(1).GetComponent<Renderer>().material = availableMaterial[1];
             }
         }
     }

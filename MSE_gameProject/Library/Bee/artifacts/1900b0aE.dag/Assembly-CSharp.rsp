@@ -389,6 +389,7 @@
 "Assets/Scripts/domain/PlayerForm.cs"
 "Assets/Scripts/domain/TurnForm.cs"
 "Assets/Scripts/domain/User.cs"
+"Assets/Scripts/domain/WinLose.cs"
 "Assets/Scripts/GameClient.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/LobbyManager.cs"
