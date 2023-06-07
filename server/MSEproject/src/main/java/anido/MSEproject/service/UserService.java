@@ -2,17 +2,18 @@ package anido.MSEproject.service;
 
 import anido.MSEproject.domain.User;
 import anido.MSEproject.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     /*
     <회원가입>
