@@ -1,6 +1,6 @@
 package anido.MSEproject.service;
 
-import anido.MSEproject.domain.RoomStatusDTO;
+import anido.MSEproject.domain.RoomStatus;
 import anido.MSEproject.domain.User;
 import anido.MSEproject.repository.RoomRepository;
 import anido.MSEproject.repository.UserRepository;
@@ -14,7 +14,7 @@ public class RoomService {
     private final UserRepository userRepository;
 
 
-    public void saveRoomStatus(RoomStatusDTO roomStatus) {
+    public void saveRoomStatus(RoomStatus roomStatus) {
         roomRepository.save(roomStatus);
     }
 

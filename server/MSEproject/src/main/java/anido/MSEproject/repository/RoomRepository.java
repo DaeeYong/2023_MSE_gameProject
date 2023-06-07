@@ -1,7 +1,7 @@
 package anido.MSEproject.repository;
 
-import anido.MSEproject.domain.RoomStatusDTO;
+import anido.MSEproject.domain.RoomStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoomRepository extends JpaRepository<RoomStatusDTO,Long> {
+public interface RoomRepository extends JpaRepository<RoomStatus,Long> {
 }

@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="roomstatus_table")
-public class RoomStatusDTO {
+public class RoomStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

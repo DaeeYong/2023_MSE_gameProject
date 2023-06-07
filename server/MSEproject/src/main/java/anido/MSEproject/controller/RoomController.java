@@ -2,7 +2,7 @@
 package anido.MSEproject.controller;
 
 import anido.MSEproject.domain.Player;
-import anido.MSEproject.domain.RoomStatusDTO;
+import anido.MSEproject.domain.RoomStatus;
 import anido.MSEproject.domain.User;
 
 
@@ -48,7 +48,7 @@ public class RoomController {
      */
     @PostMapping("/join1")
     public ResponseEntity<?> joinRoom1(@RequestBody Player player) {
-        RoomStatusDTO roomStatus = new RoomStatusDTO();
+        RoomStatus roomStatus = new RoomStatus();
 
         hostInfo = player;
 
@@ -91,7 +91,7 @@ public class RoomController {
      */
     @PostMapping("/join2")
     public ResponseEntity<?> joinRoom2(@RequestBody Player player) {
-        RoomStatusDTO roomStatus = new RoomStatusDTO();
+        RoomStatus roomStatus = new RoomStatus();
 
         waitingPlayerInfo = player;
 
@@ -143,8 +143,8 @@ public class RoomController {
      * }
      */
     @GetMapping("/start")
-    public ResponseEntity<RoomStatusDTO> startGame(@RequestParam(required = true, name = "button") boolean button) {
-        RoomStatusDTO roomStatus = new RoomStatusDTO();
+    public ResponseEntity<RoomStatus> startGame(@RequestParam(required = true, name = "button") boolean button) {
+        RoomStatus roomStatus = new RoomStatus();
 
         if (!button) {
             return createBadRequestResponse(roomStatus, "Cannot start the game.");
@@ -214,7 +214,7 @@ public class RoomController {
         return ResponseEntity.ok(isGameStart);
     }
 
-    private ResponseEntity<RoomStatusDTO> createBadRequestResponse(RoomStatusDTO roomStatus, String message) {
+    private ResponseEntity<RoomStatus> createBadRequestResponse(RoomStatus roomStatus, String message) {
 
         roomStatus.setMessage(message);
 

@@ -16,7 +16,6 @@ import javax.persistence.*;
 //@Embeddable
 public class Player extends User{
 
-
     @Column(name="player_action")
     private String action; //moving, blocking
 
