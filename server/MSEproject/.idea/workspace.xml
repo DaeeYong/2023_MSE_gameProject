@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/domain/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +134,8 @@
       <workItem from="1686061545663" duration="5257000" />
       <workItem from="1686114132977" duration="1249000" />
       <workItem from="1686115447593" duration="585000" />
-      <workItem from="1686116969423" duration="345000" />
+      <workItem from="1686116969423" duration="394000" />
+      <workItem from="1686117609216" duration="1719000" />
     </task>
     <servers />
   </component>
