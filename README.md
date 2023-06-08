@@ -135,6 +135,99 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
   "loser" : {int}  
 }
 - output format : {"valid" : true | false}
+  
+## RoomController
+### 1. Join Room1
+- method : post
+- url : http://localhost:8080/room/join1
+- input format :{  
+  "name": {string},  
+  "password": {string},  
+  "win": {int},   
+  "lose": {int}  
+}
+-output format :{    
+  "id": {int},  
+  "name": {string},  
+  "password": {string},  
+  "win": {int},  
+  "lose": {int}   
+}
+
+### 2. Join Room2
+- method : post
+- url : http://localhost:8080/room/join2
+- input format :{  
+  "name": {string},  
+  "password": {string},  
+  "win": {int},   
+  "lose": {int}  
+}  
+- output format :{    
+  "id": {int},  
+  "name": {string},  
+  "password": {string},  
+  "win": {int},  
+  "lose": {int}   
+}
+
+### 3. start Game
+- method : post
+- url : http://localhost:8080/room/start
+- input format : {  
+  "gameStartButtonPressed" : {Boolean}  
+}  
+- output format : [  
+"host": {  
+  "id": {Long},  
+  "name": {string},  
+  "password": {string},  
+  "win": {int},  
+  "lose": {int}  
+},  
+"waitingPlayer": {  
+  "id": {Long},  
+  "name": {string},  
+  "password": {string},  
+  "win": {int},  
+  "lose": {int}  
+},  
+"hostReady": {boolean},  
+"waitingPlayerReady": {boolean},  
+"message": {string},  
+"gameStarted": {boolean},  
+"hostCheck": {boolean}  
+]
+
+### 4. get waiting player information
+- method : get
+- url : http://localhost:8080/room/waitingPlayer
+- intput format : x
+- output format : {  
+  "id" : {int},  
+  "name" : {string},  
+  "password" : {string},  
+  "win" : {int},  
+  "lose" : {int}  
+  }
+
+### 5. get game start status
+- method : get
+- url : http://localhost:8080/room/startstatus
+- input format : x
+- output format : {
+  "return" : {boolean}
+}
+
+### 6. get map by index
+- method : get
+- url : http://localhost:8080/room/maps
+- input format : x
+- output format :  
+      @param idx The index of the theme in the array  
+      localhost:8080/room/maps?idx=value (0 or 1)  
+      @return The map theme at the specified index.  
+
 ## server-client 통신 api 호출 시나리오
 --------------------------
 ### 플레이어1 차례로 가정
