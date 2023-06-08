@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name="player_table")
 public class Player extends User{
-  
+
     @Column(name="player_action")
     @Transient
     private String action; //moving, blocking
