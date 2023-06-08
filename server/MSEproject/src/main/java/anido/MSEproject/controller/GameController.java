@@ -162,8 +162,8 @@ public class GameController {
         Player winner = gameService.getPlayerInfo(winLose.getWinner());
         Player loser = gameService.getPlayerInfo(winLose.getLoser());
 
-        User user1 = new User(winner.getId(), winner.getName(), winner.getPassword(), winner.getWin(), winner.getLose());
-        User user2 = new User(loser.getId(), loser.getName(), loser.getPassword(), loser.getWin(), loser.getLose());
+        User user1 = new User(winner.getId(), winner.getName(), winner.getPassword(), winner.getWin() + 1, winner.getLose());
+        User user2 = new User(loser.getId(), loser.getName(), loser.getPassword(), loser.getWin(), loser.getLose()+1);
 
         userService.updateUserInfo(user1, user2);
 
