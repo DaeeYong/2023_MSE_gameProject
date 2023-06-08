@@ -21,8 +21,6 @@ public class Player extends User{
 
     @Column(name="cur_row")
     @Transient
-    private String action = null; //moving, blocking
-
     private int row; //현재위치?
 
     @Column(name="cur_col")

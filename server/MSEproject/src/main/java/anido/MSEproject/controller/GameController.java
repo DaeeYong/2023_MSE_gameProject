@@ -162,14 +162,14 @@ public class GameController {
         Player winner = gameService.getPlayerInfo(winLose.getWinner());
         Player loser = gameService.getPlayerInfo(winLose.getLoser());
 
-        User winnerUser = userService.findOne(winner.getId()).get();
-        User loserUser = userService.findOne(loser.getId()).get();
+        User user1 = new User(winner.getId(), winner.getName(), winner.getPassword(), winner.getWin(), winner.getLose());
+        User user2 = new User(loser.getId(), loser.getName(), loser.getPassword(), loser.getWin(), loser.getLose());
 
-        winnerUser.setWin(winnerUser.getWin() + 1);
-        loserUser.setLose(loserUser.getLose() + 1);
+        userService.updateUserInfo(user1, user2);
 
         Validation validation =  new Validation();
         validation.setValid(true);
+
         return validation;
     }
 }

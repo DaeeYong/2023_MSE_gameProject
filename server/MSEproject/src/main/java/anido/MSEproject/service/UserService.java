@@ -28,7 +28,14 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+    public void updateUserInfo(User winner, User loser){
 
+        userRepository.deleteById(winner.getId());
+        userRepository.deleteById(loser.getId());
+
+        userRepository.save(winner);
+        userRepository.save(loser);
+    }
     /*
     <로그인>
      */
