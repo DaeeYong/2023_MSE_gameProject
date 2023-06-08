@@ -25,7 +25,7 @@ public class CreateObstacle : MonoBehaviour
     private Vector3 clickPos;
     private Vector2 clickTile;
     public bool validPlace;
-
+    private AudioSource audio;
     private GameObject[,] board;
 
     //public int[,] mapdata;
@@ -42,6 +42,7 @@ public class CreateObstacle : MonoBehaviour
         createobstacle = 0;
         offset = tileObj.transform.GetChild(0).localScale.y;
         validPlace = false;
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -64,11 +65,11 @@ public class CreateObstacle : MonoBehaviour
                 if (!CheckValid(hit.transform))
                 {
                     canPlace = false;
-                    cursorObj.transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[1];
+                    cursorObj.transform.GetChild(1).GetComponentInChildren<Renderer>().material = obstacleMaterial[1];
                 }
                 else
                 {
-                    cursorObj.transform.GetChild(0).GetComponent<Renderer>().material = obstacleMaterial[0];
+                    cursorObj.transform.GetChild(1).GetComponentInChildren<Renderer>().material = obstacleMaterial[0];
                     canPlace = true;
                 }
 
@@ -79,12 +80,12 @@ public class CreateObstacle : MonoBehaviour
                     switch (obstacleState)
                     {
                         case ObstacleState.HORIZONTAL:
-                            StartCoroutine(SendObstacleValidData((int)clickTile.x, (int)clickTile.y,
-                            (int)clickTile.x+1, (int)clickTile.y));
+                            StartCoroutine(SendObstacleValidData((int)clickTile.y, (int)clickTile.x,
+                            (int)clickTile.y, (int)clickTile.x+1));
                             break;
                         case ObstacleState.VERTICAL:
-                            StartCoroutine(SendObstacleValidData((int)clickTile.x, (int)clickTile.y,
-                            (int)clickTile.x, (int)clickTile.y+1));
+                            StartCoroutine(SendObstacleValidData((int)clickTile.y, (int)clickTile.x,
+                            (int)clickTile.y+1, (int)clickTile.x));
                             break;
                     }
                 }
@@ -148,10 +149,13 @@ public class CreateObstacle : MonoBehaviour
 
     public void PlaceObstacle(Vector3 cursorPosition)
     {
-        Transform go = Instantiate(obstaclePrefab, cursorPosition, Quaternion.identity).transform.GetChild(0);
-        go.localPosition = cursorObj.transform.GetChild(0).localPosition;
-        go.localRotation = cursorObj.transform.GetChild(0).localRotation;
-        go.gameObject.GetComponent<Renderer>().material = playerObstacleMaterial[gameManager.GetComponent<GameManager>().GetIndex()];
+        audio.Play();
+        GameObject go = Instantiate(obstaclePrefab, cursorPosition, Quaternion.identity);
+        go.transform.GetChild(0).localPosition = cursorObj.transform.GetChild(0).localPosition;
+        go.transform.GetChild(0).localRotation = cursorObj.transform.GetChild(0).localRotation;
+        go.transform.GetChild(1).localPosition = cursorObj.transform.GetChild(1).localPosition;
+        go.transform.GetChild(1).localRotation = cursorObj.transform.GetChild(1).localRotation;
+        go.transform.GetChild(1).GetComponentInChildren<Renderer>().material = playerObstacleMaterial[gameManager.GetIndex()];
     }
     private bool CheckValid(Transform t)
     {  
@@ -187,12 +191,16 @@ public class CreateObstacle : MonoBehaviour
             obstacleState = ObstacleState.VERTICAL;
             cursorObj.transform.GetChild(0).Rotate(new Vector3(0, -90, 0), Space.World);
             cursorObj.transform.GetChild(0).localPosition = new Vector3(0, 0f, -1);
+            cursorObj.transform.GetChild(1).Rotate(new Vector3(0, -90, 0), Space.World);
+            cursorObj.transform.GetChild(1).localPosition = new Vector3(0, 0f, -1);
         }
         else
         {
             obstacleState = ObstacleState.HORIZONTAL;
             cursorObj.transform.GetChild(0).Rotate(new Vector3(0, 90, 0), Space.World);
             cursorObj.transform.GetChild(0).localPosition = new Vector3(0.5f, 0f, - 0.5f);
+            cursorObj.transform.GetChild(1).Rotate(new Vector3(0, 90, 0), Space.World);
+            cursorObj.transform.GetChild(1).localPosition = new Vector3(0.5f, 0f, - 0.5f);
         }
     }
 
@@ -203,12 +211,16 @@ public class CreateObstacle : MonoBehaviour
             obstacleState = ObstacleState.VERTICAL;
             cursorObj.transform.GetChild(0).localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
             cursorObj.transform.GetChild(0).localPosition = new Vector3(0, 0f, -1);
+            cursorObj.transform.GetChild(1).localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+            cursorObj.transform.GetChild(1).localPosition = new Vector3(0, 0f, -1);
         }
         else if (state == 1)
         {
             obstacleState = ObstacleState.HORIZONTAL;
             cursorObj.transform.GetChild(0).localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
             cursorObj.transform.GetChild(0).localPosition = new Vector3(0.5f, 0f, - 0.5f);
+            cursorObj.transform.GetChild(1).localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            cursorObj.transform.GetChild(1).localPosition = new Vector3(0.5f, 0f, - 0.5f);
         }
     }
 

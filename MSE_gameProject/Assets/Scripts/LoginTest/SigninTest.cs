@@ -57,12 +57,15 @@ public class SigninTest : MonoBehaviour
             case UnityWebRequest.Result.Success:
                 // everything is ok.
                 Debug.Log("Data sent successfully!");
-                User user = JsonUtility.FromJson<User>(webRequest.downloadHandler.text);
+                string temp = webRequest.downloadHandler.text;
+                Debug.Log(temp);
+                User user = JsonUtility.FromJson<User>(temp);
                 if(user != null) {
                     signinSucPop.SetActive(true);
                     TextMeshProUGUI text = signinSucPop.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                     text.text = "Welcome!\n";
                     text.text += signinName.text;
+                    GameClient.GetInstance().MyData = user;
                     GameStartButton.SetActive(true);
                 }
                 else {

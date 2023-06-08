@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Random;
+
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/room")
@@ -22,6 +26,8 @@ public class RoomController {
     private boolean isGameStart = false;
 
     private final RoomService roomService;
+    private String[] themes = {"Fall", "Summer"};
+    private String mapName;
 
     /**
      * API: Join Room
@@ -47,12 +53,13 @@ public class RoomController {
      * }
      */
     @PostMapping("/join1")
-    public ResponseEntity<?> joinRoom1(@RequestBody Player player) {
+    public ResponseEntity<?> joinRoom1(@RequestParam(name="map",required=true) String map,@RequestBody Player player) {
         RoomStatus roomStatus = new RoomStatus();
 
+        mapName= map;
         hostInfo = player;
 
-        roomService.saveHostInfo(hostInfo);
+//        roomService.saveHostInfo(hostInfo);
 //        roomService.saveRoomStatus(roomStatus);
 
         if (hostInfo == null) {
@@ -62,6 +69,7 @@ public class RoomController {
         return ResponseEntity.ok(hostInfo);
 
     }
+
 
 
 
@@ -93,17 +101,19 @@ public class RoomController {
     public ResponseEntity<?> joinRoom2(@RequestBody Player player) {
         RoomStatus roomStatus = new RoomStatus();
 
-        waitingPlayerInfo = player;
+        if (hostInfo == null) {
+            return createBadRequestResponse(roomStatus,"Cannot join room. There is no Host.");
+        }
 
-        roomService.saveWaitingPlayerInfo(waitingPlayerInfo);
-//        roomService.saveRoomStatus(roomStatus);
+        waitingPlayerInfo = player;
+//        roomService.saveWaitingPlayerInfo(waitingPlayerInfo);
+        // roomService.saveRoomStatus(roomStatus);
 
         if (waitingPlayerInfo == null) {
             return createBadRequestResponse(roomStatus,"Room is already full.");
         }
 
         return ResponseEntity.ok(hostInfo);
-
     }
 
 
@@ -150,7 +160,6 @@ public class RoomController {
             return createBadRequestResponse(roomStatus, "Cannot start the game.");
         }
 
-        // 이거 왜 안되는지 해결해야함 -> 되네?
        roomStatus.setHost(hostInfo);
        roomStatus.setWaitingPlayer(waitingPlayerInfo);
        //roomService.saveRoomStatus(roomStatus);
@@ -213,10 +222,52 @@ public class RoomController {
         return ResponseEntity.ok(isGameStart);
     }
 
+    /**
+     * API: Reset Room
+     * Description: Resets the room by initializing hostInfo, waitingPlayerInfo, and isGameStart.
+     * Method: POST
+     * Endpoint: '/room/reset'
+     * Output:
+     *      - Success message
+     *
+     * "Room reset successfully."
+     */
+    @PostMapping("/reset")
+    public ResponseEntity<String> resetInfo() {
+        hostInfo = null;
+        waitingPlayerInfo = null;
+        isGameStart = false;
+
+        return ResponseEntity.ok("reset successfully.");
+    }
+
+
+    /**
+     * API: Get Map by Index
+     * Description: Returns the map theme at the specified index.
+     * Method: GET
+     * Endpoint: '/room/maps'
+     *
+     * @param idx The index of the theme in the array
+     *            localhost:8080/room/maps?idx=value (0 or 1)
+     * @return The map theme at the specified index.
+     */
+    @GetMapping("/maps")
+    public ResponseEntity<String> getMapByIndex(@RequestParam int idx) {
+       if(mapName.compareTo("Fall") == 0 || mapName.compareTo("Summer")==0){
+           return ResponseEntity.ok(mapName);
+       }
+
+       return ResponseEntity.badRequest().body("Invalid index");
+    }
+
     private ResponseEntity<RoomStatus> createBadRequestResponse(RoomStatus roomStatus, String message) {
 
         roomStatus.setMessage(message);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(roomStatus);
     }
+
+
+
 }

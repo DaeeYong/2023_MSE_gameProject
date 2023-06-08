@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.Networking;
 using TMPro;
 
@@ -8,11 +9,15 @@ public class GameClient : MonoBehaviour
 {
     [SerializeField] private TMP_InputField inputfeild;
     private static GameClient instance;
+    public User MyData;
+    public User OtherData;
     public int turnindex = 0;
+    public int mapIndex = 0;
     private static string initGameURL = "http://localhost:8080/game/init";
     private static string updatePlayerInfoURL = "http://localhost:8080/action/update/player";
     private static string fetchPlayerInfoURL = "http://localhost:8080/fetch/info/player";
-
+    private static string getWaitingplayerURL = "http://localhost:8080/room/waitingPlayer";
+    private static string getStartstateURL = "http://localhost:8080/room/startstatus";
 
     private static string validObsInfoURL = "http://localhost:8080/install/block/valid";
     //private static string fetchValidObsInfoURL = "";
@@ -22,6 +27,8 @@ public class GameClient : MonoBehaviour
     private static string createRoomURL = "http://localhost:8080/room/join1";
     private static string joinRoomURL = "http://localhost:8080/room/join2";
     private static string gameStartURL = "http://localhost:8080/room/start";
+    private static string fetchMapNametURL = "http://localhost:8080/room/maps";
+    private static string updateGameResultURL = "http://localhost:8080/game/end";
     private void Awake()
     {
         //init singleton
@@ -320,6 +327,11 @@ public class GameClient : MonoBehaviour
     {   
         Debug.Log("Join Room");
         string url = type == 1 ? createRoomURL : joinRoomURL;
+        if(type == 1)
+        {
+            string temp = mapIndex == 0 ? "Fall" : "Summer";
+            url = url + "?map=" + temp;
+        }
         string jsonData = JsonUtility.ToJson(user);
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, jsonData))
         {
@@ -341,7 +353,16 @@ public class GameClient : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
                     // everything is ok.
-                    Debug.Log("create room successfully!");
+                    if (type == 2)
+                    {
+                        Debug.Log("Join the room successfully!");
+                        string hostinfo = webRequest.downloadHandler.text;
+                        OtherData = JsonUtility.FromJson<User>(hostinfo);
+                    }
+                    else
+                    {
+                        Debug.Log("create room successfully!");
+                    }
                     LoadScene("WaitingRoom");
                     break;
             }
@@ -367,18 +388,106 @@ public class GameClient : MonoBehaviour
             case UnityWebRequest.Result.Success:
                 // everything is ok.
                 Debug.Log("Game Start");
-                LoadScene("Fall");
+                webRequest = UnityWebRequest.Get(initGameURL);
+                yield return webRequest.SendWebRequest();
+                string mapName = mapIndex == 0 ? "Fall" : "Summer";
+                LoadScene(mapName);
                 break;
         }
     }
-    
+
+    public IEnumerator getWaitingPlayer()
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get(getWaitingplayerURL);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+            case UnityWebRequest.Result.Success:
+                string data = webRequest.downloadHandler.text;
+                if (data.CompareTo("") != 0)
+                {
+                    Debug.Log("Enter other player!");
+                    Debug.Log(data);
+                    OtherData = JsonUtility.FromJson<User>(data);
+                }
+                break;
+        }
+    }
+
+    public IEnumerator getStartState(Action<string> callback)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get(getStartstateURL);
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        switch (webRequest.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError("Error: " + webRequest.error);
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+            case UnityWebRequest.Result.Success:
+                string data = webRequest.downloadHandler.text;
+                if (data.CompareTo("true") == 0)
+                {
+                    Debug.Log("Start Game");
+                    webRequest = UnityWebRequest.Get(fetchMapNametURL);
+                    webRequest.SetRequestHeader("Accept", "application/json");
+                    yield return webRequest.SendWebRequest();
+                    if (webRequest.result == UnityWebRequest.Result.Success)
+                    {
+                        string mapName = webRequest.downloadHandler.text;
+                        Debug.Log("Map Name: " + mapName);
+                        callback(mapName);
+                    }
+                    else
+                    {
+                        callback("Fall");
+                    }
+                }
+                break;
+        }
+    }
+
+    public IEnumerator sendResult(WinLose result, Action callback)
+    {
+        Debug.Log("Send Game Result");
+        string jsonData = JsonUtility.ToJson(result);
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(updateGameResultURL, jsonData))
+        {
+            webRequest.uploadHandler.Dispose();
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError("Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError("The room is already full" + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    // everything is ok.
+                    Debug.Log("Send Result successfully");
+                    callback();
+                    break;
+            }
+            webRequest.Dispose();
+        }
+    }
     public void LoadScene(string name)
     {
-        if (inputfeild != null)
-        {
-            turnindex = int.Parse(inputfeild.text);
-            Debug.Log(this.GetInstanceID());
-        }
         UnityEngine.SceneManagement.SceneManager.LoadScene(name);
     }
 }
