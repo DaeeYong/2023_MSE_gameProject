@@ -104,7 +104,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
     "col2" : {int}  
   }
 
-### Obstacle installation vaild check
+### 5. Obstacle installation vaild check
 - method : post
 - url : http://localhost:8080/install/block/valid
 - input format : {<br>
@@ -115,7 +115,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 }
 - output format : {"valid" : true | false}
 
-### install obstacle
+### 6. install obstacle
 - method : post
 - url : http://localhost:8080/install/block
 - input format : {<br>
@@ -126,7 +126,7 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 }
 - output : {"valid" : true | false}
 
-### Save results after the end of the game
+### 7. Save results after the end of the game
 - method : post
 - url : http://localhost:8080/game/end
 - input format : {<br>
