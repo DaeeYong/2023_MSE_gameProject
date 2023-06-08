@@ -70,17 +70,16 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
   - output : {"valid" : true || false}
 
 
-### 2. 순서 조회
-  - getPlayerTurnInfo() : TurnForm
-  - url : http://localhost:8080/current/player-turn-info
+### 2. get turn information
   - method : Get
-  - input : x
-  - output : TurnForm
-  - 역할 : 플레이어 차례 조회
+  - url : http://localhost:8080/current/player-turn-info
+  - input format : x
+  - output format : {"turn" : {string}}
 
-### 3. 플레이어 위치&블럭 설치 정보 업데이트
-- updatePlayerInfo(PlayerForm) : Validation
-- input : {<br>
+### 3. Player position & obstacle install information update 
+- method : post
+- url : http://localhost:8080/action/update/player
+- input format : {<br>
     "playerNumber" :{int},<br>
     "action" : {String},<br>
     "x1" : {int},<br>
@@ -88,57 +87,53 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
     "x2" : {int/ default는 -1},<br>
     "y2" : {int/ default는 -1}<br>
 }
-- 주의점 : action이 가질 수 있는 상태는 "moving" 또는 "blocking"
-- playerNumber는 1 또는 
-- output : void
-- 역할 : 플레이어의 좌표 업데이트 || 블럭 설치 정보 업데이트
+- output format : {"valid" : true || false}
+- output format : x
+- note : The possible states for an action are "moving" or "blocking" || possible states for an playerNumber are 1 or 2 
 
-### 4. 플레이어 정보 조회
-- getPlayerInfo(int playerNum) : Player
+### 4. get player information
+  method : post
 - url : http://localhost:8080/fetch/info/player
-- input : int playerNum
-- output : Player
-  - input : {
+- input format : int playerNum
+- output format : Player
+- input : {
     "action" : {"moving" | "blocking"}  
     "row1" : {int}  
     "col1" : {int}  
     "row2" : {int}  
     "col2" : {int}  
-  - }
+  }
 
-### 장애물 유효성 검사
-- IsValidInstall(Obstacle) : Validation
+### Obstacle installation vaild check
 - method : post
 - url : http://localhost:8080/install/block/valid
-- input : {<br>
-  "row1" : {int}
-  "col1" : {int}
-  "row2" : {int}
-  "col2" : {int}
+- input format : {<br>
+  "row1" : {int}  
+  "col1" : {int}  
+  "row2" : {int}  
+  "col2" : {int}  
 }
-- output : Validation
+- output format : {"valid" : true | false}
 
-### 장애물 설치
-- IsValidInstall(Obstacle) : Validation
+### install obstacle
 - method : post
 - url : http://localhost:8080/install/block
-- input : {<br>
+- input format : {<br>
   "row1" : {int}
   "col1" : {int}
   "row2" : {int}
   "col2" : {int}
 }
-- output : Validation
+- output : {"valid" : true | false}
 
-### 게임 끝 이후 결과 반영
-- recordWinLose(WinLose) : Validation
+### Save results after the end of the game
 - method : post
 - url : http://localhost:8080/game/end
-- input : {<br>
+- input format : {<br>
   "winner" : {int}  
   "loser" : {int}  
 }
-- output : Validation
+- output format : {"valid" : true | false}
 ## server-client 통신 api 호출 시나리오
 --------------------------
 ### 플레이어1 차례로 가정
