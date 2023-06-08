@@ -27,6 +27,7 @@ public class RoomController {
 
     private final RoomService roomService;
     private String[] themes = {"Fall", "Summer"};
+    private String mapName;
 
     /**
      * API: Join Room
@@ -52,9 +53,10 @@ public class RoomController {
      * }
      */
     @PostMapping("/join1")
-    public ResponseEntity<?> joinRoom1(@RequestBody Player player) {
+    public ResponseEntity<?> joinRoom1(@RequestParam(name="map",required=true) String map,@RequestBody Player player) {
         RoomStatus roomStatus = new RoomStatus();
 
+        mapName= map;
         hostInfo = player;
 
 //        roomService.saveHostInfo(hostInfo);
@@ -252,12 +254,11 @@ public class RoomController {
      */
     @GetMapping("/maps")
     public ResponseEntity<String> getMapByIndex(@RequestParam int idx) {
-        if (idx < 0 || idx >= themes.length) {
-            return ResponseEntity.badRequest().body("Invalid index");
-        }
+       if(mapName.compareTo("Fall") == 0 || mapName.compareTo("Summber")==0){
+           return ResponseEntity.ok(mapName);
+       }
 
-        String theme = themes[idx];
-        return ResponseEntity.ok(theme);
+       return ResponseEntity.badRequest().body("Invalid index");
     }
 
     private ResponseEntity<RoomStatus> createBadRequestResponse(RoomStatus roomStatus, String message) {
