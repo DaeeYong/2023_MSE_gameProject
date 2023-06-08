@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/MsEprojectApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/MsEprojectApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/SpringConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/SpringConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/Validation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/controller/Validation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/domain/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/domain/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/domain/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/domain/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/anido/MSEproject/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/service/GameService.java" afterDir="false" />
-    </list>
+    <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -183,7 +164,7 @@
       <workItem from="1686190538560" duration="1425000" />
       <workItem from="1686202034517" duration="1270000" />
       <workItem from="1686204699055" duration="2724000" />
-      <workItem from="1686211785827" duration="813000" />
+      <workItem from="1686211785827" duration="1240000" />
     </task>
     <servers />
   </component>
