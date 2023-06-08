@@ -104,15 +104,16 @@ public class GameController {
 
         playerForm.setPlayerNumber(playerNum);
         playerForm.setAction(player.getAction());
-        if(player.getAction().equals("moving")){
-            playerForm.setCoord(player.getRow(), player.getCol(),-1,-1);
-        } else if(player.getAction().equals("blocking")){
-            playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
-                    obstacle.getRow2(), obstacle.getCol2());
-        } else{
-            //나중을 위해서 비워둠.
-        }
+        if(player.getAction() != null) {
+            if (player.getAction().equals("moving")) {
+                playerForm.setCoord(player.getRow(), player.getCol(), -1, -1);
+            } else if (player.getAction().equals("blocking")) {
+                playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
+                        obstacle.getRow2(), obstacle.getCol2());
+            } else {
+            }
 
+        }
         return playerForm;
     }
 
@@ -155,14 +156,17 @@ public class GameController {
     @PostMapping("/game/end")
     @ResponseBody
     public Validation recordWinLose(@RequestBody WinLose winLose){
-        User winnerUser = gameService.getPlayerInfo(winLose.getWinner());
-        User loserUser = gameService.getPlayerInfo(winLose.getLoser());
+        Player winner = gameService.getPlayerInfo(winLose.getWinner());
+        Player loser = gameService.getPlayerInfo(winLose.getLoser());
 
-        winnerUser.setWin(winnerUser.getWin() + 1);
-        loserUser.setLose(loserUser.getLose() + 1);
+        User user1 = new User(winner.getId(), winner.getName(), winner.getPassword(), winner.getWin() + 1, winner.getLose());
+        User user2 = new User(loser.getId(), loser.getName(), loser.getPassword(), loser.getWin(), loser.getLose()+1);
+
+        userService.updateUserInfo(user1, user2);
 
         Validation validation =  new Validation();
         validation.setValid(true);
+
         return validation;
     }
 

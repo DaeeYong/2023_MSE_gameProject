@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectInThisTile: {fileID: 0}
-  isOccupied: 0
+  occupiedPlayer: 0
+  occupiedOtc: 0
 --- !u!54 &1004763308332665092
 Rigidbody:
   m_ObjectHideFlags: 0

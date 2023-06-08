@@ -1408,7 +1408,11 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  cursorObj: {fileID: 0}
+  tileObj: {fileID: 2104889419624321447, guid: dc35a9c7897b1d347a0e5204d2baab8e, type: 3}
+  offset: 0
   createobstacle: 0
+  validPlace: 0
 --- !u!1001 &384120280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3611,6 +3615,10 @@ MonoBehaviour:
   - {fileID: 1957287090}
   - {fileID: 1429653731}
   - {fileID: 2095700381}
+  actionBTN: {fileID: 0}
+  creatingObstacle: {fileID: 381619943}
+  playerType: 0
+  state: 0
 --- !u!4 &1168241894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7562879168102931258, guid: 188abe1cf79184167afcf48fe1f8e2cb, type: 3}
