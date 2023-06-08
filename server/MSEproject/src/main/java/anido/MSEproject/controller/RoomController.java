@@ -57,7 +57,7 @@ public class RoomController {
 
         hostInfo = player;
 
-        roomService.saveHostInfo(hostInfo);
+//        roomService.saveHostInfo(hostInfo);
 //        roomService.saveRoomStatus(roomStatus);
 
         if (hostInfo == null) {
@@ -67,6 +67,7 @@ public class RoomController {
         return ResponseEntity.ok(hostInfo);
 
     }
+
 
 
 
@@ -103,7 +104,7 @@ public class RoomController {
         }
 
         waitingPlayerInfo = player;
-        roomService.saveWaitingPlayerInfo(waitingPlayerInfo);
+//        roomService.saveWaitingPlayerInfo(waitingPlayerInfo);
         // roomService.saveRoomStatus(roomStatus);
 
         if (waitingPlayerInfo == null) {
@@ -157,7 +158,6 @@ public class RoomController {
             return createBadRequestResponse(roomStatus, "Cannot start the game.");
         }
 
-        // 이거 왜 안되는지 해결해야함 -> 되네?
        roomStatus.setHost(hostInfo);
        roomStatus.setWaitingPlayer(waitingPlayerInfo);
        //roomService.saveRoomStatus(roomStatus);
@@ -218,6 +218,25 @@ public class RoomController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(isGameStart);
+    }
+
+    /**
+     * API: Reset Room
+     * Description: Resets the room by initializing hostInfo, waitingPlayerInfo, and isGameStart.
+     * Method: POST
+     * Endpoint: '/room/reset'
+     * Output:
+     *      - Success message
+     *
+     * "Room reset successfully."
+     */
+    @PostMapping("/reset")
+    public ResponseEntity<String> resetInfo() {
+        hostInfo = null;
+        waitingPlayerInfo = null;
+        isGameStart = false;
+
+        return ResponseEntity.ok("reset successfully.");
     }
 
 

@@ -161,10 +161,9 @@ public class GameController {
         winnerUser.setWin(winnerUser.getWin() + 1);
         loserUser.setLose(loserUser.getLose() + 1);
 
-
-
         Validation validation =  new Validation();
         validation.setValid(true);
         return validation;
     }
+
 }
