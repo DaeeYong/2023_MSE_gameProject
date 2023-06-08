@@ -2,17 +2,20 @@ package anido.MSEproject.service;
 
 import anido.MSEproject.domain.User;
 import anido.MSEproject.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     /*
     <회원가입>
@@ -31,20 +34,25 @@ public class UserService {
     /*
     <로그인>
      */
-    public Optional<User> signIn(String name, String password){
+    public ResponseEntity<User> signIn(String name, String password) {
         Optional<User> user = userRepository.findByName(name);
-        //일치하는 유저가 있는 경우
-        if(user.isPresent()){
-            //비밀번호 일치하는지 확인
+        // 일치하는 유저가 있는 경우
+        if (user.isPresent()) {
+            // 비밀번호 일치하는지 확인
             boolean isMatch = user.get().getPassword().equals(password);
-            //비밀번호가 일치하는 경우
-            if(isMatch) return user;
-            //유저는 있지만, 비밀번호가 일치하지 않는 경우
-            else return Optional.empty();
+            // 비밀번호가 일치하는 경우
+            if (isMatch) {
+                return ResponseEntity.ok(user.get());
+            }
+            // 유저는 있지만, 비밀번호가 일치하지 않는 경우
+            else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
         }
-        //유저가 존재하지 않는 경우
-        return Optional.empty();
+        // 유저가 존재하지 않는 경우
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
     /*
     전체 user 조회
      */
@@ -63,4 +71,5 @@ public class UserService {
     public Optional<User> findByName(String name){
         return userRepository.findByName(name);
     }
+
 }

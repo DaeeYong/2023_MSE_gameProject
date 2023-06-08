@@ -5,25 +5,26 @@ import anido.MSEproject.domain.Player;
 import anido.MSEproject.domain.User;
 import anido.MSEproject.service.GameService;
 import anido.MSEproject.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final GameService gameService;
     private final Validation validation = new Validation();
 
-    @Autowired
-    public UserController(UserService userService, GameService gameService) {
-        this.userService = userService;
-        this.gameService = gameService;
-    }
+
 
     /*
      * 로그인 기능
@@ -35,19 +36,21 @@ public class UserController {
      */
     @PostMapping("/user/sign-in")
     @ResponseBody
-    public User signIn(@RequestBody UserForm userForm){
-        Optional<User> result = userService.signIn(userForm.getName(), userForm.getPassword());
-        //로그인 성공한 경우
-        if(result.isPresent()) {
-            //로그인한 유저 정보를 이용해서 플레이어 객체 생성
-            Player player = new Player(result.get(), -1, -1);
-            //게임 서비스에 플레이어 리스트에 넣어줌.
+    public User signIn(@RequestBody UserForm userForm) {
+        ResponseEntity<User> response = userService.signIn(userForm.getName(), userForm.getPassword());
+        // 로그인 성공한 경우
+        if (response.getStatusCode() == HttpStatus.OK) {
+            User user = response.getBody();
+            // 로그인한 유저 정보를 이용해서 플레이어 객체 생성
+            Player player = new Player(user, -1, -1);
+            // 게임 서비스에 플레이어 리스트에 넣어줌
             gameService.addPlayer(player);
-            return result.get();
+            return user;
         }
 
         return null;
     }
+
     /*
      * 회원가입 기능
      * method : post

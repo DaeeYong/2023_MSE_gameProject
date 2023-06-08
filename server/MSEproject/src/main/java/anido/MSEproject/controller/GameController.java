@@ -3,10 +3,12 @@ package anido.MSEproject.controller;
 import anido.MSEproject.Form.ObstacleCoordForm;
 import anido.MSEproject.Form.PlayerForm;
 import anido.MSEproject.Form.TurnForm;
+import anido.MSEproject.Form.WinLose;
 import anido.MSEproject.domain.Obstacle;
 import anido.MSEproject.domain.Player;
+import anido.MSEproject.domain.User;
 import anido.MSEproject.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 import anido.MSEproject.service.GameService;
@@ -15,17 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class GameController {
     private final GameService gameService;
     private final UserService userService;
     private final Obstacle obstacle;
 
-    @Autowired
-    public GameController(GameService gameService, UserService userService, Obstacle obstacle) {
-        this.gameService = gameService;
-        this.userService = userService;
-        this.obstacle = obstacle;
-    }
+
+
 
     //플레이어 좌표 초기 세팅
     @GetMapping("/game/init")
@@ -33,8 +32,8 @@ public class GameController {
     public Validation initGame(){
         Validation validation = new Validation();
 
-        Player player1 = getPlayerInfo(1);
-        Player player2 = getPlayerInfo(2);
+        Player player1 = gameService.getPlayerInfo(1);
+        Player player2 = gameService.getPlayerInfo(2);
         
         //플레이어 초기 좌표 세팅
         player1.setRow(8);
@@ -81,11 +80,11 @@ public class GameController {
 
         Validation validation = new Validation();
         //플레이어 위치만 업데이트
-        if(playerForm.getAction() == "moving") {
+        if(playerForm.getAction().equals("moving")) {
             gameService.updatePlayerInfo(playerForm);
         }
         //블럭설치
-        else if(playerForm.getAction() == "blocking") {
+        else if(playerForm.getAction().equals("blocking")) {
                 gameService.getPlayerInfo(playerForm.getPlayerNumber()).
                         setAction("blocking");
                 obstacle.setCoord(row1, col1, row2, col2);
@@ -105,9 +104,9 @@ public class GameController {
 
         playerForm.setPlayerNumber(playerNum);
         playerForm.setAction(player.getAction());
-        if(player.getAction() == "moving"){
+        if(player.getAction().equals("moving")){
             playerForm.setCoord(player.getRow(), player.getCol(),-1,-1);
-        } else if(player.getAction() == " blocking"){
+        } else if(player.getAction().equals("blocking")){
             playerForm.setCoord(obstacle.getRow1(), obstacle.getCol1(),
                     obstacle.getRow2(), obstacle.getCol2());
         } else{
@@ -150,6 +149,21 @@ public class GameController {
     @ResponseBody
     public List<Player> getAllPlayer(){
         return gameService.getPlayers();
+    }
+
+    //승패 기록 컨트롤러
+    @PostMapping("/game/end")
+    @ResponseBody
+    public Validation recordWinLose(@RequestBody WinLose winLose){
+        User winnerUser = gameService.getPlayerInfo(winLose.getWinner());
+        User loserUser = gameService.getPlayerInfo(winLose.getLoser());
+
+        winnerUser.setWin(winnerUser.getWin() + 1);
+        loserUser.setLose(loserUser.getLose() + 1);
+
+        Validation validation =  new Validation();
+        validation.setValid(true);
+        return validation;
     }
 
 }
