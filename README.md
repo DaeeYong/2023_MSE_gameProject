@@ -89,7 +89,8 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 }
 - output format : {"valid" : true || false}
 - output format : x
-- note : The possible states for an action are "moving" or "blocking" || possible states for an playerNumber are 1 or 2 
+- note : The possible states for an action are "moving" or   
+  "blocking" || possible states for an playerNumber are 1 or 2 
 
 ### 4. get player information
   method : post
