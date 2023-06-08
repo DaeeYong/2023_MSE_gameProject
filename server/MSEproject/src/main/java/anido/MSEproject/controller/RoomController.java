@@ -254,7 +254,7 @@ public class RoomController {
      */
     @GetMapping("/maps")
     public ResponseEntity<String> getMapByIndex(@RequestParam int idx) {
-       if(mapName.compareTo("Fall") == 0 || mapName.compareTo("Summber")==0){
+       if(mapName.compareTo("Fall") == 0 || mapName.compareTo("Summer")==0){
            return ResponseEntity.ok(mapName);
        }
 
