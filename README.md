@@ -39,54 +39,51 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
 ## api 사용법
 
 ## UserController  
-### 1. 회원가입
-
+### 1. Sign-Up
+- description : sign-up
 - method : post
-- data type : Json
 - url : "http://localhost:8080/user/sign-up"
 - input format : {"name" : {string}, "password" : {string}}
-- output format<br>
-- 회원가입 성공 -> {"response" : true}
-- 회원가입 실패(중복 존재) -> {"response" false}
+- output format : <br> {"response" : true || false}
 
-### 2. 로그인
 
+### 2. Sign-In
+- description : sign-in
 - method : post
 - url : http://localhost:8080/user/sign-in
-- 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
-- output format<br>
-- 회원가입 성공 -> {"response" : true}
-- 회원가입 실패(중복 존재) -> {"response" false}
+- input format : {"name" : {string}, "password" : {string}}
+- output format : {"response" : true || false}
 
-### 3. 모든 유저 조회
+### 3. find All Users
+- description : find all users
 - method : get
 - url : http://localhost:8080/find-all
-- 주의점 : url은 로컬에서 실행하는 경우를 가정한 것
-- output 예시 : [ {"id" : 1, "name" : "성호"}, {"id" : 2, "name" : "팔달"},{"id" : 3, "name" : "율곡"} ]
-  <br><br>
+- input format : x
+- output formate= : [ {"id" : {Long}, "name" : {string}, "password" : {string}} ... ]
 
 
 ## GameController 
-### 1. 순서 설정
-  - setPlayerTurnInfo(TurnForm) : Validation 
-  - url : http://localhost:8080/current/player-turn-set
+### 1. player turn set
+  - description : Set Player's Turn
   - method : Post
-  - input : TurnForm --> {"turn" {String}}
-  - 주의점 : turn이 가질 수 있는 문자열은 "player1" 또는 "player2"
-  - output : Validation
-  - 역할 : 플레이어 차례 set 
+  - url : http://localhost:8080/current/player-turn-set
+  - input format : {"turn" {String}}
+  - Note: The string that turn can have is "player1" or "player2"
+  - output : {"valid" : true || false}
 
-### 2. 순서 조회
-  - getPlayerTurnInfo() : TurnForm
-  - url : http://localhost:8080/current/player-turn-info
+
+### 2. get turn information
+  - description : Check Player's Turn
   - method : Get
-  - input : x
-  - output : TurnForm
-  - 역할 : 플레이어 차례 조회
+  - url : http://localhost:8080/current/player-turn-info
+  - input format : x
+  - output format : {"turn" : {string}}
 
-### 3. 플레이어 위치&블럭 설치 정보 업데이트
-- updatePlayerInfo(PlayerForm) : Validation
-- input : {<br>
+### 3. Player position & obstacle install information update 
+- description : Update player location and obstacle installation information
+- method : post
+- url : http://localhost:8080/action/update/player
+- input format : {<br>
     "playerNumber" :{int},<br>
     "action" : {String},<br>
     "x1" : {int},<br>
@@ -94,57 +91,153 @@ domain : 서비스와 관련된 객체들이 들어있는 곳
     "x2" : {int/ default는 -1},<br>
     "y2" : {int/ default는 -1}<br>
 }
-- 주의점 : action이 가질 수 있는 상태는 "moving" 또는 "blocking"
-- playerNumber는 1 또는 
-- output : void
-- 역할 : 플레이어의 좌표 업데이트 || 블럭 설치 정보 업데이트
+- output format : {"valid" : true || false}
+- output format : x
+- note : The possible states for an action are "moving" or   
+  "blocking" || possible states for an playerNumber are 1 or 2 
 
-### 4. 플레이어 정보 조회
-- getPlayerInfo(int playerNum) : Player
+### 4. get player information
+- description : get player information
+- method : post
 - url : http://localhost:8080/fetch/info/player
-- input : int playerNum
-- output : Player
-  - input : {
+- input format : int playerNum
+- output format : Player
+- input : {
     "action" : {"moving" | "blocking"}  
     "row1" : {int}  
     "col1" : {int}  
     "row2" : {int}  
     "col2" : {int}  
-  - }
+  }
 
-### 장애물 유효성 검사
-- IsValidInstall(Obstacle) : Validation
+### 5. Obstacle installation vaild check
+- description : It is responsible for verifying the validity of the obstacle installation.
 - method : post
 - url : http://localhost:8080/install/block/valid
-- input : {<br>
-  "row1" : {int}
-  "col1" : {int}
-  "row2" : {int}
-  "col2" : {int}
+- input format : {<br>
+  "row1" : {int}  
+  "col1" : {int}  
+  "row2" : {int}  
+  "col2" : {int}  
 }
-- output : Validation
+- output format : {"valid" : true | false}
 
-### 장애물 설치
-- IsValidInstall(Obstacle) : Validation
+### 6. install obstacle
+- description : Install obstacle.
 - method : post
 - url : http://localhost:8080/install/block
-- input : {<br>
+- input format : {<br>
   "row1" : {int}
   "col1" : {int}
   "row2" : {int}
   "col2" : {int}
 }
-- output : Validation
+- output : {"valid" : true | false}
 
-### 게임 끝 이후 결과 반영
-- recordWinLose(WinLose) : Validation
+### 7. Save results after the end of the game
+- description : After the game, update information on wins and losses.
 - method : post
 - url : http://localhost:8080/game/end
-- input : {<br>
+- input format : {<br>
   "winner" : {int}  
   "loser" : {int}  
 }
-- output : Validation
+- output format : {"valid" : true | false}
+  
+## RoomController
+### 1. Join Room1
+- description : Allows a player to join the room
+- method : post
+- url : http://localhost:8080/room/join1
+- input format : {  
+  "name" : {string},  
+  "password" : {string},  
+  "win" : {int}, "lose" : {int}  
+}  <br><br>
+-output format : {    
+  "id": {int}, "name": {string},  
+  "password": {string},  
+  "win": {int}, "lose": {int}   
+}
+
+### 2. Join Room2
+- description : Allows a player to join the room.
+- method : post
+- url : http://localhost:8080/room/join2
+- input format : {  
+  "name": {string}, "password": {string},  
+  "win": {int}, "lose": {int}  
+} <br><br>
+- output format :{    
+  "id": {int}, "name": {string},  
+  "password": {string},  
+  "win": {int}, "lose": {int}   
+}<br><br>
+
+### 3. start Game
+- description : Starts the game if the host and a waiting player are  
+present and the game start button is pressed.
+- method : post
+- url : http://localhost:8080/room/start
+- input format : {  
+  "gameStartButtonPressed" : {Boolean}  
+} <br><br>
+- output format : [  
+"host": {  
+  "id": {Long}, "name": {string},  
+  "password": {string},  
+  "win": {int}, "lose": {int}  
+},  
+"waitingPlayer": {  
+  "id": {Long}, "name": {string},  
+  "password": {string},  
+  "win": {int}, "lose": {int}  
+},  
+"hostReady": {boolean},  
+"waitingPlayerReady": {boolean},  
+"message": {string},  
+"gameStarted": {boolean},  
+"hostCheck": {boolean}  
+]
+
+### 4. get waiting player information
+- description : Returns the waiting player information.
+- method : get
+- url : http://localhost:8080/room/waitingPlayer
+- intput format : x
+- output format : {  
+  "id" : {int}, "name" : {string},  
+  "password" : {string},  
+  "win" : {int}, "lose" : {int}  
+  }
+
+### 5. get game start status
+- description : Returns the game start status.
+- method : get
+- url : http://localhost:8080/room/startstatus
+- input format : x
+- output format : {
+  "return" : {boolean}
+}
+
+### 6. get map by index
+- description : Returns the map theme at the specified index.
+- method : get
+- url : http://localhost:8080/room/maps
+- input format : x
+- output format :  
+      @param idx The index of the theme in the array  
+      localhost:8080/room/maps?idx=value (0 or 1)  
+      @return The map theme at the specified index. 
+
+### 7. reset room
+- description : resets the room by initializing hostInfo,   waitingPlayerInfo, and isGameStart
+- method : post
+- url : http://localhost:8080/room/reset
+- input format : x
+- output format : {
+ "success message" : "Room reset successfully"
+}
 ## server-client 통신 api 호출 시나리오
 --------------------------
 ### 플레이어1 차례로 가정

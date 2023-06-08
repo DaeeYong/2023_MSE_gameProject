@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="028a0bd9-9f7f-4e5e-b0af-654317d1d166" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/anido/MSEproject/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +22,12 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="MSEproject" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -63,7 +67,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/code/GitHub/2023_MSE_gameProject/server/MSEproject/build.gradle&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/code/untitled&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -159,7 +163,11 @@
       <workItem from="1686054183973" duration="3367000" />
       <workItem from="1686061545663" duration="957000" />
       <workItem from="1686190447941" duration="67000" />
-      <workItem from="1686190538560" duration="1358000" />
+      <workItem from="1686190538560" duration="1425000" />
+      <workItem from="1686202034517" duration="1270000" />
+      <workItem from="1686204699055" duration="2724000" />
+      <workItem from="1686211785827" duration="1329000" />
+      <workItem from="1686221048430" duration="1576000" />
     </task>
     <servers />
   </component>

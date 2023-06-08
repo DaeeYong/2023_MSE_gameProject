@@ -121,12 +121,14 @@ public class GameController {
     @PostMapping("/install/block/valid")
     @ResponseBody
     public Validation IsValidInstall(@RequestBody ObstacleCoordForm obstacleCoordForm){
-        obstacle.setRow1(obstacle.getRow1());
-        obstacle.setCol1(obstacle.getCol1());
-        obstacle.setRow2(obstacle.getRow2());
-        obstacle.setCol2(obstacle.getCol2());
-    
-        Boolean result = gameService.isValidInstall(obstacle);
+
+        int row1, col1, row2, col2;
+        row1 = obstacleCoordForm.getRow1();
+        col1 = obstacleCoordForm.getCol1();
+        row2 = obstacleCoordForm.getRow2();
+        col2 = obstacleCoordForm.getCol2();
+
+        Boolean result = gameService.isValidInstall(row1,col1,row2,col2);
 
         Validation validation = new Validation();
         validation.setValid(result);
