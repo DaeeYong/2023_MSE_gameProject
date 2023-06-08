@@ -48,27 +48,27 @@ public class GameService {
         player.setAction(playerForm.getAction());
     }
 
-    public Boolean isValidInstall(Obstacle obstacle){
+    public Boolean isValidInstall(int row1, int col1, int row2, int col2){
         //player1에 대해서 테스트
         Boolean result1 = _isValidInstall(getPlayerInfo(1).getRow(),
-                getPlayerInfo(1).getCol(),obstacle, 16);
+                getPlayerInfo(1).getCol(),row1, col1, row2, col2, 16);
 
         //player2에 대해서 테스트
         Boolean result2 = _isValidInstall(getPlayerInfo(2).getRow(),
-                getPlayerInfo(2).getCol(),obstacle, 0);
+                getPlayerInfo(2).getCol(),row1,col1, row2, col2, 0);
         
         //결과
         if(result1 == true && result2 == true) return true;
         return false;
     }
-    private Boolean _isValidInstall(int x, int y, Obstacle obstacle, int dest_y_idx){
+    private Boolean _isValidInstall(int x, int y, int row1, int col1, int row2, int col2, int dest_y_idx){
         vist.clear();
         boardOrigin.copyTo(vist);
         Stack<Pair> stack = new Stack<>();
 
         //장애물 설치
-        vist.setBoardValue(obstacle.getRow1(), obstacle.getCol1(), 1);
-        vist.setBoardValue(obstacle.getRow2(), obstacle.getCol2(), 1);
+        vist.setBoardValue(row1, col1, 1);
+        vist.setBoardValue(row2, col2, 1);
 
         //시작 위치
         vist.setBoardValue(x, y,1);
