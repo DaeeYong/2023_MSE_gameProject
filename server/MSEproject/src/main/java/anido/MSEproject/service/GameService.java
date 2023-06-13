@@ -100,8 +100,8 @@ public class GameService {
 
     }
     public void installObstacle(Obstacle obstacle){
-        boardOrigin.setBoardValue(obstacle.getRow1(), obstacle.getCol1(), 3);
-        boardOrigin.setBoardValue(obstacle.getRow2(), obstacle.getCol2(), 3);
+        boardOrigin.setBoardValue(obstacle.getRow1(), obstacle.getCol1(), 1);
+        boardOrigin.setBoardValue(obstacle.getRow2(), obstacle.getCol2(), 1);
     }
     //player 위치 보드에 반영
     //board 업데이트 -> 플레이어 좌표 업데이트
