@@ -107,7 +107,7 @@ public class GameService {
     //board 업데이트 -> 플레이어 좌표 업데이트
     // player1 : 1, player2 : 2, 장애물 : 3
     public void boardUpdate(int x, int y, int value){
-        boardOrigin.setBoardValue(y,x,value);
+        boardOrigin.setBoardValue(x,y,value);
     }
 
 
